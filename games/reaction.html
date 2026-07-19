@@ -48,7 +48,7 @@ pad.addEventListener('pointerdown', () => {
     }, 1200 + Math.random() * 2800);
   } else if (state === 'wait') {
     clearTimeout(timer); state = 'result'; pad.className = '';
-    html('😤 Foul!', 'You clicked on red. Tap to try again.');
+    html('⏳ Too soon!', 'Wait for green. Tap to try again.');
   } else if (state === 'go') {
     const ms = Math.round(performance.now() - goTime);
     state = 'result'; pad.className = '';

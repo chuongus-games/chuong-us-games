@@ -10,7 +10,7 @@
     reaction:{ name: 'Reaction Test',  icon: '⚡', unit: 'ms', lowerBetter: true },
     timer:   { name: 'Perfect Second', icon: '⏱️', unit: 'streak' },
     memory:  { name: 'Simon Memory',   icon: '🧠', unit: 'rounds' },
-    avoid:   { name: 'Falling Doom',   icon: '☄️', unit: 's' },
+    avoid:   { name: 'Meteor Rain',   icon: '☄️', unit: 's' },
     stack:   { name: 'Neon Stack',     icon: '🧱', unit: 'blocks' },
     aim:     { name: 'Aim Trainer',    icon: '🎯', unit: 's', lowerBetter: true },
     maze:    { name: 'Wire Maze',      icon: '🌀', unit: 'wins' },
@@ -41,7 +41,42 @@
       CUG.profile = data || null;
     },
 
-    signIn() {
+    /* Google Identity Services: sign-in happens on OUR domain (popup shows chuong.us,
+       not supabase.co). Fallback to classic OAuth redirect if the GIS script is blocked. */
+    GOOGLE_CLIENT_ID: '900700248109-qm940jnv21lgmbf31gdmtg7rkbqcs98r.apps.googleusercontent.com',
+    _gis: null,
+    loadGIS() {
+      if (CUG._gis) return CUG._gis;
+      CUG._gis = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://accounts.google.com/gsi/client';
+        s.async = true; s.defer = true;
+        s.onload = () => {
+          google.accounts.id.initialize({
+            client_id: CUG.GOOGLE_CLIENT_ID,
+            use_fedcm_for_prompt: true,
+            callback: async (resp) => {
+              const { error } = await sb.auth.signInWithIdToken({ provider: 'google', token: resp.credential });
+              if (error) alert('Sign-in error: ' + error.message);
+              else location.reload();
+            }
+          });
+          resolve();
+        };
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+      return CUG._gis;
+    },
+    renderGoogleButton(el) {
+      CUG.loadGIS().then(() => {
+        google.accounts.id.renderButton(el, { theme: 'filled_black', text: 'signin_with', shape: 'pill', size: 'medium' });
+      }).catch(() => {
+        el.innerHTML = '<button class="cug-btn cug-google">Sign in with Google</button>';
+        el.firstChild.onclick = CUG.signIn;
+      });
+    },
+    signIn() { /* fallback only (GIS blocked) */
       sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href } });
     },
     async signOut() {
@@ -65,8 +100,8 @@
           '<button class="cug-btn cug-out" title="Sign out">⏻</button>';
         host.querySelector('.cug-out').onclick = CUG.signOut;
       } else {
-        host.innerHTML = '<button class="cug-btn cug-google">Sign in with Google</button>';
-        host.querySelector('.cug-google').onclick = CUG.signIn;
+        host.innerHTML = '';
+        CUG.renderGoogleButton(host);
       }
     },
 
@@ -118,7 +153,7 @@
         if (!panel.classList.contains('open')) return;
         const list = panel.querySelector('.cug-lb-list');
         const rows = await CUG.leaderboard(game, 10);
-        if (!rows.length) { list.innerHTML = '<div class="cug-lb-row">No scores yet — be the first! 💀</div>'; }
+        if (!rows.length) { list.innerHTML = '<div class="cug-lb-row">No scores yet — be the first! 🔥</div>'; }
         else {
           list.innerHTML = rows.map((r, i) =>
             '<div class="cug-lb-row"><span class="r">' + (i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1)) + '</span>' +

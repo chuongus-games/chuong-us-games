@@ -67,7 +67,7 @@ btn.addEventListener('click', () => {
     btn.textContent = 'START';
     if (diff <= 0.01) { streak++; msg.innerHTML = '🏆 <b>' + el.toFixed(3) + 's</b> — GODLIKE! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
     else if (diff <= 0.03) { streak++; msg.innerHTML = '✅ <b>' + el.toFixed(3) + 's</b> — Pass! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
-    else { streak = 0; msg.innerHTML = '💀 <b>' + el.toFixed(3) + 's</b> — Off by ' + (diff * 1000).toFixed(0) + 'ms. Streak reset!'; }
+    else { streak = 0; msg.innerHTML = '<b>' + el.toFixed(3) + 's</b> — Off by ' + (diff * 1000).toFixed(0) + 'ms — try again!'; }
     if (window.CUG && streak > 0) CUG.submitScore('timer', streak);
     if (streak > best) { best = streak; localStorage.setItem(KEY, best); showBest(); }
     streakEl.textContent = streak > 0 ? '🔥 Win streak: ' + streak : '';

@@ -80,7 +80,7 @@ function draw() {
   ctx.fillText(Math.floor(dist) + 'm', cv.width / 2, 58);
   ctx.font = '700 18px Segoe UI, sans-serif';
   if (state === 'ready') ctx.fillText('Tap to run', cv.width / 2, 170);
-  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('💀 Spiked! Tap to run again', cv.width / 2, 170); }
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('Great run! Tap to go again', cv.width / 2, 170); }
 }
 reset(); step();
 </script>

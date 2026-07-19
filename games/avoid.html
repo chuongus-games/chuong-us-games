@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Falling Doom — Chuong US Games</title>
+<title>Meteor Rain — Chuong US Games</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☄️</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -11,7 +11,7 @@
 <body class="game-page" data-game="avoid">
 <header class="game-top">
   <a class="back" href="../index.html">◂ Games</a>
-  <h1>☄️ Falling Doom</h1>
+  <h1>☄️ Meteor Rain</h1>
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="480" height="600"></canvas></div>
@@ -71,7 +71,7 @@ function draw() {
   ctx.fillText(Math.floor(secs) + 's', cv.width / 2, 60);
   ctx.font = '700 19px Segoe UI, sans-serif';
   if (state === 'ready') ctx.fillText('Tap to start', cv.width / 2, 320);
-  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('💀 Hit! Tap to retry', cv.width / 2, 320); }
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('So close! Tap to play again', cv.width / 2, 320); }
 }
 step();
 </script>

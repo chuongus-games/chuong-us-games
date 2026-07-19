@@ -43,7 +43,7 @@ function pos(e) {
 }
 function handle(p) {
   if (!armed) { if (inRect(p, START)) { armed = true; msg = 'Head to GOAL — don\'t touch the bright walls!'; } return; }
-  if (!inPath(p)) { armed = false; deaths++; msg = '💀 Wall hit! Back to START.'; return; }
+  if (!inPath(p)) { armed = false; deaths++; msg = 'Wall touched — back to START!'; return; }
   if (inRect(p, GOAL)) {
     armed = false; wins++;
     if (window.CUG) CUG.submitScore('maze', wins);
@@ -53,7 +53,7 @@ function handle(p) {
 }
 cv.addEventListener('pointermove', e => handle(pos(e)));
 cv.addEventListener('pointerdown', e => handle(pos(e)));
-cv.addEventListener('pointerleave', () => { if (armed) { armed = false; deaths++; msg = '💀 Out of bounds! Back to START.'; } });
+cv.addEventListener('pointerleave', () => { if (armed) { armed = false; deaths++; msg = 'Out of bounds — back to START!'; } });
 
 function draw() {
   ctx.clearRect(0, 0, cv.width, cv.height);
@@ -66,7 +66,7 @@ function draw() {
   ctx.fillText('START', START.x + 20, START.y + 21);
   ctx.fillStyle = '#4ade80'; ctx.fillText('GOAL', GOAL.x + 20, GOAL.y + 21);
   ctx.fillStyle = armed ? '#4ade80' : '#e8edf7'; ctx.font = '700 15px Segoe UI, sans-serif'; ctx.textAlign = 'left';
-  ctx.fillText(msg + '   (Wins ' + wins + ' · 💀 ' + deaths + ')', 14, cv.height - 14);
+  ctx.fillText(msg + '   (Wins ' + wins + ' · Retries ' + deaths + ')', 14, cv.height - 14);
   requestAnimationFrame(draw);
 }
 draw();

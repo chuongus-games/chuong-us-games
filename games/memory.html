@@ -42,7 +42,7 @@
     <button id="start">START</button>
   </div>
 </div>
-<p class="hint">The sequence grows every round and plays FASTER each time. One wrong note ends it all.</p>
+<p class="hint">The sequence grows every round and plays FASTER each time. One wrong note ends the round.</p>
 <script>
 const pads = [0,1,2,3].map(i => document.getElementById('p' + i));
 const status = document.getElementById('status'), lvlEl = document.getElementById('lvl'),
@@ -86,7 +86,7 @@ pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
   lit(i, 200);
   if (i !== seq[pos]) {
     mode = 'idle';
-    status.textContent = '💀 Wrong! You reached round ' + (seq.length - 1);
+    status.textContent = 'Almost! You reached round ' + (seq.length - 1);
     if (window.CUG) CUG.submitScore('memory', seq.length - 1);
     if (seq.length - 1 > best) { best = seq.length - 1; localStorage.setItem(KEY, best); showBest(); }
     startBtn.style.display = ''; startBtn.textContent = 'PLAY AGAIN';

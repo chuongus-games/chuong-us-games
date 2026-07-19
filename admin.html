@@ -27,7 +27,8 @@
 document.addEventListener('cug-ready', async () => {
   const out = document.getElementById('out');
   if (!CUG.user) {
-    out.innerHTML = '<div class="panel"><p class="msg-note">Admin access requires sign-in.</p><br><button class="btn-primary" onclick="CUG.signIn()">Sign in with Google</button></div>';
+    out.innerHTML = '<div class="panel"><p class="msg-note">Admin access requires sign-in.</p><br><div id="gbtn"></div></div>';
+    CUG.renderGoogleButton(document.getElementById('gbtn'));
     return;
   }
   const [ov, st] = await Promise.all([CUG.sb.rpc('admin_overview'), CUG.sb.rpc('admin_stats')]);
