@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Chuong US Games</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html">CHUONG<span class="us">.US</span> GAMES</a>
+  </div>
+</header>
+
+<main class="panel-page">
+  <h1>📊 Admin Dashboard</h1>
+  <p class="sub">Player and play statistics per game. Admin only.</p>
+  <div id="out"><p class="msg-note">Loading…</p></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('cug-ready', async () => {
+  const out = document.getElementById('out');
+  if (!CUG.user) {
+    out.innerHTML = '<div class="panel"><p class="msg-note">Admin access requires sign-in.</p><br><button class="btn-primary" onclick="CUG.signIn()">Sign in with Google</button></div>';
+    return;
+  }
+  const [ov, st] = await Promise.all([CUG.sb.rpc('admin_overview'), CUG.sb.rpc('admin_stats')]);
+  if (ov.error || st.error) {
+    out.innerHTML = '<div class="panel"><p class="msg-note">⛔ This account is not an admin.</p></div>';
+    return;
+  }
+  const o = ov.data[0] || { total_users: 0, total_plays: 0 };
+  out.innerHTML =
+    '<div class="panel"><h2>Overview</h2><div class="tiles">' +
+    '<div class="tile"><div class="v">' + (+o.total_users).toLocaleString('en-US') + '</div><div class="l">REGISTERED PLAYERS</div></div>' +
+    '<div class="tile"><div class="v">' + (+o.total_plays).toLocaleString('en-US') + '</div><div class="l">TOTAL PLAYS (ALL VISITORS)</div></div>' +
+    '</div></div>' +
+    '<div class="panel"><h2>Per game</h2><table class="stat-table">' +
+    '<tr><th>Game</th><th class="num">Players with scores</th><th class="num">Plays by players</th><th class="num">Total plays</th></tr>' +
+    st.data.map(r => {
+      const m = CUG.meta[r.game] || { name: r.game, icon: '🎮' };
+      return '<tr><td>' + m.icon + ' ' + m.name + '</td>' +
+        '<td class="num">' + r.players + '</td>' +
+        '<td class="num">' + r.player_plays + '</td>' +
+        '<td class="num rank">' + (+r.total_plays).toLocaleString('en-US') + '</td></tr>';
+    }).join('') + '</table></div>';
+});
+</script>
+</body>
+</html>

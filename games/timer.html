@@ -5,6 +5,8 @@
 <title>Perfect Second — Chuong US Games</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
 <style>
 #box { width: min(640px, 92vw); text-align: center; user-select: none; }
 #clock {
@@ -23,7 +25,7 @@
 #streak { margin-top: 18px; font-size: .95rem; color: var(--gold); font-weight: 700; }
 </style>
 </head>
-<body class="game-page">
+<body class="game-page" data-game="timer">
 <header class="game-top">
   <a class="back" href="../index.html">◂ Games</a>
   <h1>⏱️ Perfect Second</h1>
@@ -66,6 +68,7 @@ btn.addEventListener('click', () => {
     if (diff <= 0.01) { streak++; msg.innerHTML = '🏆 <b>' + el.toFixed(3) + 's</b> — GODLIKE! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
     else if (diff <= 0.03) { streak++; msg.innerHTML = '✅ <b>' + el.toFixed(3) + 's</b> — Pass! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
     else { streak = 0; msg.innerHTML = '💀 <b>' + el.toFixed(3) + 's</b> — Off by ' + (diff * 1000).toFixed(0) + 'ms. Streak reset!'; }
+    if (window.CUG && streak > 0) CUG.submitScore('timer', streak);
     if (streak > best) { best = streak; localStorage.setItem(KEY, best); showBest(); }
     streakEl.textContent = streak > 0 ? '🔥 Win streak: ' + streak : '';
   }

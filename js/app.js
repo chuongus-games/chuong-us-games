@@ -1,0 +1,136 @@
+/* Chuong US Games — shared Supabase client, auth UI, scores & leaderboard */
+(function () {
+  const SUPABASE_URL = 'https://lvirausgablhtmcqdblj.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_qcNXOOBcJIvf0mEki-1JnQ_00Jzb5lp';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const GAME_META = {
+    flappy:  { name: 'Flappy Neon',    icon: '🐤', unit: 'pts' },
+    dodge:   { name: 'Hardest Dodge',  icon: '🔵', unit: 'wins' },
+    reaction:{ name: 'Reaction Test',  icon: '⚡', unit: 'ms', lowerBetter: true },
+    timer:   { name: 'Perfect Second', icon: '⏱️', unit: 'streak' },
+    memory:  { name: 'Simon Memory',   icon: '🧠', unit: 'rounds' },
+    avoid:   { name: 'Falling Doom',   icon: '☄️', unit: 's' },
+    stack:   { name: 'Neon Stack',     icon: '🧱', unit: 'blocks' },
+    aim:     { name: 'Aim Trainer',    icon: '🎯', unit: 's', lowerBetter: true },
+    maze:    { name: 'Wire Maze',      icon: '🌀', unit: 'wins' },
+    runner:  { name: 'Spike Runner',   icon: '🏃', unit: 'm' }
+  };
+
+  const CUG = {
+    sb, user: null, profile: null, meta: GAME_META,
+
+    async init() {
+      const { data } = await sb.auth.getSession();
+      CUG.user = data.session ? data.session.user : null;
+      if (CUG.user) await CUG.loadProfile();
+      CUG.renderAuth();
+      CUG.renderLeaderboardWidget();
+      sb.auth.onAuthStateChange(async (_e, session) => {
+        const had = !!CUG.user;
+        CUG.user = session ? session.user : null;
+        if (CUG.user && !CUG.profile) await CUG.loadProfile();
+        if (!CUG.user) CUG.profile = null;
+        if (had !== !!CUG.user) CUG.renderAuth();
+      });
+      document.dispatchEvent(new Event('cug-ready'));
+    },
+
+    async loadProfile() {
+      const { data } = await sb.from('profiles').select('*').eq('id', CUG.user.id).single();
+      CUG.profile = data || null;
+    },
+
+    signIn() {
+      sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href } });
+    },
+    async signOut() {
+      await sb.auth.signOut();
+      location.reload();
+    },
+
+    renderAuth() {
+      let host = document.getElementById('cug-auth');
+      if (!host) {
+        host = document.createElement('div');
+        host.id = 'cug-auth';
+        const top = document.querySelector('.game-top') || document.querySelector('header.site .wrap');
+        if (!top) return;
+        top.appendChild(host);
+      }
+      if (CUG.user) {
+        const name = CUG.profile ? CUG.profile.username : 'player';
+        host.innerHTML =
+          '<a class="cug-user" href="' + CUG.rel('profile.html') + '">👤 ' + CUG.esc(name) + '</a>' +
+          '<button class="cug-btn cug-out" title="Sign out">⏻</button>';
+        host.querySelector('.cug-out').onclick = CUG.signOut;
+      } else {
+        host.innerHTML = '<button class="cug-btn cug-google">Sign in with Google</button>';
+        host.querySelector('.cug-google').onclick = CUG.signIn;
+      }
+    },
+
+    rel(p) {
+      return location.pathname.indexOf('/games/') >= 0 ? '../' + p : p;
+    },
+    esc(s) {
+      return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    },
+
+    logPlay(game) {
+      try { sb.rpc('log_play', { p_game: game }).then(() => {}); } catch (e) {}
+    },
+    async submitScore(game, score) {
+      if (!CUG.user || !(score > 0)) return;
+      try { await sb.rpc('submit_score', { p_game: game, p_score: score }); } catch (e) {}
+    },
+    async leaderboard(game, limit) {
+      const { data, error } = await sb.rpc('leaderboard', { p_game: game, p_limit: limit || 10 });
+      return error ? [] : (data || []);
+    },
+    async myStats() {
+      const { data, error } = await sb.rpc('my_stats');
+      return error ? [] : (data || []);
+    },
+
+    /* leaderboard button + slide panel on game pages (body[data-game]) */
+    renderLeaderboardWidget() {
+      const game = document.body.dataset.game;
+      if (!game) return;
+      /* count one play per visit on first interaction */
+      const once = () => {
+        CUG.logPlay(game);
+        removeEventListener('pointerdown', once); removeEventListener('keydown', once);
+      };
+      addEventListener('pointerdown', once); addEventListener('keydown', once);
+      const top = document.querySelector('.game-top');
+      if (!top) return;
+      const btn = document.createElement('button');
+      btn.className = 'cug-btn cug-lb-btn';
+      btn.textContent = '🏆 Leaderboard';
+      top.insertBefore(btn, document.getElementById('cug-auth'));
+      const panel = document.createElement('div');
+      panel.className = 'cug-lb-panel';
+      panel.innerHTML = '<h2>🏆 Top 10 — ' + GAME_META[game].name + '</h2><div class="cug-lb-list">Loading…</div><p class="cug-lb-note"></p>';
+      document.body.appendChild(panel);
+      btn.onclick = async () => {
+        panel.classList.toggle('open');
+        if (!panel.classList.contains('open')) return;
+        const list = panel.querySelector('.cug-lb-list');
+        const rows = await CUG.leaderboard(game, 10);
+        if (!rows.length) { list.innerHTML = '<div class="cug-lb-row">No scores yet — be the first! 💀</div>'; }
+        else {
+          list.innerHTML = rows.map((r, i) =>
+            '<div class="cug-lb-row"><span class="r">' + (i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1)) + '</span>' +
+            '<span class="n">' + CUG.esc(r.username) + '</span>' +
+            '<span class="s">' + r.best + ' ' + GAME_META[game].unit + '</span></div>').join('');
+        }
+        panel.querySelector('.cug-lb-note').textContent =
+          CUG.user ? 'Your best score is saved automatically.' : 'Sign in with Google to get on the board!';
+      };
+    }
+  };
+
+  window.CUG = CUG;
+  document.addEventListener('DOMContentLoaded', CUG.init);
+})();

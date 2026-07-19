@@ -5,8 +5,10 @@
 <title>Aim Trainer — Chuong US Games</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
 </head>
-<body class="game-page">
+<body class="game-page" data-game="aim">
 <header class="game-top">
   <a class="back" href="../index.html">◂ Games</a>
   <h1>🎯 Aim Trainer</h1>
@@ -43,6 +45,7 @@ cv.addEventListener('pointerdown', e => {
     if (hit >= TOTAL) {
       finalT = (performance.now() - t0) / 1000 + miss;
       state = 'done';
+      if (window.CUG) CUG.submitScore('aim', +finalT.toFixed(2));
       if (!best || finalT < best) { best = finalT; localStorage.setItem(KEY, best); showBest(); }
     } else newTarget();
   } else miss++;

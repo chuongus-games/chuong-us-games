@@ -5,6 +5,8 @@
 <title>Reaction Test — Chuong US Games</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
 <style>
 #pad {
   width: min(640px, 92vw); height: 420px; border-radius: 16px; border: 1px solid var(--line);
@@ -18,7 +20,7 @@
 #pad.go h2, #pad.wait h2 { color: #fff; }
 </style>
 </head>
-<body class="game-page">
+<body class="game-page" data-game="reaction">
 <header class="game-top">
   <a class="back" href="../index.html">◂ Games</a>
   <h1>⚡ Reaction Test</h1>
@@ -50,6 +52,7 @@ pad.addEventListener('pointerdown', () => {
   } else if (state === 'go') {
     const ms = Math.round(performance.now() - goTime);
     state = 'result'; pad.className = '';
+    if (window.CUG) CUG.submitScore('reaction', ms);
     if (!best || ms < best) { best = ms; localStorage.setItem(KEY, best); showBest(); }
     const rank = ms < 180 ? '🏆 Lightning!' : ms < 230 ? '⚡ Very fast' : ms < 300 ? '👍 Not bad' : '🐢 A bit slow…';
     html(ms + ' ms', rank + '<br>Tap to go again.');

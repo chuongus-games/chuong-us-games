@@ -20,78 +20,79 @@
 <section class="hero">
   <div class="wrap">
     <h1>Simple to play.<br><span>Brutally hard to win.</span></h1>
-    <p>10 mini games — no install, no sign-up. Click and play. Just don't expect to win 💀</p>
+    <p>10 mini games — no install needed. Click and play. Just don't expect to win 💀</p>
     <a class="cta" href="#games">PLAY NOW</a>
   </div>
 </section>
 
 <main class="wrap">
+  <div class="searchbar"><input type="search" id="q" placeholder="🔍 Search games… (e.g. flappy, aim, maze)" autocomplete="off"></div>
   <div class="grid" id="games">
 
-    <a class="card" href="games/flappy.html">
+    <a class="card" data-game="flappy" href="games/flappy.html">
       <div class="icon">🐤</div>
       <h3>Flappy Neon</h3>
       <p>Tap to fly through the gaps. Everyone knows how to play. Almost nobody scores 10.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀💀</span></div>
     </a>
 
-    <a class="card" href="games/dodge.html">
+    <a class="card" data-game="dodge" href="games/dodge.html">
       <div class="icon">🔵</div>
       <h3>Hardest Dodge</h3>
       <p>Guide the blue square through spinning bullets to the goal. One hit sends you back to start.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀💀💀</span></div>
     </a>
 
-    <a class="card" href="games/reaction.html">
+    <a class="card" data-game="reaction" href="games/reaction.html">
       <div class="icon">⚡</div>
       <h3>Reaction Test</h3>
       <p>Click the instant the screen turns green. Under 200ms is the only score that counts.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀</span></div>
     </a>
 
-    <a class="card" href="games/timer.html">
+    <a class="card" data-game="timer" href="games/timer.html">
       <div class="icon">⏱️</div>
       <h3>Perfect Second</h3>
       <p>Stop the clock at exactly 1.000 seconds. One millisecond off is a loss.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀💀</span></div>
     </a>
 
-    <a class="card" href="games/memory.html">
+    <a class="card" data-game="memory" href="games/memory.html">
       <div class="icon">🧠</div>
       <h3>Simon Memory</h3>
       <p>Watch and repeat an ever-growing color sequence. How far can your brain go?</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀</span></div>
     </a>
 
-    <a class="card" href="games/avoid.html">
+    <a class="card" data-game="avoid" href="games/avoid.html">
       <div class="icon">☄️</div>
       <h3>Falling Doom</h3>
       <p>Dodge a meteor shower that keeps speeding up. Survive one second at a time.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀💀</span></div>
     </a>
 
-    <a class="card" href="games/stack.html">
+    <a class="card" data-game="stack" href="games/stack.html">
       <div class="icon">🧱</div>
       <h3>Neon Stack</h3>
       <p>Stack blocks with perfect timing. Any overhang gets sliced off — run out and you're done.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀💀</span></div>
     </a>
 
-    <a class="card" href="games/aim.html">
+    <a class="card" data-game="aim" href="games/aim.html">
       <div class="icon">🎯</div>
       <h3>Aim Trainer</h3>
       <p>Hit 20 shrinking targets as fast as you can. Every miss adds a penalty.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀</span></div>
     </a>
 
-    <a class="card" href="games/maze.html">
+    <a class="card" data-game="maze" href="games/maze.html">
       <div class="icon">🌀</div>
       <h3>Wire Maze</h3>
       <p>Trace your cursor through a narrow corridor to the goal. Touch a wall — back to start.</p>
       <div class="meta"><span class="play">PLAY ▸</span><span class="skulls">💀💀💀💀</span></div>
     </a>
 
-    <a class="card" href="games/runner.html">
+    <a class="card" data-game="runner" href="games/runner.html">
       <div class="icon">🏃</div>
       <h3>Spike Runner</h3>
       <p>Jump over spikes at ever-increasing speed. How far can you run?</p>
@@ -105,5 +106,38 @@
   <div class="wrap">© 2026 chuong.us — Simple games, brutal difficulty. Made with 💀 in Da Lat.</div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('cug-ready', async () => {
+  const grid = document.getElementById('games');
+  const cards = [...grid.querySelectorAll('.card')];
+
+  // most-played first
+  const { data } = await CUG.sb.from('game_plays').select('game,plays');
+  if (data && data.length) {
+    const plays = Object.fromEntries(data.map(r => [r.game, +r.plays]));
+    cards.forEach(c => {
+      const n = plays[c.dataset.game] || 0;
+      c.dataset.plays = n;
+      const el = document.createElement('span');
+      el.className = 'plays';
+      el.innerHTML = '▶ <b>' + n.toLocaleString('en-US') + '</b> plays';
+      c.querySelector('.meta').before(el);
+    });
+    cards.sort((a, b) => (+b.dataset.plays) - (+a.dataset.plays)).forEach(c => grid.appendChild(c));
+  }
+
+  // search filter
+  const q = document.getElementById('q');
+  q.addEventListener('input', () => {
+    const s = q.value.trim().toLowerCase();
+    cards.forEach(c => {
+      const hay = (c.dataset.game + ' ' + c.querySelector('h3').textContent + ' ' + c.querySelector('p').textContent).toLowerCase();
+      c.style.display = !s || hay.includes(s) ? '' : 'none';
+    });
+  });
+});
+</script>
 </body>
 </html>

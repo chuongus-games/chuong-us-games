@@ -5,6 +5,8 @@
 <title>Simon Memory — Chuong US Games</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
 <style>
 #box { text-align: center; user-select: none; }
 #pads { display: grid; grid-template-columns: repeat(2, 130px); gap: 14px; justify-content: center; margin: 18px 0; }
@@ -23,7 +25,7 @@
 }
 </style>
 </head>
-<body class="game-page">
+<body class="game-page" data-game="memory">
 <header class="game-top">
   <a class="back" href="../index.html">◂ Games</a>
   <h1>🧠 Simon Memory</h1>
@@ -85,6 +87,7 @@ pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
   if (i !== seq[pos]) {
     mode = 'idle';
     status.textContent = '💀 Wrong! You reached round ' + (seq.length - 1);
+    if (window.CUG) CUG.submitScore('memory', seq.length - 1);
     if (seq.length - 1 > best) { best = seq.length - 1; localStorage.setItem(KEY, best); showBest(); }
     startBtn.style.display = ''; startBtn.textContent = 'PLAY AGAIN';
     return;
