@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flappy Neon — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐤</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>🐤 Flappy Neon</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="420" height="600"></canvas></div>
+<p class="hint">Chạm màn hình / click / phím Space để bay. Qua mỗi khe ống được 1 điểm.</p>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_flappy_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'BEST ' + best;
+showBest();
+
+const G = 0.45, FLAP = -7.6, GAP = 138, PW = 62, SPEED = 2.6;
+let bird, pipes, score, state, t;
+function reset() {
+  bird = { y: 300, vy: 0 };
+  pipes = []; score = 0; state = 'ready'; t = 0;
+}
+function spawnPipe() {
+  const top = 60 + Math.random() * (cv.height - GAP - 180);
+  pipes.push({ x: cv.width, top, passed: false });
+}
+function flap() {
+  if (state === 'ready') { state = 'play'; spawnPipe(); }
+  if (state === 'play') bird.vy = FLAP;
+  if (state === 'dead' && t > 20) reset();
+}
+cv.addEventListener('pointerdown', e => { e.preventDefault(); flap(); });
+addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); flap(); } });
+
+function step() {
+  t++;
+  if (state === 'play') {
+    bird.vy += G; bird.y += bird.vy;
+    if (t % 95 === 0) spawnPipe();
+    for (const p of pipes) {
+      p.x -= SPEED;
+      if (!p.passed && p.x + PW < 90) { p.passed = true; score++; }
+      if (90 + 14 > p.x && 90 - 14 < p.x + PW &&
+          (bird.y - 14 < p.top || bird.y + 14 > p.top + GAP)) die();
+    }
+    pipes = pipes.filter(p => p.x > -PW);
+    if (bird.y > cv.height - 14 || bird.y < -40) die();
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+function die() {
+  state = 'dead'; t = 0;
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, cv.width, cv.height);
+  for (const p of pipes) {
+    ctx.fillStyle = '#22d3ee';
+    ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 12;
+    ctx.fillRect(p.x, 0, PW, p.top);
+    ctx.fillRect(p.x, p.top + GAP, PW, cv.height - p.top - GAP);
+    ctx.shadowBlur = 0;
+  }
+  ctx.fillStyle = '#fbbf24';
+  ctx.shadowColor = '#fbbf24'; ctx.shadowBlur = 14;
+  ctx.beginPath(); ctx.arc(90, bird.y, 14, 0, 7); ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 44px Segoe UI, sans-serif';
+  ctx.fillText(score, cv.width / 2, 70);
+  ctx.font = '700 20px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText('Chạm để bắt đầu', cv.width / 2, 320);
+  if (state === 'dead') {
+    ctx.fillStyle = '#fb7185';
+    ctx.fillText('💀 GAME OVER — chạm để chơi lại', cv.width / 2, 320);
+  }
+}
+reset(); step();
+</script>
+</body>
+</html>

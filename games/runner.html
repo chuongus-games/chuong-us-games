@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spike Runner — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>🏃 Spike Runner</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="680" height="380"></canvas></div>
+<p class="hint">Chạm / Space để nhảy qua gai. Tốc độ tăng vô hạn — điểm là quãng đường.</p>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_runner_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'BEST ' + best + 'm';
+showBest();
+
+const GROUND = 310, G = 0.7, JUMP = -13;
+let py, vy, spikes, dist, speed, state, gapT;
+function reset() {
+  py = GROUND; vy = 0; spikes = []; dist = 0; speed = 5.5; state = 'ready'; gapT = 0;
+}
+function jump() {
+  if (state === 'ready') state = 'play';
+  else if (state === 'dead') { reset(); return; }
+  if (py >= GROUND - 1) vy = JUMP;
+}
+cv.addEventListener('pointerdown', e => { e.preventDefault(); jump(); });
+addEventListener('keydown', e => { if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); jump(); } });
+
+function step() {
+  if (state === 'play') {
+    vy += G; py += vy;
+    if (py > GROUND) { py = GROUND; vy = 0; }
+    speed += 0.0022; dist += speed / 10;
+    gapT -= speed;
+    if (gapT <= 0) {
+      const n = Math.random() < 0.3 ? 2 : 1;
+      for (let i = 0; i < n; i++) spikes.push({ x: cv.width + 30 + i * 34 });
+      gapT = 240 + Math.random() * 320;
+    }
+    for (const s of spikes) {
+      s.x -= speed;
+      if (s.x > 60 && s.x < 128 && py > GROUND - 34) {
+        state = 'dead';
+        const m = Math.floor(dist);
+        if (m > best) { best = m; localStorage.setItem(KEY, best); showBest(); }
+      }
+    }
+    spikes = spikes.filter(s => s.x > -40);
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.strokeStyle = '#223052'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, GROUND + 26); ctx.lineTo(cv.width, GROUND + 26); ctx.stroke();
+  for (const s of spikes) {
+    ctx.fillStyle = '#fb7185'; ctx.shadowColor = '#fb7185'; ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.moveTo(s.x, GROUND + 26); ctx.lineTo(s.x + 15, GROUND - 8); ctx.lineTo(s.x + 30, GROUND + 26);
+    ctx.closePath(); ctx.fill(); ctx.shadowBlur = 0;
+  }
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 12;
+  ctx.fillRect(84, py - 26, 26, 26); ctx.shadowBlur = 0;
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 34px Segoe UI, sans-serif';
+  ctx.fillText(Math.floor(dist) + 'm', cv.width / 2, 58);
+  ctx.font = '700 18px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText('Chạm để chạy', cv.width / 2, 170);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('💀 Dính gai! Chạm để chạy lại', cv.width / 2, 170); }
+}
+reset(); step();
+</script>
+</body>
+</html>

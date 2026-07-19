@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reaction Test — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+#pad {
+  width: min(640px, 92vw); height: 420px; border-radius: 16px; border: 1px solid var(--line);
+  display: grid; place-items: center; text-align: center; cursor: pointer; user-select: none;
+  background: var(--bg2); transition: background .1s; padding: 20px;
+}
+#pad h2 { font-size: 1.6rem; margin-bottom: 8px; }
+#pad p { color: var(--muted); }
+#pad.wait { background: #7f1d2e; }
+#pad.go { background: #14532d; }
+#pad.go h2, #pad.wait h2 { color: #fff; }
+</style>
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>⚡ Reaction Test</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><div id="pad"><div><h2>Bấm để bắt đầu</h2><p>Chờ nền chuyển XANH LÁ rồi bấm thật nhanh.<br>Bấm sớm khi còn ĐỎ = phạm quy.</p></div></div></div>
+<p class="hint">Trung bình con người: ~250ms. Game thủ: ~180ms. Bạn thì sao?</p>
+<script>
+const pad = document.getElementById('pad');
+const KEY = 'cug_reaction_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? 'BEST ' + best + 'ms' : '';
+showBest();
+
+let state = 'idle', timer = null, goTime = 0;
+function html(h2, p) { pad.innerHTML = '<div><h2>' + h2 + '</h2><p>' + p + '</p></div>'; }
+pad.addEventListener('pointerdown', () => {
+  if (state === 'idle' || state === 'result') {
+    state = 'wait'; pad.className = 'wait';
+    html('Chờ màu xanh…', 'Đừng bấm vội!');
+    timer = setTimeout(() => {
+      state = 'go'; pad.className = 'go'; goTime = performance.now();
+      html('BẤM NGAY!', '');
+    }, 1200 + Math.random() * 2800);
+  } else if (state === 'wait') {
+    clearTimeout(timer); state = 'result'; pad.className = '';
+    html('😤 Phạm quy!', 'Bấm khi còn đỏ. Chạm để thử lại.');
+  } else if (state === 'go') {
+    const ms = Math.round(performance.now() - goTime);
+    state = 'result'; pad.className = '';
+    if (!best || ms < best) { best = ms; localStorage.setItem(KEY, best); showBest(); }
+    const rank = ms < 180 ? '🏆 Thần tốc!' : ms < 230 ? '⚡ Rất nhanh' : ms < 300 ? '👍 Khá đấy' : '🐢 Hơi chậm…';
+    html(ms + ' ms', rank + '<br>Chạm để chơi tiếp.');
+  }
+});
+</script>
+</body>
+</html>

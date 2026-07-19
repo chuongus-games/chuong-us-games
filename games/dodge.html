@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardest Dodge — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔵</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>🔵 Hardest Dodge</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="640" height="440"></canvas></div>
+<p class="hint">Dùng phím mũi tên / WASD (hoặc kéo ngón tay) đưa khối xanh từ vùng START sang vùng GOAL. Chạm đạn hồng = quay về đầu.</p>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_dodge_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'WINS ' + best;
+showBest();
+
+const P = { x: 60, y: 220, s: 22, v: 3.2 };
+const keys = {};
+addEventListener('keydown', e => { keys[e.key.toLowerCase()] = true; if (e.key.startsWith('Arrow')) e.preventDefault(); });
+addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+let touch = null;
+cv.addEventListener('pointerdown', e => touch = { x: e.offsetX, y: e.offsetY });
+cv.addEventListener('pointermove', e => {
+  if (!touch) return;
+  const sx = cv.width / cv.getBoundingClientRect().width;
+  P.x += (e.offsetX - touch.x) * sx; P.y += (e.offsetY - touch.y) * sx;
+  touch = { x: e.offsetX, y: e.offsetY };
+});
+addEventListener('pointerup', () => touch = null);
+
+let t = 0, deaths = 0, wins = 0, flash = 0;
+const balls = [];
+for (let i = 0; i < 14; i++) balls.push({ cx: 320, cy: 220, r: 40 + i * 13, a: i * 0.9, sp: (i % 2 ? 1 : -1) * (0.02 + i * 0.0022) });
+
+function resetPlayer() { P.x = 60; P.y = 220; }
+function step() {
+  t++;
+  if (keys['arrowleft'] || keys['a']) P.x -= P.v;
+  if (keys['arrowright'] || keys['d']) P.x += P.v;
+  if (keys['arrowup'] || keys['w']) P.y -= P.v;
+  if (keys['arrowdown'] || keys['s']) P.y += P.v;
+  P.x = Math.max(10, Math.min(cv.width - 10 - P.s, P.x));
+  P.y = Math.max(10, Math.min(cv.height - 10 - P.s, P.y));
+
+  for (const b of balls) {
+    b.a += b.sp;
+    b.x = b.cx + Math.cos(b.a) * b.r;
+    b.y = b.cy + Math.sin(b.a) * b.r * 0.82;
+    const dx = b.x - (P.x + P.s / 2), dy = b.y - (P.y + P.s / 2);
+    if (dx * dx + dy * dy < (9 + P.s / 2) * (9 + P.s / 2)) {
+      deaths++; flash = 8; resetPlayer();
+    }
+  }
+  if (P.x > cv.width - 110) {
+    wins++; if (wins > best) { best = wins; localStorage.setItem(KEY, best); showBest(); }
+    resetPlayer();
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+function zone(x, label, color) {
+  ctx.fillStyle = 'rgba(34,211,238,.07)'; ctx.fillRect(x, 0, 100, cv.height);
+  ctx.fillStyle = color; ctx.font = '800 15px Segoe UI, sans-serif';
+  ctx.textAlign = 'center'; ctx.fillText(label, x + 50, 26);
+}
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  if (flash > 0) { ctx.fillStyle = 'rgba(251,113,133,.25)'; ctx.fillRect(0, 0, cv.width, cv.height); flash--; }
+  zone(0, 'START', '#8b96ad'); zone(cv.width - 100, 'GOAL', '#4ade80');
+  for (const b of balls) {
+    ctx.fillStyle = '#fb7185'; ctx.shadowColor = '#fb7185'; ctx.shadowBlur = 10;
+    ctx.beginPath(); ctx.arc(b.x, b.y, 9, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+  }
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 14;
+  ctx.fillRect(P.x, P.y, P.s, P.s); ctx.shadowBlur = 0;
+  ctx.fillStyle = '#e8edf7'; ctx.font = '700 15px Segoe UI, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('Thắng: ' + wins + '   💀 Chết: ' + deaths, 14, cv.height - 14);
+}
+step();
+</script>
+</body>
+</html>

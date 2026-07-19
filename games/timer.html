@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfect Second — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+#box { width: min(640px, 92vw); text-align: center; user-select: none; }
+#clock {
+  font-size: clamp(3.4rem, 12vw, 6rem); font-weight: 900; font-variant-numeric: tabular-nums;
+  background: linear-gradient(90deg, var(--neon), var(--neon2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+#msg { min-height: 3.2em; color: var(--muted); margin: 10px 0 20px; font-size: 1.05rem; line-height: 1.5; }
+#btn {
+  font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; color: #06121a;
+  background: linear-gradient(90deg, var(--neon), var(--neon2));
+  border: 0; border-radius: 14px; padding: 16px 52px; cursor: pointer;
+  box-shadow: 0 0 24px rgba(34,211,238,.35);
+}
+#btn:active { transform: scale(.97); }
+#streak { margin-top: 18px; font-size: .95rem; color: var(--gold); font-weight: 700; }
+</style>
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>⏱️ Perfect Second</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage">
+  <div id="box">
+    <div id="clock">0.000</div>
+    <div id="msg">Bấm START, đồng hồ chạy và <b>ẨN ĐI sau 0.3s</b>.<br>Bấm STOP đúng thời điểm <b>1.000 giây</b>.</div>
+    <button id="btn">START</button>
+    <div id="streak"></div>
+  </div>
+</div>
+<p class="hint">Lệch ≤ 0.010s: thần thánh · ≤ 0.030s: đạt · &gt; 0.030s: thua. Chuỗi thắng liên tiếp là điểm của bạn.</p>
+<script>
+const clock = document.getElementById('clock'), msg = document.getElementById('msg'),
+      btn = document.getElementById('btn'), streakEl = document.getElementById('streak');
+const KEY = 'cug_timer_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'BEST STREAK ' + best;
+showBest();
+
+let running = false, t0 = 0, raf = null, streak = 0;
+function tick() {
+  const el = (performance.now() - t0) / 1000;
+  clock.textContent = el < 0.3 ? el.toFixed(3) : '?.???';
+  raf = requestAnimationFrame(tick);
+}
+btn.addEventListener('click', () => {
+  if (!running) {
+    running = true; t0 = performance.now(); btn.textContent = 'STOP';
+    msg.innerHTML = 'Đếm trong đầu… bấm STOP tại <b>1.000s</b>!';
+    tick();
+  } else {
+    running = false; cancelAnimationFrame(raf);
+    const el = (performance.now() - t0) / 1000, diff = Math.abs(el - 1);
+    clock.textContent = el.toFixed(3);
+    btn.textContent = 'START';
+    if (diff <= 0.01) { streak++; msg.innerHTML = '🏆 <b>' + el.toFixed(3) + 's</b> — THẦN THÁNH! Lệch ' + (diff * 1000).toFixed(0) + 'ms'; }
+    else if (diff <= 0.03) { streak++; msg.innerHTML = '✅ <b>' + el.toFixed(3) + 's</b> — Đạt! Lệch ' + (diff * 1000).toFixed(0) + 'ms'; }
+    else { streak = 0; msg.innerHTML = '💀 <b>' + el.toFixed(3) + 's</b> — Lệch ' + (diff * 1000).toFixed(0) + 'ms. Chuỗi về 0!'; }
+    if (streak > best) { best = streak; localStorage.setItem(KEY, best); showBest(); }
+    streakEl.textContent = streak > 0 ? '🔥 Chuỗi thắng: ' + streak : '';
+  }
+});
+</script>
+</body>
+</html>

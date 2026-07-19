@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Stack — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>🧱 Neon Stack</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="420" height="620"></canvas></div>
+<p class="hint">Chạm / Space để thả khối. Phần lệch ra ngoài bị cắt bỏ — khối càng lúc càng mỏng, tốc độ càng nhanh.</p>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_stack_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'BEST ' + best;
+showBest();
+
+const H = 26;
+let stack, cur, dir, speed, score, state, camY;
+function reset() {
+  stack = [{ x: 110, w: 200 }];
+  score = 0; speed = 3; dir = 1; camY = 0; state = 'play';
+  cur = { x: 0, w: 200 };
+}
+function hue(i) { return 'hsl(' + ((185 + i * 14) % 360) + ' 85% 60%)'; }
+function drop() {
+  if (state !== 'play') { if (state === 'dead') reset(); return; }
+  const prev = stack[stack.length - 1];
+  const left = Math.max(cur.x, prev.x);
+  const right = Math.min(cur.x + cur.w, prev.x + prev.w);
+  const w = right - left;
+  if (w <= 4) {
+    state = 'dead';
+    if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+    return;
+  }
+  stack.push({ x: left, w });
+  score++;
+  speed = Math.min(9, 3 + score * 0.22);
+  cur = { x: dir > 0 ? -w : cv.width, w };
+  dir = -dir;
+}
+cv.addEventListener('pointerdown', e => { e.preventDefault(); drop(); });
+addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); drop(); } });
+
+function step() {
+  if (state === 'play') {
+    cur.x += speed * dir;
+    if (cur.x < -cur.w - 10) dir = 1;
+    if (cur.x > cv.width + 10) dir = -1;
+  }
+  const targetCam = Math.max(0, (stack.length + 1) * H - 380);
+  camY += (targetCam - camY) * 0.1;
+  draw();
+  requestAnimationFrame(step);
+}
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, cv.width, cv.height);
+  stack.forEach((b, i) => {
+    const y = cv.height - 40 - i * H + camY;
+    ctx.fillStyle = hue(i);
+    ctx.fillRect(b.x, y, b.w, H - 3);
+  });
+  if (state === 'play') {
+    const y = cv.height - 40 - stack.length * H + camY;
+    ctx.fillStyle = hue(stack.length);
+    ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 16;
+    ctx.fillRect(cur.x, y, cur.w, H - 3);
+    ctx.shadowBlur = 0;
+  }
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 40px Segoe UI, sans-serif';
+  ctx.fillText(score, cv.width / 2, 64);
+  if (state === 'dead') {
+    ctx.font = '700 20px Segoe UI, sans-serif';
+    ctx.fillStyle = '#fb7185';
+    ctx.fillText('💀 Trượt rồi! Chạm để chơi lại', cv.width / 2, 110);
+  }
+}
+reset(); step();
+</script>
+</body>
+</html>

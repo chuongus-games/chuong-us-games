@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simon Memory — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+#box { text-align: center; user-select: none; }
+#pads { display: grid; grid-template-columns: repeat(2, 130px); gap: 14px; justify-content: center; margin: 18px 0; }
+.pad {
+  height: 130px; border-radius: 18px; cursor: pointer; opacity: .35;
+  transition: opacity .12s, transform .1s; border: 2px solid transparent;
+}
+.pad.lit { opacity: 1; transform: scale(1.04); box-shadow: 0 0 34px currentColor; }
+#p0 { background: #22d3ee; color: #22d3ee; } #p1 { background: #a78bfa; color: #a78bfa; }
+#p2 { background: #fbbf24; color: #fbbf24; } #p3 { background: #fb7185; color: #fb7185; }
+#status { font-size: 1.15rem; font-weight: 700; min-height: 1.6em; }
+#lvl { color: var(--muted); margin-top: 6px; }
+#start {
+  margin-top: 16px; font-size: 1rem; font-weight: 800; color: #06121a; border: 0; cursor: pointer;
+  background: linear-gradient(90deg, var(--neon), var(--neon2)); border-radius: 12px; padding: 12px 40px;
+}
+</style>
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>🧠 Simon Memory</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage">
+  <div id="box">
+    <div id="status">Nhớ chuỗi màu — rồi lặp lại đúng thứ tự</div>
+    <div id="pads">
+      <div class="pad" id="p0"></div><div class="pad" id="p1"></div>
+      <div class="pad" id="p2"></div><div class="pad" id="p3"></div>
+    </div>
+    <div id="lvl"></div>
+    <button id="start">BẮT ĐẦU</button>
+  </div>
+</div>
+<p class="hint">Chuỗi dài thêm mỗi vòng và phát ngày càng NHANH. Sai 1 nốt là kết thúc.</p>
+<script>
+const pads = [0,1,2,3].map(i => document.getElementById('p' + i));
+const status = document.getElementById('status'), lvlEl = document.getElementById('lvl'),
+      startBtn = document.getElementById('start');
+const KEY = 'cug_memory_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'BEST ' + best;
+showBest();
+
+const AC = window.AudioContext ? new AudioContext() : null;
+const freqs = [330, 415, 494, 587];
+function beep(i, dur) {
+  if (!AC) return;
+  const o = AC.createOscillator(), g = AC.createGain();
+  o.frequency.value = freqs[i]; o.type = 'sine';
+  g.gain.setValueAtTime(.18, AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(.001, AC.currentTime + dur / 1000);
+  o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime + dur / 1000);
+}
+let seq = [], pos = 0, mode = 'idle';
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function lit(i, dur) {
+  pads[i].classList.add('lit'); beep(i, dur);
+  setTimeout(() => pads[i].classList.remove('lit'), dur);
+}
+async function playSeq() {
+  mode = 'show'; status.textContent = '👀 Xem kỹ…';
+  const dur = Math.max(140, 420 - seq.length * 22);
+  await sleep(600);
+  for (const i of seq) { lit(i, dur); await sleep(dur + Math.max(80, 180 - seq.length * 10)); }
+  mode = 'input'; pos = 0; status.textContent = '🎮 Đến lượt bạn!';
+}
+function nextRound() {
+  seq.push(Math.floor(Math.random() * 4));
+  lvlEl.textContent = 'Vòng ' + seq.length;
+  playSeq();
+}
+pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
+  if (mode !== 'input') return;
+  lit(i, 200);
+  if (i !== seq[pos]) {
+    mode = 'idle';
+    status.textContent = '💀 Sai rồi! Bạn đạt vòng ' + (seq.length - 1);
+    if (seq.length - 1 > best) { best = seq.length - 1; localStorage.setItem(KEY, best); showBest(); }
+    startBtn.style.display = ''; startBtn.textContent = 'CHƠI LẠI';
+    return;
+  }
+  pos++;
+  if (pos === seq.length) { status.textContent = '✅ Chuẩn!'; setTimeout(nextRound, 700); }
+}));
+startBtn.addEventListener('click', () => {
+  if (AC && AC.state === 'suspended') AC.resume();
+  seq = []; startBtn.style.display = 'none'; nextRound();
+});
+</script>
+</body>
+</html>

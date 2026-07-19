@@ -1,0 +1,118 @@
+:root {
+  --bg: #0a0e17;
+  --bg2: #101625;
+  --card: #141b2d;
+  --card-hover: #1a2340;
+  --line: #223052;
+  --text: #e8edf7;
+  --muted: #8b96ad;
+  --neon: #22d3ee;
+  --neon2: #a78bfa;
+  --danger: #fb7185;
+  --gold: #fbbf24;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ---------- home ---------- */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+header.site {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  background: rgba(10,14,23,.85);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 10;
+}
+header.site .wrap { display: flex; align-items: center; gap: 12px; }
+.logo {
+  font-size: 1.35rem; font-weight: 800; letter-spacing: 1px;
+  background: linear-gradient(90deg, var(--neon), var(--neon2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.logo .us { color: var(--text); -webkit-text-fill-color: var(--text); }
+.tag-hard {
+  margin-left: auto; font-size: .72rem; font-weight: 700; letter-spacing: 2px;
+  color: var(--danger); border: 1px solid var(--danger);
+  padding: 4px 10px; border-radius: 999px; text-transform: uppercase;
+}
+.hero { text-align: center; padding: 64px 0 40px; }
+.hero h1 {
+  font-size: clamp(2rem, 5.5vw, 3.4rem); font-weight: 900; line-height: 1.15;
+}
+.hero h1 span {
+  background: linear-gradient(90deg, var(--neon), var(--neon2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero p { color: var(--muted); margin-top: 14px; font-size: 1.05rem; }
+.hero .cta {
+  display: inline-block; margin-top: 26px; padding: 13px 34px; border-radius: 12px;
+  font-weight: 700; letter-spacing: 1px; color: #06121a;
+  background: linear-gradient(90deg, var(--neon), var(--neon2));
+  box-shadow: 0 0 24px rgba(34,211,238,.35);
+  transition: transform .15s, box-shadow .15s;
+}
+.hero .cta:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(34,211,238,.55); }
+
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; padding: 24px 0 70px;
+}
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 22px 18px 18px; display: flex; flex-direction: column; gap: 10px;
+  transition: transform .15s, border-color .15s, box-shadow .15s, background .15s;
+  position: relative; overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-4px); border-color: var(--neon);
+  background: var(--card-hover);
+  box-shadow: 0 8px 30px rgba(34,211,238,.18);
+}
+.card .icon {
+  width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center;
+  background: rgba(34,211,238,.09); font-size: 1.6rem;
+}
+.card h3 { font-size: 1.02rem; font-weight: 700; }
+.card p { font-size: .82rem; color: var(--muted); line-height: 1.45; flex: 1; }
+.card .meta { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+.card .play {
+  font-size: .78rem; font-weight: 800; letter-spacing: 1.5px; color: var(--neon);
+}
+.card:hover .play { text-shadow: 0 0 12px rgba(34,211,238,.8); }
+.skulls { font-size: .72rem; letter-spacing: 1px; }
+
+footer.site {
+  border-top: 1px solid var(--line); padding: 26px 0; text-align: center;
+  color: var(--muted); font-size: .82rem;
+}
+
+/* ---------- game shell ---------- */
+.game-page { display: flex; flex-direction: column; min-height: 100vh; }
+.game-top {
+  display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.game-top .back {
+  font-size: .85rem; font-weight: 700; color: var(--muted);
+  padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+}
+.game-top .back:hover { color: var(--neon); border-color: var(--neon); }
+.game-top h1 { font-size: 1.05rem; font-weight: 800; }
+.game-top .best { margin-left: auto; font-size: .85rem; color: var(--gold); font-weight: 700; }
+.stage {
+  flex: 1; display: grid; place-items: center; padding: 14px;
+  background: radial-gradient(ellipse at 50% 0%, #121a2e 0%, var(--bg) 65%);
+}
+canvas.game {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
+  max-width: 100%; height: auto; touch-action: none; display: block;
+  box-shadow: 0 0 40px rgba(34,211,238,.08);
+}
+.hint { text-align: center; color: var(--muted); font-size: .82rem; padding: 0 16px 18px; }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Falling Doom — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☄️</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>☄️ Falling Doom</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="600"></canvas></div>
+<p class="hint">Di chuột / kéo ngón tay để né thiên thạch. Điểm = số giây sống sót.</p>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_avoid_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'BEST ' + best + 's';
+showBest();
+
+let px = 240, state = 'ready', t0 = 0, rocks = [], secs = 0;
+function scaleX(clientX) {
+  const r = cv.getBoundingClientRect();
+  return (clientX - r.left) * (cv.width / r.width);
+}
+cv.addEventListener('pointermove', e => px = scaleX(e.clientX));
+cv.addEventListener('pointerdown', e => {
+  px = scaleX(e.clientX);
+  if (state !== 'play') { state = 'play'; t0 = performance.now(); rocks = []; }
+});
+
+function step() {
+  if (state === 'play') {
+    secs = (performance.now() - t0) / 1000;
+    const diff = 1 + secs / 12;
+    if (Math.random() < 0.028 * diff) {
+      rocks.push({ x: Math.random() * cv.width, y: -20, r: 8 + Math.random() * 16, vy: (2 + Math.random() * 2.4) * diff, vx: (Math.random() - .5) * 2.2 });
+    }
+    for (const k of rocks) {
+      k.y += k.vy; k.x += k.vx;
+      const dx = k.x - px, dy = k.y - (cv.height - 46);
+      if (dx * dx + dy * dy < (k.r + 12) * (k.r + 12)) {
+        state = 'dead';
+        const s = Math.floor(secs);
+        if (s > best) { best = s; localStorage.setItem(KEY, best); showBest(); }
+      }
+    }
+    rocks = rocks.filter(k => k.y < cv.height + 30);
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, cv.width, cv.height);
+  for (const k of rocks) {
+    ctx.fillStyle = '#fb7185'; ctx.shadowColor = '#fb7185'; ctx.shadowBlur = 10;
+    ctx.beginPath(); ctx.arc(k.x, k.y, k.r, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+  }
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 14;
+  ctx.beginPath(); ctx.arc(px, cv.height - 46, 12, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 38px Segoe UI, sans-serif';
+  ctx.fillText(Math.floor(secs) + 's', cv.width / 2, 60);
+  ctx.font = '700 19px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText('Chạm để bắt đầu', cv.width / 2, 320);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('💀 Trúng đạn! Chạm để chơi lại', cv.width / 2, 320); }
+}
+step();
+</script>
+</body>
+</html>

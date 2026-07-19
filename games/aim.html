@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aim Trainer — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>🎯 Aim Trainer</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="640" height="460"></canvas></div>
+<p class="hint">Bắn 20 mục tiêu — mỗi mục tiêu nhỏ dần theo cấp độ. Bắn trượt +1s phạt. Thời gian thấp nhất thắng.</p>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_aim_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? 'BEST ' + best.toFixed(2) + 's' : '';
+showBest();
+
+const TOTAL = 20;
+let state = 'ready', hit = 0, miss = 0, t0 = 0, target = null, finalT = 0;
+function newTarget() {
+  const r = Math.max(9, 30 - hit);
+  target = { x: 40 + Math.random() * (cv.width - 80), y: 60 + Math.random() * (cv.height - 120), r };
+}
+function pos(e) {
+  const rc = cv.getBoundingClientRect();
+  return { x: (e.clientX - rc.left) * cv.width / rc.width, y: (e.clientY - rc.top) * cv.height / rc.height };
+}
+cv.addEventListener('pointerdown', e => {
+  const p = pos(e);
+  if (state === 'ready' || state === 'done') {
+    state = 'play'; hit = 0; miss = 0; t0 = performance.now(); newTarget(); return;
+  }
+  const dx = p.x - target.x, dy = p.y - target.y;
+  if (dx * dx + dy * dy <= target.r * target.r) {
+    hit++;
+    if (hit >= TOTAL) {
+      finalT = (performance.now() - t0) / 1000 + miss;
+      state = 'done';
+      if (!best || finalT < best) { best = finalT; localStorage.setItem(KEY, best); showBest(); }
+    } else newTarget();
+  } else miss++;
+});
+function step() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  if (state === 'ready') {
+    ctx.font = '700 22px Segoe UI, sans-serif';
+    ctx.fillText('Chạm để bắt đầu — 20 mục tiêu', cv.width / 2, cv.height / 2);
+  } else if (state === 'play') {
+    for (let i = 3; i > 0; i--) {
+      ctx.fillStyle = i % 2 ? '#fb7185' : '#e8edf7';
+      ctx.beginPath(); ctx.arc(target.x, target.y, target.r * i / 3, 0, 7); ctx.fill();
+    }
+    ctx.fillStyle = '#8b96ad'; ctx.font = '700 16px Segoe UI, sans-serif'; ctx.textAlign = 'left';
+    const el = (performance.now() - t0) / 1000;
+    ctx.fillText('🎯 ' + hit + '/' + TOTAL + '   ❌ ' + miss + '   ⏱ ' + el.toFixed(1) + 's', 14, 26);
+  } else {
+    ctx.font = '800 34px Segoe UI, sans-serif';
+    ctx.fillText(finalT.toFixed(2) + 's', cv.width / 2, cv.height / 2 - 20);
+    ctx.font = '700 18px Segoe UI, sans-serif'; ctx.fillStyle = '#8b96ad';
+    ctx.fillText('(kèm ' + miss + 's phạt do trượt) — Chạm để chơi lại', cv.width / 2, cv.height / 2 + 16);
+  }
+  requestAnimationFrame(step);
+}
+step();
+</script>
+</body>
+</html>

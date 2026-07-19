@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wire Maze — Chuong US Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="game-page">
+<header class="game-top">
+  <a class="back" href="../index.html">◂ Games</a>
+  <h1>🌀 Wire Maze</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="640" height="440"></canvas></div>
+<p class="hint">Đưa con trỏ vào ô START rồi lần theo hành lang tối tới ô GOAL. Chạm vùng sáng = về đầu. Mobile: kéo ngón tay.</p>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_maze_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = 'WINS ' + best;
+showBest();
+
+// corridor path: sequence of rects forming a snake-like tunnel
+const W = 34; // corridor width
+const segs = [
+  [20, 180, 120, W],[106, 60, W, 154],[106, 60, 300, W],[372, 60, W, 240],
+  [220, 266, 186, W],[220, 160, W, 140],[186, 160, 120, W],
+  [186, 160, W, 214],[40, 340, 380, W],[40, 240, W, 134],[386, 300, W, 74],
+  [386, 300, 180, W],[532, 100, W, 234],[460, 100, 106, W]
+];
+const START = { x: 20, y: 180, w: 40, h: W };
+const GOAL = { x: 460, y: 100, w: 40, h: W };
+let armed = false, wins = 0, deaths = 0, msg = 'Đưa chuột vào ô START';
+function inRect(p, r) { return p.x >= r.x && p.x <= r.x + r.w && p.y >= r.y && p.y <= r.y + r.h; }
+function inPath(p) { return segs.some(r => inRect(p, { x: r[0], y: r[1], w: r[2], h: r[3] })) || inRect(p, START) || inRect(p, GOAL); }
+function pos(e) {
+  const rc = cv.getBoundingClientRect();
+  return { x: (e.clientX - rc.left) * cv.width / rc.width, y: (e.clientY - rc.top) * cv.height / rc.height };
+}
+function handle(p) {
+  if (!armed) { if (inRect(p, START)) { armed = true; msg = 'Đi tới GOAL — đừng chạm vùng sáng!'; } return; }
+  if (!inPath(p)) { armed = false; deaths++; msg = '💀 Chạm tường! Về ô START làm lại.'; return; }
+  if (inRect(p, GOAL)) {
+    armed = false; wins++;
+    if (wins > best) { best = wins; localStorage.setItem(KEY, best); showBest(); }
+    msg = '🏆 QUA MÀN! Vào START chơi tiếp.';
+  }
+}
+cv.addEventListener('pointermove', e => handle(pos(e)));
+cv.addEventListener('pointerdown', e => handle(pos(e)));
+cv.addEventListener('pointerleave', () => { if (armed) { armed = false; deaths++; msg = '💀 Ra ngoài! Về ô START.'; } });
+
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#2b3a63'; ctx.fillRect(0, 0, cv.width, cv.height); // walls (light = death)
+  ctx.fillStyle = '#0a0e17';
+  for (const r of segs) ctx.fillRect(r[0], r[1], r[2], r[3]);
+  ctx.fillStyle = '#164e63'; ctx.fillRect(START.x, START.y, START.w, START.h);
+  ctx.fillStyle = '#14532d'; ctx.fillRect(GOAL.x, GOAL.y, GOAL.w, GOAL.h);
+  ctx.fillStyle = '#22d3ee'; ctx.font = '800 13px Segoe UI, sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('START', START.x + 20, START.y + 21);
+  ctx.fillStyle = '#4ade80'; ctx.fillText('GOAL', GOAL.x + 20, GOAL.y + 21);
+  ctx.fillStyle = armed ? '#4ade80' : '#e8edf7'; ctx.font = '700 15px Segoe UI, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText(msg + '   (Thắng ' + wins + ' · 💀 ' + deaths + ')', 14, cv.height - 14);
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
