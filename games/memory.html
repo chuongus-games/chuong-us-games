@@ -93,7 +93,7 @@ pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
     return;
   }
   pos++;
-  if (pos === seq.length) { status.textContent = '✅ Perfect!'; setTimeout(nextRound, 700); }
+  if (pos === seq.length) { mode = 'show'; status.textContent = '✅ Perfect!'; setTimeout(nextRound, 700); }
 }));
 startBtn.addEventListener('click', () => {
   if (AC && AC.state === 'suspended') AC.resume();

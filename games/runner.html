@@ -50,7 +50,7 @@ function step() {
     }
     for (const s of spikes) {
       s.x -= speed;
-      if (s.x > 60 && s.x < 128 && py > GROUND - 34) {
+      if (s.x + 26 > 84 && s.x + 4 < 110 && py > GROUND - 34) {
         state = 'dead';
         const m = Math.floor(dist);
         if (window.CUG) CUG.submitScore('runner', m);

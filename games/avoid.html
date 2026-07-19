@@ -50,6 +50,7 @@ function step() {
         const s = Math.floor(secs);
         if (window.CUG) CUG.submitScore('avoid', s);
         if (s > best) { best = s; localStorage.setItem(KEY, best); showBest(); }
+        break;
       }
     }
     rocks = rocks.filter(k => k.y < cv.height + 30);
