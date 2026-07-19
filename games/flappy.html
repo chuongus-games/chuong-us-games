@@ -30,12 +30,16 @@ function reset() {
   bird = { y: 300, vy: 0 };
   pipes = []; score = 0; state = 'ready'; t = 0;
 }
+let lastTop = 230;
 function spawnPipe() {
-  const top = 60 + Math.random() * (cv.height - GAP - 180);
+  const min = 60, max = cv.height - GAP - 120;
+  const lo = Math.max(min, lastTop - 150), hi = Math.min(max, lastTop + 150);
+  const top = lo + Math.random() * (hi - lo);
+  lastTop = top;
   pipes.push({ x: cv.width, top, passed: false });
 }
 function flap() {
-  if (state === 'ready') { state = 'play'; spawnPipe(); }
+  if (state === 'ready') { state = 'play'; t = 0; lastTop = 230; spawnPipe(); }
   if (state === 'play') bird.vy = FLAP;
   if (state === 'dead' && t > 20) reset();
 }
