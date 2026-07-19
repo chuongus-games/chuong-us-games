@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hardest Dodge — Chuong US Games</title>
@@ -13,7 +13,7 @@
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="640" height="440"></canvas></div>
-<p class="hint">Dùng phím mũi tên / WASD (hoặc kéo ngón tay) đưa khối xanh từ vùng START sang vùng GOAL. Chạm đạn hồng = quay về đầu.</p>
+<p class="hint">Use arrow keys / WASD (or drag with your finger) to move the blue square from START to GOAL. Touch a pink bullet = back to start.</p>
 <script>
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_dodge_best';
@@ -82,7 +82,7 @@ function draw() {
   ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 14;
   ctx.fillRect(P.x, P.y, P.s, P.s); ctx.shadowBlur = 0;
   ctx.fillStyle = '#e8edf7'; ctx.font = '700 15px Segoe UI, sans-serif'; ctx.textAlign = 'left';
-  ctx.fillText('Thắng: ' + wins + '   💀 Chết: ' + deaths, 14, cv.height - 14);
+  ctx.fillText('Wins: ' + wins + '   💀 Deaths: ' + deaths, 14, cv.height - 14);
 }
 step();
 </script>

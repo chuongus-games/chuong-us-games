@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Perfect Second — Chuong US Games</title>
@@ -32,12 +32,12 @@
 <div class="stage">
   <div id="box">
     <div id="clock">0.000</div>
-    <div id="msg">Bấm START, đồng hồ chạy và <b>ẨN ĐI sau 0.3s</b>.<br>Bấm STOP đúng thời điểm <b>1.000 giây</b>.</div>
+    <div id="msg">Press START — the clock runs and <b>HIDES after 0.3s</b>.<br>Press STOP at exactly <b>1.000 seconds</b>.</div>
     <button id="btn">START</button>
     <div id="streak"></div>
   </div>
 </div>
-<p class="hint">Lệch ≤ 0.010s: thần thánh · ≤ 0.030s: đạt · &gt; 0.030s: thua. Chuỗi thắng liên tiếp là điểm của bạn.</p>
+<p class="hint">Off by ≤ 0.010s: godlike · ≤ 0.030s: pass · &gt; 0.030s: fail. Your score is your win streak.</p>
 <script>
 const clock = document.getElementById('clock'), msg = document.getElementById('msg'),
       btn = document.getElementById('btn'), streakEl = document.getElementById('streak');
@@ -56,18 +56,18 @@ function tick() {
 btn.addEventListener('click', () => {
   if (!running) {
     running = true; t0 = performance.now(); btn.textContent = 'STOP';
-    msg.innerHTML = 'Đếm trong đầu… bấm STOP tại <b>1.000s</b>!';
+    msg.innerHTML = 'Count in your head… press STOP at <b>1.000s</b>!';
     tick();
   } else {
     running = false; cancelAnimationFrame(raf);
     const el = (performance.now() - t0) / 1000, diff = Math.abs(el - 1);
     clock.textContent = el.toFixed(3);
     btn.textContent = 'START';
-    if (diff <= 0.01) { streak++; msg.innerHTML = '🏆 <b>' + el.toFixed(3) + 's</b> — THẦN THÁNH! Lệch ' + (diff * 1000).toFixed(0) + 'ms'; }
-    else if (diff <= 0.03) { streak++; msg.innerHTML = '✅ <b>' + el.toFixed(3) + 's</b> — Đạt! Lệch ' + (diff * 1000).toFixed(0) + 'ms'; }
-    else { streak = 0; msg.innerHTML = '💀 <b>' + el.toFixed(3) + 's</b> — Lệch ' + (diff * 1000).toFixed(0) + 'ms. Chuỗi về 0!'; }
+    if (diff <= 0.01) { streak++; msg.innerHTML = '🏆 <b>' + el.toFixed(3) + 's</b> — GODLIKE! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
+    else if (diff <= 0.03) { streak++; msg.innerHTML = '✅ <b>' + el.toFixed(3) + 's</b> — Pass! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
+    else { streak = 0; msg.innerHTML = '💀 <b>' + el.toFixed(3) + 's</b> — Off by ' + (diff * 1000).toFixed(0) + 'ms. Streak reset!'; }
     if (streak > best) { best = streak; localStorage.setItem(KEY, best); showBest(); }
-    streakEl.textContent = streak > 0 ? '🔥 Chuỗi thắng: ' + streak : '';
+    streakEl.textContent = streak > 0 ? '🔥 Win streak: ' + streak : '';
   }
 });
 </script>

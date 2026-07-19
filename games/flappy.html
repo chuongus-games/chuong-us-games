@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flappy Neon — Chuong US Games</title>
@@ -13,7 +13,7 @@
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="420" height="600"></canvas></div>
-<p class="hint">Chạm màn hình / click / phím Space để bay. Qua mỗi khe ống được 1 điểm.</p>
+<p class="hint">Tap / click / press Space to fly. Pass a gap to score 1 point.</p>
 <script>
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_flappy_best';
@@ -79,10 +79,10 @@ function draw() {
   ctx.font = '800 44px Segoe UI, sans-serif';
   ctx.fillText(score, cv.width / 2, 70);
   ctx.font = '700 20px Segoe UI, sans-serif';
-  if (state === 'ready') ctx.fillText('Chạm để bắt đầu', cv.width / 2, 320);
+  if (state === 'ready') ctx.fillText('Tap to start', cv.width / 2, 320);
   if (state === 'dead') {
     ctx.fillStyle = '#fb7185';
-    ctx.fillText('💀 GAME OVER — chạm để chơi lại', cv.width / 2, 320);
+    ctx.fillText('💀 GAME OVER — tap to retry', cv.width / 2, 320);
   }
 }
 reset(); step();

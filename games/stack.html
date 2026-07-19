@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neon Stack — Chuong US Games</title>
@@ -13,7 +13,7 @@
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="420" height="620"></canvas></div>
-<p class="hint">Chạm / Space để thả khối. Phần lệch ra ngoài bị cắt bỏ — khối càng lúc càng mỏng, tốc độ càng nhanh.</p>
+<p class="hint">Tap / Space to drop the block. Any overhang gets sliced off — blocks get thinner, speed gets faster.</p>
 <script>
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_stack_best';
@@ -82,7 +82,7 @@ function draw() {
   if (state === 'dead') {
     ctx.font = '700 20px Segoe UI, sans-serif';
     ctx.fillStyle = '#fb7185';
-    ctx.fillText('💀 Trượt rồi! Chạm để chơi lại', cv.width / 2, 110);
+    ctx.fillText('💀 Missed! Tap to retry', cv.width / 2, 110);
   }
 }
 reset(); step();

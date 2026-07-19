@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spike Runner — Chuong US Games</title>
@@ -13,7 +13,7 @@
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="680" height="380"></canvas></div>
-<p class="hint">Chạm / Space để nhảy qua gai. Tốc độ tăng vô hạn — điểm là quãng đường.</p>
+<p class="hint">Tap / Space to jump over the spikes. Speed increases forever — score is distance.</p>
 <script>
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_runner_best';
@@ -76,8 +76,8 @@ function draw() {
   ctx.font = '800 34px Segoe UI, sans-serif';
   ctx.fillText(Math.floor(dist) + 'm', cv.width / 2, 58);
   ctx.font = '700 18px Segoe UI, sans-serif';
-  if (state === 'ready') ctx.fillText('Chạm để chạy', cv.width / 2, 170);
-  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('💀 Dính gai! Chạm để chạy lại', cv.width / 2, 170); }
+  if (state === 'ready') ctx.fillText('Tap to run', cv.width / 2, 170);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('💀 Spiked! Tap to run again', cv.width / 2, 170); }
 }
 reset(); step();
 </script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reaction Test — Chuong US Games</title>
@@ -24,8 +24,8 @@
   <h1>⚡ Reaction Test</h1>
   <span class="best" id="best"></span>
 </header>
-<div class="stage"><div id="pad"><div><h2>Bấm để bắt đầu</h2><p>Chờ nền chuyển XANH LÁ rồi bấm thật nhanh.<br>Bấm sớm khi còn ĐỎ = phạm quy.</p></div></div></div>
-<p class="hint">Trung bình con người: ~250ms. Game thủ: ~180ms. Bạn thì sao?</p>
+<div class="stage"><div id="pad"><div><h2>Click to start</h2><p>Wait for the screen to turn GREEN, then click as fast as you can.<br>Clicking early on RED = foul.</p></div></div></div>
+<p class="hint">Average human: ~250ms. Gamer: ~180ms. What about you?</p>
 <script>
 const pad = document.getElementById('pad');
 const KEY = 'cug_reaction_best';
@@ -39,20 +39,20 @@ function html(h2, p) { pad.innerHTML = '<div><h2>' + h2 + '</h2><p>' + p + '</p>
 pad.addEventListener('pointerdown', () => {
   if (state === 'idle' || state === 'result') {
     state = 'wait'; pad.className = 'wait';
-    html('Chờ màu xanh…', 'Đừng bấm vội!');
+    html('Wait for green…', 'Don\'t click yet!');
     timer = setTimeout(() => {
       state = 'go'; pad.className = 'go'; goTime = performance.now();
-      html('BẤM NGAY!', '');
+      html('CLICK NOW!', '');
     }, 1200 + Math.random() * 2800);
   } else if (state === 'wait') {
     clearTimeout(timer); state = 'result'; pad.className = '';
-    html('😤 Phạm quy!', 'Bấm khi còn đỏ. Chạm để thử lại.');
+    html('😤 Foul!', 'You clicked on red. Tap to try again.');
   } else if (state === 'go') {
     const ms = Math.round(performance.now() - goTime);
     state = 'result'; pad.className = '';
     if (!best || ms < best) { best = ms; localStorage.setItem(KEY, best); showBest(); }
-    const rank = ms < 180 ? '🏆 Thần tốc!' : ms < 230 ? '⚡ Rất nhanh' : ms < 300 ? '👍 Khá đấy' : '🐢 Hơi chậm…';
-    html(ms + ' ms', rank + '<br>Chạm để chơi tiếp.');
+    const rank = ms < 180 ? '🏆 Lightning!' : ms < 230 ? '⚡ Very fast' : ms < 300 ? '👍 Not bad' : '🐢 A bit slow…';
+    html(ms + ' ms', rank + '<br>Tap to go again.');
   }
 });
 </script>

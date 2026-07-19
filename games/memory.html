@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simon Memory — Chuong US Games</title>
@@ -31,16 +31,16 @@
 </header>
 <div class="stage">
   <div id="box">
-    <div id="status">Nhớ chuỗi màu — rồi lặp lại đúng thứ tự</div>
+    <div id="status">Memorize the sequence — then repeat it in order</div>
     <div id="pads">
       <div class="pad" id="p0"></div><div class="pad" id="p1"></div>
       <div class="pad" id="p2"></div><div class="pad" id="p3"></div>
     </div>
     <div id="lvl"></div>
-    <button id="start">BẮT ĐẦU</button>
+    <button id="start">START</button>
   </div>
 </div>
-<p class="hint">Chuỗi dài thêm mỗi vòng và phát ngày càng NHANH. Sai 1 nốt là kết thúc.</p>
+<p class="hint">The sequence grows every round and plays FASTER each time. One wrong note ends it all.</p>
 <script>
 const pads = [0,1,2,3].map(i => document.getElementById('p' + i));
 const status = document.getElementById('status'), lvlEl = document.getElementById('lvl'),
@@ -68,15 +68,15 @@ function lit(i, dur) {
   setTimeout(() => pads[i].classList.remove('lit'), dur);
 }
 async function playSeq() {
-  mode = 'show'; status.textContent = '👀 Xem kỹ…';
+  mode = 'show'; status.textContent = '👀 Watch closely…';
   const dur = Math.max(140, 420 - seq.length * 22);
   await sleep(600);
   for (const i of seq) { lit(i, dur); await sleep(dur + Math.max(80, 180 - seq.length * 10)); }
-  mode = 'input'; pos = 0; status.textContent = '🎮 Đến lượt bạn!';
+  mode = 'input'; pos = 0; status.textContent = '🎮 Your turn!';
 }
 function nextRound() {
   seq.push(Math.floor(Math.random() * 4));
-  lvlEl.textContent = 'Vòng ' + seq.length;
+  lvlEl.textContent = 'Round ' + seq.length;
   playSeq();
 }
 pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
@@ -84,13 +84,13 @@ pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
   lit(i, 200);
   if (i !== seq[pos]) {
     mode = 'idle';
-    status.textContent = '💀 Sai rồi! Bạn đạt vòng ' + (seq.length - 1);
+    status.textContent = '💀 Wrong! You reached round ' + (seq.length - 1);
     if (seq.length - 1 > best) { best = seq.length - 1; localStorage.setItem(KEY, best); showBest(); }
-    startBtn.style.display = ''; startBtn.textContent = 'CHƠI LẠI';
+    startBtn.style.display = ''; startBtn.textContent = 'PLAY AGAIN';
     return;
   }
   pos++;
-  if (pos === seq.length) { status.textContent = '✅ Chuẩn!'; setTimeout(nextRound, 700); }
+  if (pos === seq.length) { status.textContent = '✅ Perfect!'; setTimeout(nextRound, 700); }
 }));
 startBtn.addEventListener('click', () => {
   if (AC && AC.state === 'suspended') AC.resume();
