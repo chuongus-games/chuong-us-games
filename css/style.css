@@ -149,6 +149,23 @@ canvas.game {
 .cug-lb-row .s { color: var(--gold); font-weight: 700; }
 .cug-lb-note { margin-top: 12px; font-size: .78rem; color: var(--muted); }
 
+/* ---------- login gate ---------- */
+.cug-gate {
+  position: fixed; inset: 0; z-index: 60; display: grid; place-items: center;
+  background: rgba(10,14,23,.72); backdrop-filter: blur(6px); padding: 20px;
+}
+.cug-gate-box {
+  background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+  padding: 34px 30px; max-width: 380px; text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+.cug-gate-box .gicon { font-size: 2.4rem; margin-bottom: 10px; }
+.cug-gate-box h2 { font-size: 1.25rem; margin-bottom: 10px; }
+.cug-gate-box p { color: var(--muted); font-size: .9rem; line-height: 1.55; margin-bottom: 20px; }
+.cug-gate-box .gbtn { display: flex; justify-content: center; margin-bottom: 16px; min-height: 40px; }
+.cug-gate-box .ghome { font-size: .82rem; font-weight: 700; color: var(--muted); }
+.cug-gate-box .ghome:hover { color: var(--neon); }
+
 /* ---------- home search & plays ---------- */
 .searchbar { display: flex; justify-content: center; margin: 8px 0 4px; }
 .searchbar input {

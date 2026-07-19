@@ -25,6 +25,7 @@
       CUG.user = data.session ? data.session.user : null;
       if (CUG.user) await CUG.loadProfile();
       CUG.renderAuth();
+      CUG.gateGames();
       CUG.renderLeaderboardWidget();
       sb.auth.onAuthStateChange(async (_e, session) => {
         const had = !!CUG.user;
@@ -126,6 +127,30 @@
     async myStats() {
       const { data, error } = await sb.rpc('my_stats');
       return error ? [] : (data || []);
+    },
+
+    /* login required to play: overlay + input blocker on game pages */
+    gateGames() {
+      const game = document.body.dataset.game;
+      if (!game || CUG.user) return;
+      const ov = document.createElement('div');
+      ov.className = 'cug-gate';
+      ov.innerHTML =
+        '<div class="cug-gate-box">' +
+        '<div class="gicon">🔒</div>' +
+        '<h2>Sign in to play</h2>' +
+        '<p>Sign in with Google to play ' + (GAME_META[game] ? GAME_META[game].name : 'this game') +
+        ', save your best scores and climb the leaderboard.</p>' +
+        '<div class="gbtn"></div>' +
+        '<a class="ghome" href="../index.html">◂ Back to all games</a>' +
+        '</div>';
+      document.body.appendChild(ov);
+      CUG.renderGoogleButton(ov.querySelector('.gbtn'));
+      const block = e => {
+        if (!ov.contains(e.target)) { e.stopPropagation(); e.preventDefault(); }
+      };
+      addEventListener('keydown', block, true);
+      addEventListener('pointerdown', block, true);
     },
 
     /* leaderboard button + slide panel on game pages (body[data-game]) */
