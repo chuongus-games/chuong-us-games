@@ -2,11 +2,59 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aim Trainer — Chuong US Games</title>
+<title>Aim Trainer — Hardest Free Aim Training Game Online</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/app.js"></script>
+<meta name="description" content="Hit 20 shrinking targets as fast as you can in this free online aim trainer. Every miss adds a penalty — one of the hardest aim games online.">
+<link rel="canonical" href="https://chuong.us/games/aim.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Aim Trainer — Hardest Free Aim Training Game Online">
+<meta property="og:description" content="Hit 20 shrinking targets as fast as you can in this free online aim trainer. Every miss adds a penalty — one of the hardest aim games online.">
+<meta property="og:url" content="https://chuong.us/games/aim.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Aim Trainer — Hardest Free Aim Training Game Online">
+<meta name="twitter:description" content="Hit 20 shrinking targets as fast as you can in this free online aim trainer. Every miss adds a penalty — one of the hardest aim games online.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Aim Trainer",
+  "url": "https://chuong.us/games/aim.html",
+  "description": "Hit 20 shrinking targets as fast as you can in this free online aim trainer. Every miss adds a penalty — one of the hardest aim games online.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Chuong US Games",
+      "item": "https://chuong.us/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Aim Trainer",
+      "item": "https://chuong.us/games/aim.html"
+    }
+  ]
+}
+</script>
 </head>
 <body class="game-page" data-game="aim">
 <header class="game-top">
@@ -16,6 +64,14 @@
 </header>
 <div class="stage"><canvas class="game" id="cv" width="640" height="460"></canvas></div>
 <p class="hint">Hit 20 targets — each one smaller than the last. Every miss adds a +1s penalty. Lowest time wins.</p>
+<p class="seo-note">This free online aim trainer is built to punish sloppy clicks: hit 20 shrinking targets as fast as possible while every miss adds a time penalty. It's a hard aim training game whether you're warming up or just chasing a better score.</p>
+<nav class="related" aria-label="More hard games">
+  <span>More hard games:</span>
+  <a href="reaction.html">⚡ Reaction Test</a>
+    <a href="maze.html">🌀 Wire Maze</a>
+    <a href="memory.html">🧠 Simon Memory</a>
+</nav>
+
 <script>
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_aim_best';
