@@ -22,7 +22,8 @@
         signInToBoard: 'Sign in with Google to get on the board!', signInToPlayTitle: 'Sign in to play',
         signInToPlayBody: 'Sign in with Google to play {game}, save your best scores and climb the leaderboard.',
         signInGoogleFallback: 'Sign in with Google', player: 'player', signOutTitle: 'Sign out', close: 'Close',
-        start: 'START', goal: 'GOAL', playsLine: '▶ <b>{n}</b> plays'
+        start: 'START', goal: 'GOAL', playsLine: '▶ <b>{n}</b> plays',
+        pin: 'Pin to favorites', unpin: 'Remove from favorites'
       },
       index: {
         tagline: 'Easy to play · Hard to win', heroLine1: 'Simple to play.', heroLine2: 'Extremely hard to win.',
@@ -58,7 +59,8 @@
         usernameLabel: 'Username', usernamePlaceholder: 'your_name', save: 'Save',
         usernameInvalid: '⚠️ 3–20 chars, letters/numbers/_ only.', usernameTaken: '⚠️ That username is taken.',
         saved: '✅ Saved!', gamesPlayed: '🎮 Games played', noScores: 'No scores yet. ',
-        goPlay: 'Go play something challenging 🔥', tableGame: 'Game', tableBest: 'Best', tablePlays: 'Plays', tableRank: 'Rank'
+        goPlay: 'Go play something challenging 🔥', tableGame: 'Game', tableBest: 'Best', tablePlays: 'Plays', tableRank: 'Rank',
+        favoritesTitle: '⭐ Favorite games', noFavorites: 'No favorites yet — tap ☆ on any game to pin it here.'
       },
       admin: {
         title: '📊 Admin Dashboard', sub: 'Player and play statistics per game. Admin only.',
@@ -157,7 +159,8 @@
         signInToBoard: 'Đăng nhập bằng Google để lên bảng xếp hạng!', signInToPlayTitle: 'Đăng nhập để chơi',
         signInToPlayBody: 'Đăng nhập bằng Google để chơi {game}, lưu điểm cao nhất và leo lên bảng xếp hạng.',
         signInGoogleFallback: 'Đăng nhập bằng Google', player: 'người chơi', signOutTitle: 'Đăng xuất', close: 'Đóng',
-        start: 'BẮT ĐẦU', goal: 'ĐÍCH', playsLine: '▶ <b>{n}</b> lượt chơi'
+        start: 'BẮT ĐẦU', goal: 'ĐÍCH', playsLine: '▶ <b>{n}</b> lượt chơi',
+        pin: 'Ghim vào yêu thích', unpin: 'Bỏ ghim yêu thích'
       },
       index: {
         tagline: 'Dễ chơi · Khó thắng', heroLine1: 'Chơi thì dễ.', heroLine2: 'Thắng thì cực khó.',
@@ -193,7 +196,8 @@
         usernameLabel: 'Tên người dùng', usernamePlaceholder: 'ten_cua_ban', save: 'Lưu',
         usernameInvalid: '⚠️ 3–20 ký tự, chỉ chữ/số/dấu gạch dưới.', usernameTaken: '⚠️ Tên này đã có người dùng.',
         saved: '✅ Đã lưu!', gamesPlayed: '🎮 Trò chơi đã chơi', noScores: 'Chưa có điểm nào. ',
-        goPlay: 'Đi chơi thử thách ngay 🔥', tableGame: 'Trò chơi', tableBest: 'Điểm cao nhất', tablePlays: 'Số lần chơi', tableRank: 'Hạng'
+        goPlay: 'Đi chơi thử thách ngay 🔥', tableGame: 'Trò chơi', tableBest: 'Điểm cao nhất', tablePlays: 'Số lần chơi', tableRank: 'Hạng',
+        favoritesTitle: '⭐ Game yêu thích', noFavorites: 'Chưa có game yêu thích nào — chạm ☆ trên bất kỳ game nào để ghim vào đây.'
       },
       admin: {
         title: '📊 Bảng điều khiển Admin', sub: 'Thống kê người chơi và lượt chơi theo từng game. Chỉ dành cho admin.',
@@ -292,7 +296,8 @@
         signInToBoard: '使用 Google 登录即可上榜！', signInToPlayTitle: '登录后开始游戏',
         signInToPlayBody: '使用 Google 登录来玩{game}，保存最佳成绩并冲击排行榜。',
         signInGoogleFallback: '使用 Google 登录', player: '玩家', signOutTitle: '退出登录', close: '关闭',
-        start: '起点', goal: '终点', playsLine: '▶ <b>{n}</b> 次游玩'
+        start: '起点', goal: '终点', playsLine: '▶ <b>{n}</b> 次游玩',
+        pin: '加入收藏', unpin: '取消收藏'
       },
       index: {
         tagline: '易上手 · 难通关', heroLine1: '上手很简单。', heroLine2: '通关极其困难。',
@@ -328,7 +333,8 @@
         usernameLabel: '用户名', usernamePlaceholder: '你的名字', save: '保存',
         usernameInvalid: '⚠️ 需3–20个字符，仅限字母/数字/下划线。', usernameTaken: '⚠️ 该用户名已被占用。',
         saved: '✅ 已保存！', gamesPlayed: '🎮 已玩游戏', noScores: '暂无成绩。 ',
-        goPlay: '去挑战一下吧 🔥', tableGame: '游戏', tableBest: '最佳成绩', tablePlays: '游玩次数', tableRank: '排名'
+        goPlay: '去挑战一下吧 🔥', tableGame: '游戏', tableBest: '最佳成绩', tablePlays: '游玩次数', tableRank: '排名',
+        favoritesTitle: '⭐ 收藏的游戏', noFavorites: '还没有收藏的游戏 — 点击任意游戏上的 ☆ 即可收藏到这里。'
       },
       admin: {
         title: '📊 管理后台', sub: '各游戏的玩家和游玩统计数据。仅限管理员查看。',
@@ -427,7 +433,8 @@
         signInToBoard: '¡Inicia sesión con Google para aparecer en la clasificación!', signInToPlayTitle: 'Inicia sesión para jugar',
         signInToPlayBody: 'Inicia sesión con Google para jugar {game}, guardar tus mejores puntuaciones y subir en la clasificación.',
         signInGoogleFallback: 'Iniciar sesión con Google', player: 'jugador', signOutTitle: 'Cerrar sesión', close: 'Cerrar',
-        start: 'INICIO', goal: 'META', playsLine: '▶ <b>{n}</b> partidas'
+        start: 'INICIO', goal: 'META', playsLine: '▶ <b>{n}</b> partidas',
+        pin: 'Fijar en favoritos', unpin: 'Quitar de favoritos'
       },
       index: {
         tagline: 'Fácil de jugar · Difícil de ganar', heroLine1: 'Fácil de jugar.', heroLine2: 'Extremadamente difícil de ganar.',
@@ -463,7 +470,8 @@
         usernameLabel: 'Nombre de usuario', usernamePlaceholder: 'tu_nombre', save: 'Guardar',
         usernameInvalid: '⚠️ 3–20 caracteres, solo letras/números/_.', usernameTaken: '⚠️ Ese nombre de usuario ya está en uso.',
         saved: '✅ ¡Guardado!', gamesPlayed: '🎮 Partidas jugadas', noScores: 'Aún no hay puntuaciones. ',
-        goPlay: 'Ve a jugar algo desafiante 🔥', tableGame: 'Juego', tableBest: 'Mejor', tablePlays: 'Partidas', tableRank: 'Rango'
+        goPlay: 'Ve a jugar algo desafiante 🔥', tableGame: 'Juego', tableBest: 'Mejor', tablePlays: 'Partidas', tableRank: 'Rango',
+        favoritesTitle: '⭐ Juegos favoritos', noFavorites: 'Aún no tienes favoritos — toca ☆ en cualquier juego para fijarlo aquí.'
       },
       admin: {
         title: '📊 Panel de administración', sub: 'Estadísticas de jugadores y partidas por juego. Solo para administradores.',
@@ -562,7 +570,8 @@
         signInToBoard: 'Entre com o Google para aparecer na classificação!', signInToPlayTitle: 'Entre para jogar',
         signInToPlayBody: 'Entre com o Google para jogar {game}, salvar suas melhores pontuações e subir na classificação.',
         signInGoogleFallback: 'Entrar com o Google', player: 'jogador', signOutTitle: 'Sair', close: 'Fechar',
-        start: 'INÍCIO', goal: 'META', playsLine: '▶ <b>{n}</b> jogadas'
+        start: 'INÍCIO', goal: 'META', playsLine: '▶ <b>{n}</b> jogadas',
+        pin: 'Fixar nos favoritos', unpin: 'Remover dos favoritos'
       },
       index: {
         tagline: 'Fácil de jogar · Difícil de vencer', heroLine1: 'Fácil de jogar.', heroLine2: 'Extremamente difícil de vencer.',
@@ -598,7 +607,8 @@
         usernameLabel: 'Nome de usuário', usernamePlaceholder: 'seu_nome', save: 'Salvar',
         usernameInvalid: '⚠️ 3–20 caracteres, apenas letras/números/_.', usernameTaken: '⚠️ Esse nome de usuário já está em uso.',
         saved: '✅ Salvo!', gamesPlayed: '🎮 Jogos jogados', noScores: 'Ainda não há pontuações. ',
-        goPlay: 'Vá jogar algo desafiador 🔥', tableGame: 'Jogo', tableBest: 'Melhor', tablePlays: 'Jogadas', tableRank: 'Posição'
+        goPlay: 'Vá jogar algo desafiador 🔥', tableGame: 'Jogo', tableBest: 'Melhor', tablePlays: 'Jogadas', tableRank: 'Posição',
+        favoritesTitle: '⭐ Jogos favoritos', noFavorites: 'Ainda sem favoritos — toque em ☆ em qualquer jogo para fixá-lo aqui.'
       },
       admin: {
         title: '📊 Painel de administração', sub: 'Estatísticas de jogadores e jogadas por jogo. Somente para administradores.',

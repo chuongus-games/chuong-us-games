@@ -21,6 +21,11 @@
   <h1 data-i18n="profile.title">👤 My Profile</h1>
   <p class="sub" data-i18n="profile.sub">Your username, games played, best scores and ranks.</p>
 
+  <div class="panel">
+    <h2 data-i18n="profile.favoritesTitle">⭐ Favorite games</h2>
+    <div id="favList" class="fav-list"></div>
+  </div>
+
   <div id="signed-out" class="panel" style="display:none">
     <p class="msg-note" data-i18n="profile.signInNote">Sign in with Google to save scores, compete on leaderboards and edit your profile.</p>
     <br><div id="gbtn"></div>
@@ -47,6 +52,33 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/app.js" defer></script>
 <script>
+function renderFavorites() {
+  const list = document.getElementById('favList');
+  const favs = CUG.getFavorites();
+  if (!favs.length) {
+    list.innerHTML = '<p class="msg-note">' + I18N.t('profile.noFavorites') + '</p>';
+    return;
+  }
+  list.innerHTML = favs.map(id => {
+    const m = CUG.meta[id];
+    if (!m) return '';
+    return '<a class="fav-row" href="games/' + id + '.html">' +
+      '<span class="fav-icon">' + m.icon + '</span>' +
+      '<span class="fav-name">' + CUG.esc(m.name) + '</span>' +
+      '<span class="fav-play">' + I18N.t('common.play') + '</span>' +
+      '<button class="fav-unpin" type="button" data-id="' + id + '" title="' + I18N.t('common.unpin') + '">✕</button>' +
+      '</a>';
+  }).join('');
+  list.querySelectorAll('.fav-unpin').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation();
+      CUG.toggleFavorite(btn.dataset.id);
+      renderFavorites();
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', renderFavorites);
+
 document.addEventListener('cug-ready', async () => {
   if (!CUG.user) {
     document.getElementById('signed-out').style.display = '';

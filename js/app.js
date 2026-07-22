@@ -28,6 +28,7 @@
       if (CUG.user) await CUG.loadProfile();
       CUG.renderAuth();
       CUG.gateGames();
+      CUG.renderFavButton();
       CUG.renderLeaderboardWidget();
       sb.auth.onAuthStateChange(async (_e, session) => {
         const had = !!CUG.user;
@@ -129,6 +130,37 @@
     async myStats() {
       const { data, error } = await sb.rpc('my_stats');
       return error ? [] : (data || []);
+    },
+
+    /* favorite games: stored locally per browser, no sign-in required */
+    FAV_KEY: 'cug_favorites',
+    getFavorites() {
+      try { return JSON.parse(localStorage.getItem(CUG.FAV_KEY) || '[]'); } catch (e) { return []; }
+    },
+    isFavorite(game) { return CUG.getFavorites().indexOf(game) !== -1; },
+    toggleFavorite(game) {
+      let favs = CUG.getFavorites();
+      favs = favs.indexOf(game) !== -1 ? favs.filter(g => g !== game) : favs.concat([game]);
+      localStorage.setItem(CUG.FAV_KEY, JSON.stringify(favs));
+      return favs.indexOf(game) !== -1;
+    },
+    /* pin/unpin button on game pages, next to the leaderboard button */
+    renderFavButton() {
+      const game = document.body.dataset.game;
+      if (!game) return;
+      const top = document.querySelector('.game-top');
+      if (!top) return;
+      const btn = document.createElement('button');
+      btn.className = 'cug-btn cug-fav-btn';
+      const refresh = () => {
+        const on = CUG.isFavorite(game);
+        btn.textContent = on ? '★' : '☆';
+        btn.classList.toggle('on', on);
+        btn.title = I18N.t(on ? 'common.unpin' : 'common.pin');
+      };
+      refresh();
+      btn.onclick = () => { CUG.toggleFavorite(game); refresh(); };
+      top.insertBefore(btn, top.querySelector('.cug-lb-btn') || document.getElementById('cug-auth'));
     },
 
     /* login required to play: overlay + input blocker on game pages */
