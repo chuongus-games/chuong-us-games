@@ -168,7 +168,13 @@ canvas.game {
   transition: right .25s ease; overflow-y: auto;
 }
 .cug-lb-panel.open { right: 0; box-shadow: -12px 0 40px rgba(0,0,0,.5); }
-.cug-lb-panel h2 { font-size: 1rem; margin-bottom: 14px; }
+.cug-lb-panel h2 { font-size: 1rem; margin-bottom: 14px; padding-right: 26px; }
+.cug-lb-close {
+  position: absolute; top: 14px; right: 14px; width: 28px; height: 28px; line-height: 26px;
+  text-align: center; padding: 0; font-size: 1rem; color: var(--muted);
+  background: transparent; border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
+}
+.cug-lb-close:hover { color: var(--neon); border-color: var(--neon); }
 .cug-lb-row {
   display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px;
   font-size: .88rem; border-bottom: 1px solid var(--line);

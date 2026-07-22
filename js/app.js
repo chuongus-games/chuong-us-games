@@ -170,8 +170,15 @@
       top.insertBefore(btn, document.getElementById('cug-auth'));
       const panel = document.createElement('div');
       panel.className = 'cug-lb-panel';
-      panel.innerHTML = '<h2>' + I18N.t('common.top10', { game: GAME_META[game].name }) + '</h2><div class="cug-lb-list">' + I18N.t('common.loading') + '</div><p class="cug-lb-note"></p>';
+      panel.innerHTML = '<button class="cug-lb-close" title="' + I18N.t('common.close') + '">✕</button>' +
+        '<h2>' + I18N.t('common.top10', { game: GAME_META[game].name }) + '</h2><div class="cug-lb-list">' + I18N.t('common.loading') + '</div><p class="cug-lb-note"></p>';
       document.body.appendChild(panel);
+      const close = () => panel.classList.remove('open');
+      panel.querySelector('.cug-lb-close').onclick = close;
+      addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+      addEventListener('pointerdown', e => {
+        if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) close();
+      });
       btn.onclick = async () => {
         panel.classList.toggle('open');
         if (!panel.classList.contains('open')) return;

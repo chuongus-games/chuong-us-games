@@ -21,7 +21,7 @@
         noScoresYet: 'No scores yet — be the first! 🔥', scoreSavedAuto: 'Your best score is saved automatically.',
         signInToBoard: 'Sign in with Google to get on the board!', signInToPlayTitle: 'Sign in to play',
         signInToPlayBody: 'Sign in with Google to play {game}, save your best scores and climb the leaderboard.',
-        signInGoogleFallback: 'Sign in with Google', player: 'player', signOutTitle: 'Sign out',
+        signInGoogleFallback: 'Sign in with Google', player: 'player', signOutTitle: 'Sign out', close: 'Close',
         start: 'START', goal: 'GOAL', playsLine: '▶ <b>{n}</b> plays'
       },
       index: {
@@ -140,7 +140,7 @@
         noScoresYet: 'Chưa có điểm nào — hãy là người đầu tiên! 🔥', scoreSavedAuto: 'Điểm cao nhất của bạn được tự động lưu.',
         signInToBoard: 'Đăng nhập bằng Google để lên bảng xếp hạng!', signInToPlayTitle: 'Đăng nhập để chơi',
         signInToPlayBody: 'Đăng nhập bằng Google để chơi {game}, lưu điểm cao nhất và leo lên bảng xếp hạng.',
-        signInGoogleFallback: 'Đăng nhập bằng Google', player: 'người chơi', signOutTitle: 'Đăng xuất',
+        signInGoogleFallback: 'Đăng nhập bằng Google', player: 'người chơi', signOutTitle: 'Đăng xuất', close: 'Đóng',
         start: 'BẮT ĐẦU', goal: 'ĐÍCH', playsLine: '▶ <b>{n}</b> lượt chơi'
       },
       index: {
@@ -259,7 +259,7 @@
         noScoresYet: '暂无成绩 — 抢先上榜！🔥', scoreSavedAuto: '你的最佳成绩会自动保存。',
         signInToBoard: '使用 Google 登录即可上榜！', signInToPlayTitle: '登录后开始游戏',
         signInToPlayBody: '使用 Google 登录来玩{game}，保存最佳成绩并冲击排行榜。',
-        signInGoogleFallback: '使用 Google 登录', player: '玩家', signOutTitle: '退出登录',
+        signInGoogleFallback: '使用 Google 登录', player: '玩家', signOutTitle: '退出登录', close: '关闭',
         start: '起点', goal: '终点', playsLine: '▶ <b>{n}</b> 次游玩'
       },
       index: {
@@ -378,7 +378,7 @@
         noScoresYet: 'Aún no hay puntuaciones — ¡sé el primero! 🔥', scoreSavedAuto: 'Tu mejor puntuación se guarda automáticamente.',
         signInToBoard: '¡Inicia sesión con Google para aparecer en la clasificación!', signInToPlayTitle: 'Inicia sesión para jugar',
         signInToPlayBody: 'Inicia sesión con Google para jugar {game}, guardar tus mejores puntuaciones y subir en la clasificación.',
-        signInGoogleFallback: 'Iniciar sesión con Google', player: 'jugador', signOutTitle: 'Cerrar sesión',
+        signInGoogleFallback: 'Iniciar sesión con Google', player: 'jugador', signOutTitle: 'Cerrar sesión', close: 'Cerrar',
         start: 'INICIO', goal: 'META', playsLine: '▶ <b>{n}</b> partidas'
       },
       index: {
@@ -497,7 +497,7 @@
         noScoresYet: 'Ainda não há pontuações — seja o primeiro! 🔥', scoreSavedAuto: 'Sua melhor pontuação é salva automaticamente.',
         signInToBoard: 'Entre com o Google para aparecer na classificação!', signInToPlayTitle: 'Entre para jogar',
         signInToPlayBody: 'Entre com o Google para jogar {game}, salvar suas melhores pontuações e subir na classificação.',
-        signInGoogleFallback: 'Entrar com o Google', player: 'jogador', signOutTitle: 'Sair',
+        signInGoogleFallback: 'Entrar com o Google', player: 'jogador', signOutTitle: 'Sair', close: 'Fechar',
         start: 'INÍCIO', goal: 'META', playsLine: '▶ <b>{n}</b> jogadas'
       },
       index: {
