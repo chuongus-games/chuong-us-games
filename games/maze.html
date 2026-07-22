@@ -64,8 +64,8 @@
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="640" height="440"></canvas></div>
-<p class="hint" data-i18n="game.maze.hint">Enter the START box, then trace the dark corridor to GOAL. Touch the bright area = back to start. Mobile: drag your finger.</p>
-<p class="seo-note" data-i18n="game.maze.seoNote">Wire Maze is a free steady-hand maze game online: trace your cursor through a narrow corridor to the goal, and touching a wall sends you straight back to start. Simple to understand, genuinely hard to finish.</p>
+<p class="hint" data-i18n="game.maze.hint">Enter the START box, then trace the dark corridor to GOAL before the timer runs out. Touch the bright area = back to start. Mobile: drag your finger.</p>
+<p class="seo-note" data-i18n="game.maze.seoNote">Wire Maze is a free steady-hand maze game online: trace your cursor through a narrow corridor to the goal before the clock runs out, and touching a wall sends you straight back to start. Simple to understand, genuinely hard to finish.</p>
 <nav class="related" aria-label="More hard games">
   <span data-i18n="common.moreHardGames">More hard games:</span>
   <a href="dodge.html">🔵 Hardest Dodge</a>
@@ -145,7 +145,7 @@ function ghostPointAt(t) { // t in [0,1] along the whole path
   return ghostWaypoints[0];
 }
 
-let armed = false, wins = 0, deaths = 0, msg;
+let armed = false, wins = 0, deaths = 0, msg, armedAt = 0;
 function setMsgKey(k) { msg = I18N.t(k); }
 setMsgKey('game.maze.moveIntoStart');
 function inRect(p, r) { return p.x >= r.x && p.x <= r.x + r.w && p.y >= r.y && p.y <= r.y + r.h; }
@@ -154,8 +154,12 @@ function pos(e) {
   const rc = cv.getBoundingClientRect();
   return { x: (e.clientX - rc.left) * cv.width / rc.width, y: (e.clientY - rc.top) * cv.height / rc.height };
 }
+// clock starts the instant you enter START; it gets tighter each win so the maze
+// keeps getting harder even though the corridor layout never changes
+const BASE_TIME_MS = 7000, TIME_STEP_MS = 350, MIN_TIME_MS = 3000;
+const timeLimitFor = w => Math.max(MIN_TIME_MS, BASE_TIME_MS - w * TIME_STEP_MS);
 function handle(p) {
-  if (!armed) { if (inRect(p, START)) { armed = true; setMsgKey('game.maze.headToGoal'); } return; }
+  if (!armed) { if (inRect(p, START)) { armed = true; armedAt = performance.now(); setMsgKey('game.maze.headToGoal'); } return; }
   if (!inPath(p)) { armed = false; deaths++; setMsgKey('game.maze.wallTouched'); return; }
   if (inRect(p, GOAL)) {
     armed = false; wins++;
@@ -175,7 +179,22 @@ function draw() {
   ctx.fillStyle = '#0a0e17';
   for (const r of segs) ctx.fillRect(r[0], r[1], r[2], r[3]);
 
-  if (!armed && ghostTotalLen > 0) {
+  if (armed) {
+    const limit = timeLimitFor(wins);
+    const remaining = limit - (performance.now() - armedAt);
+    if (remaining <= 0) {
+      armed = false; deaths++; setMsgKey('game.maze.timeUp');
+    } else {
+      // countdown bar: shrinks and shifts green → amber → red as time runs out
+      const ratio = remaining / limit;
+      const barColor = ratio > 0.5 ? '#4ade80' : ratio > 0.25 ? '#fbbf24' : '#fb7185';
+      const barW = 200, barX = cv.width / 2 - barW / 2, barY = 10;
+      ctx.fillStyle = 'rgba(10,14,23,.6)'; ctx.fillRect(barX - 3, barY - 3, barW + 6, 14);
+      ctx.fillStyle = barColor; ctx.fillRect(barX, barY, barW * ratio, 8);
+      ctx.fillStyle = barColor; ctx.font = '800 13px Segoe UI, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText((remaining / 1000).toFixed(1) + 's', cv.width / 2, barY + 26);
+    }
+  } else if (ghostTotalLen > 0) {
     // idle: play a looping ghost-dot demo tracing the real safe path, plus a
     // pulsing ring around START, so new players see exactly where to go
     const cycle = GHOST_LOOP_MS + GHOST_PAUSE_MS;

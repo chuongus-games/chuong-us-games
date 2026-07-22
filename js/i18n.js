@@ -118,12 +118,12 @@
           missPenalty: '(includes {miss}s miss penalty) — Tap to retry', bestSecLabel: 'BEST {n}s'
         },
         maze: {
-          hint: 'Enter the START box, then trace the dark corridor to GOAL. Touch the bright area = back to start. Mobile: drag your finger.',
-          seoNote: 'Wire Maze is a free steady-hand maze game online: trace your cursor through a narrow corridor to the goal, and touching a wall sends you straight back to start. Simple to understand, genuinely hard to finish.',
+          hint: 'Enter the START box, then trace the dark corridor to GOAL before the timer runs out. Touch the bright area = back to start. Mobile: drag your finger.',
+          seoNote: 'Wire Maze is a free steady-hand maze game online: trace your cursor through a narrow corridor to the goal before the clock runs out, and touching a wall sends you straight back to start. Simple to understand, genuinely hard to finish.',
           moveIntoStart: 'Move your cursor into START', headToGoal: 'Head to GOAL — don\'t touch the bright walls!',
           wallTouched: 'Wall touched — back to START!', cleared: '🏆 CLEARED! Enter START to go again.',
-          outOfBounds: 'Out of bounds — back to START!', statusLine: '{msg}   (Wins {wins} · Retries {deaths})',
-          winsLabel: 'WINS {n}'
+          outOfBounds: 'Out of bounds — back to START!', timeUp: '⏰ Too slow — back to START!',
+          statusLine: '{msg}   (Wins {wins} · Retries {deaths})', winsLabel: 'WINS {n}'
         },
         runner: {
           hint: 'Tap / Space to jump over the spikes. Speed increases forever — score is distance.',
@@ -237,12 +237,12 @@
           missPenalty: '(đã cộng {miss}s phạt trượt) — Chạm để thử lại', bestSecLabel: 'CAO NHẤT {n}s'
         },
         maze: {
-          hint: 'Vào ô BẮT ĐẦU, rồi rê chuột theo hành lang tối tới ĐÍCH. Chạm vùng sáng = quay lại từ đầu. Di động: kéo bằng ngón tay.',
-          seoNote: 'Wire Maze là trò mê cung đòi hỏi tay vững, miễn phí: rê chuột qua hành lang hẹp để tới đích, chạm tường sẽ đưa bạn quay lại từ đầu ngay lập tức. Dễ hiểu nhưng thực sự khó để hoàn thành.',
+          hint: 'Vào ô BẮT ĐẦU, rồi rê chuột theo hành lang tối tới ĐÍCH trước khi hết giờ. Chạm vùng sáng = quay lại từ đầu. Di động: kéo bằng ngón tay.',
+          seoNote: 'Wire Maze là trò mê cung đòi hỏi tay vững, miễn phí: rê chuột qua hành lang hẹp để tới đích trước khi đồng hồ chạy hết, chạm tường sẽ đưa bạn quay lại từ đầu ngay lập tức. Dễ hiểu nhưng thực sự khó để hoàn thành.',
           moveIntoStart: 'Đưa chuột vào ô BẮT ĐẦU', headToGoal: 'Tiến tới ĐÍCH — đừng chạm vùng sáng!',
           wallTouched: 'Chạm tường rồi — quay lại BẮT ĐẦU!', cleared: '🏆 HOÀN THÀNH! Vào lại BẮT ĐẦU để chơi tiếp.',
-          outOfBounds: 'Ra ngoài vùng chơi — quay lại BẮT ĐẦU!', statusLine: '{msg}   (Thắng {wins} · Thử lại {deaths})',
-          winsLabel: 'THẮNG {n}'
+          outOfBounds: 'Ra ngoài vùng chơi — quay lại BẮT ĐẦU!', timeUp: '⏰ Chậm quá — quay lại BẮT ĐẦU!',
+          statusLine: '{msg}   (Thắng {wins} · Thử lại {deaths})', winsLabel: 'THẮNG {n}'
         },
         runner: {
           hint: 'Chạm / Space để nhảy qua chông. Tốc độ tăng liên tục — điểm là quãng đường.',
@@ -356,12 +356,12 @@
           missPenalty: '（已含{miss}秒失手惩罚）— 轻点重试', bestSecLabel: '最佳 {n}秒'
         },
         maze: {
-          hint: '进入起点方块，然后沿着深色通道拖到终点。碰到亮色区域 = 回到起点。手机端：用手指拖动。',
-          seoNote: 'Wire Maze 是一款免费的稳手迷宫游戏：拖动光标穿过狭窄通道到达终点，碰到墙壁就会立刻回到起点。规则简单易懂，但要真正通关却很难。',
+          hint: '进入起点方块，在时间耗尽前沿着深色通道拖到终点。碰到亮色区域 = 回到起点。手机端：用手指拖动。',
+          seoNote: 'Wire Maze 是一款免费的稳手迷宫游戏：在时间耗尽前拖动光标穿过狭窄通道到达终点，碰到墙壁就会立刻回到起点。规则简单易懂，但要真正通关却很难。',
           moveIntoStart: '将光标移入起点区域', headToGoal: '前往终点 — 不要碰到亮色墙壁！',
           wallTouched: '碰到墙壁了 — 回到起点！', cleared: '🏆 通关！回到起点区域再来一次。',
-          outOfBounds: '超出范围 — 回到起点！', statusLine: '{msg}   （过关 {wins} · 重试 {deaths}）',
-          winsLabel: '过关 {n}'
+          outOfBounds: '超出范围 — 回到起点！', timeUp: '⏰ 太慢了 — 回到起点！',
+          statusLine: '{msg}   （过关 {wins} · 重试 {deaths}）', winsLabel: '过关 {n}'
         },
         runner: {
           hint: '轻点 / 空格键跳过尖刺。速度会持续加快 — 得分即为跑动距离。',
@@ -475,12 +475,12 @@
           missPenalty: '(incluye {miss}s de penalización por fallos) — Toca para reintentar', bestSecLabel: 'MEJOR {n}s'
         },
         maze: {
-          hint: 'Entra en el recuadro de INICIO, luego traza el corredor oscuro hasta la META. Tocar el área brillante = vuelves al inicio. Móvil: arrastra el dedo.',
-          seoNote: 'Wire Maze es un juego gratuito en línea de pulso firme: guía tu cursor por un corredor estrecho hasta la meta, y tocar una pared te manda directo al inicio. Fácil de entender, genuinamente difícil de terminar.',
+          hint: 'Entra en el recuadro de INICIO, luego traza el corredor oscuro hasta la META antes de que se acabe el tiempo. Tocar el área brillante = vuelves al inicio. Móvil: arrastra el dedo.',
+          seoNote: 'Wire Maze es un juego gratuito en línea de pulso firme: guía tu cursor por un corredor estrecho hasta la meta antes de que se acabe el tiempo, y tocar una pared te manda directo al inicio. Fácil de entender, genuinamente difícil de terminar.',
           moveIntoStart: 'Mueve el cursor dentro de INICIO', headToGoal: 'Dirígete a la META — ¡no toques las paredes brillantes!',
           wallTouched: '¡Tocaste la pared — de vuelta a INICIO!', cleared: '🏆 ¡SUPERADO! Entra en INICIO para jugar de nuevo.',
-          outOfBounds: 'Fuera de límites — ¡de vuelta a INICIO!', statusLine: '{msg}   (Victorias {wins} · Reintentos {deaths})',
-          winsLabel: 'VICTORIAS {n}'
+          outOfBounds: 'Fuera de límites — ¡de vuelta a INICIO!', timeUp: '⏰ ¡Muy lento — de vuelta a INICIO!',
+          statusLine: '{msg}   (Victorias {wins} · Reintentos {deaths})', winsLabel: 'VICTORIAS {n}'
         },
         runner: {
           hint: 'Toca / Espacio para saltar los pinchos. La velocidad aumenta sin parar — el puntaje es la distancia.',
@@ -594,12 +594,12 @@
           missPenalty: '(inclui {miss}s de penalidade por erros) — Toque para tentar de novo', bestSecLabel: 'MELHOR {n}s'
         },
         maze: {
-          hint: 'Entre na caixa de INÍCIO e depois trace o corredor escuro até a META. Tocar a área clara = volta ao início. No celular: arraste o dedo.',
-          seoNote: 'Wire Maze é um jogo gratuito de pulso firme on-line: trace o cursor por um corredor estreito até a meta, e tocar uma parede te manda direto de volta ao início. Simples de entender, genuinamente difícil de terminar.',
+          hint: 'Entre na caixa de INÍCIO e depois trace o corredor escuro até a META antes que o tempo acabe. Tocar a área clara = volta ao início. No celular: arraste o dedo.',
+          seoNote: 'Wire Maze é um jogo gratuito de pulso firme on-line: trace o cursor por um corredor estreito até a meta antes que o tempo acabe, e tocar uma parede te manda direto de volta ao início. Simples de entender, genuinamente difícil de terminar.',
           moveIntoStart: 'Mova o cursor para dentro do INÍCIO', headToGoal: 'Siga para a META — não toque nas paredes claras!',
           wallTouched: 'Tocou a parede — de volta ao INÍCIO!', cleared: '🏆 CONCLUÍDO! Entre no INÍCIO para jogar de novo.',
-          outOfBounds: 'Fora dos limites — de volta ao INÍCIO!', statusLine: '{msg}   (Vitórias {wins} · Tentativas {deaths})',
-          winsLabel: 'VITÓRIAS {n}'
+          outOfBounds: 'Fora dos limites — de volta ao INÍCIO!', timeUp: '⏰ Devagar demais — de volta ao INÍCIO!',
+          statusLine: '{msg}   (Vitórias {wins} · Tentativas {deaths})', winsLabel: 'VITÓRIAS {n}'
         },
         runner: {
           hint: 'Toque / Espaço para pular os espinhos. A velocidade aumenta sem parar — a pontuação é a distância.',
