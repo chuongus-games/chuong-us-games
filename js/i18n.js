@@ -26,7 +26,7 @@
         pin: 'Pin to favorites', unpin: 'Remove from favorites'
       },
       index: {
-        tagline: 'Easy to play · Hard to win', heroLine1: 'Simple to play.', heroLine2: 'Extremely hard to win.',
+        tagline: 'Easy to play · Hard to win', heroLine1: 'Simple to play', heroLine2: 'Extremely hard to win',
         heroP: 'New games added all the time — no install needed. Click and play. Think you can beat them all? 🔥',
         cta: 'PLAY NOW',
         introP: 'Chuong US Games is a free collection of hard games you can play online with no download and no signup. Each one takes ten seconds to learn — flappy bird, bullet dodging, aim training, reaction speed, memory, maze and more — but very few players manage to beat their own best score. If you\'re looking for a genuinely difficult game to test your reflexes and patience, start below.',
@@ -163,7 +163,7 @@
         pin: 'Ghim vào yêu thích', unpin: 'Bỏ ghim yêu thích'
       },
       index: {
-        tagline: 'Dễ chơi · Khó thắng', heroLine1: 'Chơi thì dễ.', heroLine2: 'Thắng thì cực khó.',
+        tagline: 'Dễ chơi · Khó thắng', heroLine1: 'Chơi thì dễ', heroLine2: 'Thắng thì cực khó',
         heroP: 'Trò chơi mới được thêm liên tục — không cần cài đặt. Bấm và chơi ngay. Bạn nghĩ mình có thể vượt qua tất cả? 🔥',
         cta: 'CHƠI NGAY',
         introP: 'Chuong US Games là bộ sưu tập trò chơi khó miễn phí, chơi trực tuyến, không cần tải về hay đăng ký. Mỗi trò chỉ mất mười giây để học — flappy bird, né đạn, luyện ngắm, tốc độ phản xạ, trí nhớ, mê cung và nhiều hơn nữa — nhưng rất ít người chơi vượt qua được điểm cao nhất của chính mình. Nếu bạn đang tìm một trò chơi thực sự thử thách phản xạ và sự kiên nhẫn, hãy bắt đầu bên dưới.',
@@ -300,7 +300,7 @@
         pin: '加入收藏', unpin: '取消收藏'
       },
       index: {
-        tagline: '易上手 · 难通关', heroLine1: '上手很简单。', heroLine2: '通关极其困难。',
+        tagline: '易上手 · 难通关', heroLine1: '上手很简单', heroLine2: '通关极其困难',
         heroP: '不断新增游戏 — 无需安装，点击即玩。你觉得能全部通关吗？🔥',
         cta: '立即开始',
         introP: 'Chuong US Games 是一个免费的高难度小游戏合集，在线即可畅玩，无需下载也无需注册。每款游戏只需十秒就能学会——flappy bird、躲避子弹、瞄准训练、反应速度、记忆挑战、迷宫等等——但很少有玩家能超越自己的最佳成绩。如果你想找一款真正考验反应力和耐心的游戏，就从下面开始吧。',
@@ -437,7 +437,7 @@
         pin: 'Fijar en favoritos', unpin: 'Quitar de favoritos'
       },
       index: {
-        tagline: 'Fácil de jugar · Difícil de ganar', heroLine1: 'Fácil de jugar.', heroLine2: 'Extremadamente difícil de ganar.',
+        tagline: 'Fácil de jugar · Difícil de ganar', heroLine1: 'Fácil de jugar', heroLine2: 'Extremadamente difícil de ganar',
         heroP: 'Se agregan juegos nuevos todo el tiempo — no necesitas instalar nada. Haz clic y juega. ¿Crees que puedes vencerlos todos? 🔥',
         cta: 'JUGAR AHORA',
         introP: 'Chuong US Games es una colección gratuita de juegos difíciles que puedes jugar en línea sin descargas ni registro. Cada uno se aprende en diez segundos — flappy bird, esquivar balas, entrenamiento de puntería, velocidad de reacción, memoria, laberintos y más — pero muy pocos jugadores logran superar su propio mejor puntaje. Si buscas un juego realmente difícil para poner a prueba tus reflejos y tu paciencia, empieza abajo.',
@@ -574,7 +574,7 @@
         pin: 'Fixar nos favoritos', unpin: 'Remover dos favoritos'
       },
       index: {
-        tagline: 'Fácil de jogar · Difícil de vencer', heroLine1: 'Fácil de jogar.', heroLine2: 'Extremamente difícil de vencer.',
+        tagline: 'Fácil de jogar · Difícil de vencer', heroLine1: 'Fácil de jogar', heroLine2: 'Extremamente difícil de vencer',
         heroP: 'Novos jogos adicionados o tempo todo — sem necessidade de instalação. Clique e jogue. Acha que consegue vencer todos? 🔥',
         cta: 'JOGAR AGORA',
         introP: 'Chuong US Games é uma coleção gratuita de jogos difíceis que você pode jogar on-line sem download nem cadastro. Cada um leva dez segundos para aprender — flappy bird, desviar de balas, treino de mira, velocidade de reação, memória, labirinto e muito mais — mas pouquíssimos jogadores conseguem superar sua própria melhor pontuação. Se você procura um jogo realmente difícil para testar seus reflexos e paciência, comece abaixo.',
