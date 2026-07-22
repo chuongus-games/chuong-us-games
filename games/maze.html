@@ -94,6 +94,57 @@ const segs = [
 ];
 const START = { x: 20, y: 180, w: 40, h: W };
 const GOAL = { x: 460, y: 100, w: 40, h: W };
+
+// build a tutorial ghost-path from START to GOAL by walking the actual corridor
+// rects (same shapes used for collision), so the preview can never point through a wall
+function rectsOverlap(a, b) {
+  const ox1 = Math.max(a.x, b.x), oy1 = Math.max(a.y, b.y);
+  const ox2 = Math.min(a.x + a.w, b.x + b.w), oy2 = Math.min(a.y + a.h, b.y + b.h);
+  return ox2 > ox1 && oy2 > oy1 ? { x: ox1, y: oy1, w: ox2 - ox1, h: oy2 - oy1 } : null;
+}
+const rectCenter = r => ({ x: r.x + r.w / 2, y: r.y + r.h / 2 });
+const pathNodes = [START, ...segs.map(r => ({ x: r[0], y: r[1], w: r[2], h: r[3] })), GOAL];
+const pathAdj = pathNodes.map(() => []);
+for (let i = 0; i < pathNodes.length; i++) {
+  for (let j = i + 1; j < pathNodes.length; j++) {
+    if (rectsOverlap(pathNodes[i], pathNodes[j])) { pathAdj[i].push(j); pathAdj[j].push(i); }
+  }
+}
+const pathPrev = new Array(pathNodes.length).fill(-1);
+const pathSeen = new Array(pathNodes.length).fill(false);
+pathSeen[0] = true;
+for (const q = [0]; q.length;) {
+  const u = q.shift();
+  for (const v of pathAdj[u]) if (!pathSeen[v]) { pathSeen[v] = true; pathPrev[v] = u; q.push(v); }
+}
+const ghostWaypoints = [];
+{
+  const order = [];
+  for (let cur = pathNodes.length - 1; cur !== -1; cur = pathPrev[cur]) order.unshift(cur);
+  if (order[0] === 0) {
+    ghostWaypoints.push(rectCenter(pathNodes[0]));
+    for (let i = 0; i < order.length - 1; i++) {
+      const ov = rectsOverlap(pathNodes[order[i]], pathNodes[order[i + 1]]);
+      if (ov) ghostWaypoints.push(rectCenter(ov));
+    }
+    ghostWaypoints.push(rectCenter(pathNodes[order[order.length - 1]]));
+  }
+}
+const ghostSegLens = ghostWaypoints.slice(1).map((p, i) => Math.hypot(p.x - ghostWaypoints[i].x, p.y - ghostWaypoints[i].y));
+const ghostTotalLen = ghostSegLens.reduce((a, b) => a + b, 0);
+function ghostPointAt(t) { // t in [0,1] along the whole path
+  let d = t * ghostTotalLen;
+  for (let i = 0; i < ghostSegLens.length; i++) {
+    if (d <= ghostSegLens[i] || i === ghostSegLens.length - 1) {
+      const f = ghostSegLens[i] ? d / ghostSegLens[i] : 0;
+      const a = ghostWaypoints[i], b = ghostWaypoints[i + 1];
+      return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+    }
+    d -= ghostSegLens[i];
+  }
+  return ghostWaypoints[0];
+}
+
 let armed = false, wins = 0, deaths = 0, msg;
 function setMsgKey(k) { msg = I18N.t(k); }
 setMsgKey('game.maze.moveIntoStart');
@@ -117,11 +168,33 @@ cv.addEventListener('pointermove', e => handle(pos(e)));
 cv.addEventListener('pointerdown', e => handle(pos(e)));
 cv.addEventListener('pointerleave', () => { if (armed) { armed = false; deaths++; setMsgKey('game.maze.outOfBounds'); } });
 
+const GHOST_LOOP_MS = 3400, GHOST_PAUSE_MS = 700;
 function draw() {
   ctx.clearRect(0, 0, cv.width, cv.height);
   ctx.fillStyle = '#2b3a63'; ctx.fillRect(0, 0, cv.width, cv.height); // walls (light = death)
   ctx.fillStyle = '#0a0e17';
   for (const r of segs) ctx.fillRect(r[0], r[1], r[2], r[3]);
+
+  if (!armed && ghostTotalLen > 0) {
+    // idle: play a looping ghost-dot demo tracing the real safe path, plus a
+    // pulsing ring around START, so new players see exactly where to go
+    const cycle = GHOST_LOOP_MS + GHOST_PAUSE_MS;
+    const tCycle = performance.now() % cycle;
+    const t = Math.min(1, tCycle / GHOST_LOOP_MS);
+    const TRAIL = 10;
+    for (let i = TRAIL; i >= 0; i--) {
+      const tt = Math.max(0, t - i * 0.012);
+      const gp = ghostPointAt(tt);
+      const a = (1 - i / TRAIL) * 0.5;
+      ctx.fillStyle = 'rgba(251,191,36,' + a.toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(gp.x, gp.y, 6 - i * 0.35, 0, 7); ctx.fill();
+    }
+    const pulse = 0.5 + 0.5 * Math.sin(performance.now() / 260);
+    ctx.strokeStyle = 'rgba(74,222,128,' + (0.35 + pulse * 0.45).toFixed(3) + ')';
+    ctx.lineWidth = 3 + pulse * 2;
+    ctx.strokeRect(START.x - 4, START.y - 4, START.w + 8, START.h + 8);
+  }
+
   ctx.fillStyle = '#164e63'; ctx.fillRect(START.x, START.y, START.w, START.h);
   ctx.fillStyle = '#14532d'; ctx.fillRect(GOAL.x, GOAL.y, GOAL.w, GOAL.h);
   ctx.fillStyle = '#22d3ee'; ctx.font = '800 13px Segoe UI, sans-serif'; ctx.textAlign = 'center';
