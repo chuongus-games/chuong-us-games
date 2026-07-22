@@ -161,7 +161,7 @@ function finish() {
   if (!best || finalT < best) { best = finalT; localStorage.setItem(KEY, best); showBest(); }
   resultEl.querySelector('.big').textContent = finalT.toFixed(2) + 's';
   resultEl.querySelector('.sub').textContent = I18N.t('game.numrush.missPenalty', { miss });
-  resultEl.style.display = '';
+  resultEl.style.display = 'block';
 }
 
 function onCellTap(n, el) {

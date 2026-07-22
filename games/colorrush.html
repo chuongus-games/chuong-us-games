@@ -151,12 +151,13 @@ function resolve(tapped) {
     pad.classList.add('correct');
     msgEl.textContent = '';
   } else {
+    const endedAt = streak;
     streak = 0;
     pad.classList.add('wrong');
-    msgEl.textContent = I18N.t(tapped ? 'game.colorrush.mistakeTapWrong' : 'game.colorrush.mistakeMissedMatch');
+    msgEl.textContent = I18N.t(tapped ? 'game.colorrush.mistakeTapWrong' : 'game.colorrush.mistakeMissedMatch', { n: endedAt });
   }
   updateStreak();
-  setTimeout(nextRound, correct ? 220 : 750);
+  setTimeout(nextRound, correct ? 220 : 1600);
 }
 
 pad.addEventListener('pointerdown', () => {

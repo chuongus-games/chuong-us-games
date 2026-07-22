@@ -139,7 +139,7 @@
           seoNote: 'Color Rush is a free online go/no-go reflex game: watch the target color, then tap only when the flashing card matches it. Tap the wrong color or hesitate on a real match and your streak is gone, which makes staying calm under a shrinking time window one of the hardest reflex challenges around.',
           targetLabel: 'TARGET', tapToStartTitle: 'Tap to start',
           tapToStartBody: 'Watch the TARGET color. Tap the card only when it matches — don\'t tap when it doesn\'t!',
-          mistakeTapWrong: '❌ Wrong color — streak reset!', mistakeMissedMatch: '⏰ Missed it — streak reset!',
+          mistakeTapWrong: '❌ Wrong color — streak of {n} saved, now reset!', mistakeMissedMatch: '⏰ Missed it — streak of {n} saved, now reset!',
           streakLabel: 'Streak {n}', bestStreakLabel: 'BEST STREAK {n}'
         },
         numrush: {
@@ -276,7 +276,7 @@
           seoNote: 'Color Rush là trò chơi phản xạ kiểu "go/no-go" miễn phí: quan sát màu mục tiêu, rồi chỉ chạm khi thẻ nhấp nháy trùng màu đó. Chạm sai màu hoặc chần chừ khi đúng màu là mất chuỗi ngay lập tức, khiến việc giữ bình tĩnh dưới áp lực thời gian rút ngắn trở thành một trong những thử thách phản xạ khó nhất.',
           targetLabel: 'MỤC TIÊU', tapToStartTitle: 'Chạm để bắt đầu',
           tapToStartBody: 'Quan sát màu MỤC TIÊU. Chỉ chạm vào thẻ khi nó trùng màu — đừng chạm khi không trùng!',
-          mistakeTapWrong: '❌ Sai màu — mất chuỗi rồi!', mistakeMissedMatch: '⏰ Bỏ lỡ rồi — mất chuỗi!',
+          mistakeTapWrong: '❌ Sai màu — đã lưu chuỗi {n}, giờ reset lại!', mistakeMissedMatch: '⏰ Bỏ lỡ rồi — đã lưu chuỗi {n}, giờ reset lại!',
           streakLabel: 'Chuỗi {n}', bestStreakLabel: 'CHUỖI CAO NHẤT {n}'
         },
         numrush: {
@@ -413,7 +413,7 @@
           seoNote: 'Color Rush 是一款免费的“go/no-go”反应力游戏：观察目标颜色，只有当闪烁的卡片颜色与之匹配时才点击。点错颜色或该出手时犹豫，连击立刻归零，在不断缩短的时间窗口下保持冷静，是最考验反应力的挑战之一。',
           targetLabel: '目标', tapToStartTitle: '轻点开始',
           tapToStartBody: '注意观察目标颜色。只有卡片颜色与之匹配时才点击——不匹配时千万别点！',
-          mistakeTapWrong: '❌ 颜色不对 — 连击清零！', mistakeMissedMatch: '⏰ 漏掉了 — 连击清零！',
+          mistakeTapWrong: '❌ 颜色不对 — 已保存连击 {n}，现在清零！', mistakeMissedMatch: '⏰ 漏掉了 — 已保存连击 {n}，现在清零！',
           streakLabel: '连击 {n}', bestStreakLabel: '最佳连击 {n}'
         },
         numrush: {
@@ -550,7 +550,7 @@
           seoNote: 'Color Rush es un juego gratuito en línea de reflejos tipo "go/no-go": observa el color objetivo y toca solo cuando la tarjeta que parpadea coincida con él. Tocar el color equivocado o dudar ante una coincidencia real termina tu racha, lo que hace que mantener la calma bajo una ventana de tiempo cada vez más corta sea uno de los retos de reflejos más difíciles.',
           targetLabel: 'OBJETIVO', tapToStartTitle: 'Toca para empezar',
           tapToStartBody: 'Observa el color OBJETIVO. Toca la tarjeta solo cuando coincida — ¡no toques cuando no coincida!',
-          mistakeTapWrong: '❌ Color equivocado — ¡racha reiniciada!', mistakeMissedMatch: '⏰ ¡Lo perdiste — racha reiniciada!',
+          mistakeTapWrong: '❌ Color equivocado — ¡racha de {n} guardada, reiniciando!', mistakeMissedMatch: '⏰ ¡Lo perdiste — racha de {n} guardada, reiniciando!',
           streakLabel: 'Racha {n}', bestStreakLabel: 'MEJOR RACHA {n}'
         },
         numrush: {
@@ -687,7 +687,7 @@
           seoNote: 'Color Rush é um jogo gratuito de reflexos on-line no estilo "go/no-go": observe a cor alvo e toque somente quando o cartão piscante bater com ela. Tocar a cor errada ou hesitar numa combinação real zera sua sequência na hora, o que torna manter a calma sob uma janela de tempo cada vez menor um dos desafios de reflexo mais difíceis.',
           targetLabel: 'ALVO', tapToStartTitle: 'Toque para começar',
           tapToStartBody: 'Observe a cor ALVO. Toque no cartão somente quando ele bater com ela — não toque quando não bater!',
-          mistakeTapWrong: '❌ Cor errada — sequência zerada!', mistakeMissedMatch: '⏰ Você perdeu — sequência zerada!',
+          mistakeTapWrong: '❌ Cor errada — sequência de {n} salva, zerando agora!', mistakeMissedMatch: '⏰ Você perdeu — sequência de {n} salva, zerando agora!',
           streakLabel: 'Sequência {n}', bestStreakLabel: 'MELHOR SEQUÊNCIA {n}'
         },
         numrush: {
