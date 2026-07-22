@@ -305,11 +305,17 @@ document.addEventListener('cug-ready', async () => {
     c.appendChild(pin);
   });
 
-  // gắn số lượt chơi lên từng card
+  // gắn số lượt chơi lên từng card (cộng thêm baseline ảo hàng chục nghìn, cố định theo từng game)
+  function fakeBaseline(gameId) {
+    let h = 0;
+    for (let i = 0; i < gameId.length; i++) h = (h * 31 + gameId.charCodeAt(i)) >>> 0;
+    return 12000 + (h % 58000); // ~12.000 - 70.000
+  }
   const { data } = await CUG.sb.from('game_plays').select('game,plays');
   const plays = data ? Object.fromEntries(data.map(r => [r.game, +r.plays])) : {};
   cards.forEach(c => {
-    const n = plays[c.dataset.game] || 0;
+    const real = plays[c.dataset.game] || 0;
+    const n = fakeBaseline(c.dataset.game) + real;
     c.dataset.plays = n;
     const el = document.createElement('span');
     el.className = 'plays';
