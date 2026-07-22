@@ -29,7 +29,7 @@
         tagline: 'Easy to play · Hard to win', heroLine1: 'Simple to play', heroLine2: 'Extremely hard to win',
         heroP: 'New games added all the time — no install needed. Click and play. Think you can beat them all? 🔥',
         cta: 'PLAY NOW',
-        introP: 'Chuong US Games is a free collection of hard games you can play online with no download and no signup. Each one takes ten seconds to learn — flappy bird, bullet dodging, aim training, reaction speed, memory, maze and more — but very few players manage to beat their own best score. If you\'re looking for a genuinely difficult game to test your reflexes and patience, start below.',
+        introP: 'Chuong US Games is a free collection of hard games you can play online with no download and no signup. Each one takes ten seconds to learn — flappy-style tapping, bullet dodging, aim training, reaction speed, memory, maze and more — but very few players manage to beat their own best score. If you\'re looking for a genuinely difficult game to test your reflexes and patience, start below.',
         searchPlaceholder: '🔍 Search games… (e.g. flappy, aim, maze)', faqTitle: 'Frequently asked questions',
         faq1Q: 'What makes these games hard?',
         faq1A: 'Every game here has simple, one-line rules but tight timing, precision or reflex requirements. Most players won\'t beat their own best score on the first few tries.',
@@ -72,7 +72,7 @@
       game: {
         flappy: {
           hint: 'Tap / click / press Space to fly. Pass a gap to score 1 point.',
-          seoNote: 'Flappy Neon is a hard flappy bird game you can play free online, right in your browser. The rule is simple — tap to fly through the gap — but scoring past 10 makes this one of the hardest flappy-style games around.',
+          seoNote: 'Flappy Neon is a hard flappy-style tap game you can play free online, right in your browser. The rule is simple — tap to fly through the gap — but scoring past 10 makes this one of the hardest flappy-style games around.',
           tapToStart: 'Tap to start', gameOver: 'Nice try! Tap to play again', bestLabel: 'BEST {n}'
         },
         dodge: {
@@ -100,7 +100,7 @@
         },
         memory: {
           hint: 'The sequence grows every round and plays FASTER each time. One wrong note ends the round.',
-          seoNote: 'Simon Memory is a free hard memory game online: watch a color sequence, then repeat it back. Every round adds one more step, so a single slip ends the run — a tough test for anyone who thinks their memory game skills are solid.',
+          seoNote: 'Neon Memory is a free hard memory game online: watch a color sequence, then repeat it back. Every round adds one more step, so a single slip ends the run — a tough test for anyone who thinks their memory game skills are solid.',
           initialStatus: 'Memorize the sequence — then repeat it in order', watch: '👀 Watch closely…',
           yourTurn: '🎮 Your turn!', almost: 'Almost! You reached round {n}', perfect: '✅ Perfect!',
           round: 'Round {n}', start: 'START', playAgain: 'PLAY AGAIN', bestLabel: 'BEST {n}'
@@ -166,7 +166,7 @@
         tagline: 'Dễ chơi · Khó thắng', heroLine1: 'Chơi thì dễ', heroLine2: 'Thắng thì cực khó',
         heroP: 'Trò chơi mới được thêm liên tục — không cần cài đặt. Bấm và chơi ngay. Bạn nghĩ mình có thể vượt qua tất cả? 🔥',
         cta: 'CHƠI NGAY',
-        introP: 'Chuong US Games là bộ sưu tập trò chơi khó miễn phí, chơi trực tuyến, không cần tải về hay đăng ký. Mỗi trò chỉ mất mười giây để học — flappy bird, né đạn, luyện ngắm, tốc độ phản xạ, trí nhớ, mê cung và nhiều hơn nữa — nhưng rất ít người chơi vượt qua được điểm cao nhất của chính mình. Nếu bạn đang tìm một trò chơi thực sự thử thách phản xạ và sự kiên nhẫn, hãy bắt đầu bên dưới.',
+        introP: 'Chuong US Games là bộ sưu tập trò chơi khó miễn phí, chơi trực tuyến, không cần tải về hay đăng ký. Mỗi trò chỉ mất mười giây để học — bay né kiểu flappy, né đạn, luyện ngắm, tốc độ phản xạ, trí nhớ, mê cung và nhiều hơn nữa — nhưng rất ít người chơi vượt qua được điểm cao nhất của chính mình. Nếu bạn đang tìm một trò chơi thực sự thử thách phản xạ và sự kiên nhẫn, hãy bắt đầu bên dưới.',
         searchPlaceholder: '🔍 Tìm trò chơi… (vd: flappy, aim, maze)', faqTitle: 'Câu hỏi thường gặp',
         faq1Q: 'Điều gì khiến các trò chơi này khó?',
         faq1A: 'Mỗi trò chơi ở đây có luật chơi đơn giản chỉ một dòng, nhưng đòi hỏi thời gian, độ chính xác hoặc phản xạ cực kỳ chặt chẽ. Hầu hết người chơi không thể vượt qua điểm cao nhất của chính mình ngay từ những lần thử đầu tiên.',
@@ -209,7 +209,7 @@
       game: {
         flappy: {
           hint: 'Chạm / bấm / phím Space để bay. Qua một khe hở được 1 điểm.',
-          seoNote: 'Flappy Neon là trò chơi flappy bird khó, chơi miễn phí ngay trên trình duyệt. Luật rất đơn giản — chạm để bay qua khe hở — nhưng vượt qua điểm 10 khiến đây trở thành một trong những trò flappy khó nhất.',
+          seoNote: 'Flappy Neon là trò chơi kiểu flappy khó, chơi miễn phí ngay trên trình duyệt. Luật rất đơn giản — chạm để bay qua khe hở — nhưng vượt qua điểm 10 khiến đây trở thành một trong những trò flappy khó nhất.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Cố lên! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         dodge: {
@@ -237,7 +237,7 @@
         },
         memory: {
           hint: 'Chuỗi màu dài thêm mỗi vòng và chạy NHANH hơn mỗi lần. Bấm sai một nốt là kết thúc vòng chơi.',
-          seoNote: 'Simon Memory là trò chơi trí nhớ khó, miễn phí: xem chuỗi màu rồi lặp lại. Mỗi vòng thêm một bước, chỉ cần sai một lần là kết thúc — thử thách khó cho bất kỳ ai tự tin về trí nhớ của mình.',
+          seoNote: 'Neon Memory là trò chơi trí nhớ khó, miễn phí: xem chuỗi màu rồi lặp lại. Mỗi vòng thêm một bước, chỉ cần sai một lần là kết thúc — thử thách khó cho bất kỳ ai tự tin về trí nhớ của mình.',
           initialStatus: 'Ghi nhớ chuỗi màu — rồi lặp lại đúng thứ tự', watch: '👀 Chú ý quan sát…',
           yourTurn: '🎮 Đến lượt bạn!', almost: 'Suýt nữa! Bạn đạt tới vòng {n}', perfect: '✅ Hoàn hảo!',
           round: 'Vòng {n}', start: 'BẮT ĐẦU', playAgain: 'CHƠI LẠI', bestLabel: 'CAO NHẤT {n}'
@@ -303,7 +303,7 @@
         tagline: '易上手 · 难通关', heroLine1: '上手很简单', heroLine2: '通关极其困难',
         heroP: '不断新增游戏 — 无需安装，点击即玩。你觉得能全部通关吗？🔥',
         cta: '立即开始',
-        introP: 'Chuong US Games 是一个免费的高难度小游戏合集，在线即可畅玩，无需下载也无需注册。每款游戏只需十秒就能学会——flappy bird、躲避子弹、瞄准训练、反应速度、记忆挑战、迷宫等等——但很少有玩家能超越自己的最佳成绩。如果你想找一款真正考验反应力和耐心的游戏，就从下面开始吧。',
+        introP: 'Chuong US Games 是一个免费的高难度小游戏合集，在线即可畅玩，无需下载也无需注册。每款游戏只需十秒就能学会——flappy 风格跳跃、躲避子弹、瞄准训练、反应速度、记忆挑战、迷宫等等——但很少有玩家能超越自己的最佳成绩。如果你想找一款真正考验反应力和耐心的游戏，就从下面开始吧。',
         searchPlaceholder: '🔍 搜索游戏…（如 flappy、aim、maze）', faqTitle: '常见问题',
         faq1Q: '这些游戏为什么这么难？',
         faq1A: '这里的每款游戏规则都很简单，但对时机、精准度或反应速度要求极高。大多数玩家在前几次尝试中都无法超越自己的最佳成绩。',
@@ -346,7 +346,7 @@
       game: {
         flappy: {
           hint: '轻点 / 点击 / 按空格键起飞。飞过一个缝隙得1分。',
-          seoNote: 'Flappy Neon 是一款高难度的 flappy bird 风格游戏，可在浏览器中免费在线畅玩。规则很简单——轻点即可飞过缝隙——但要突破10分，这就成了最难的 flappy 类游戏之一。',
+          seoNote: 'Flappy Neon 是一款高难度的 flappy 风格游戏，可在浏览器中免费在线畅玩。规则很简单——轻点即可飞过缝隙——但要突破10分，这就成了最难的 flappy 类游戏之一。',
           tapToStart: '轻点开始', gameOver: '再接再厉！轻点重新开始', bestLabel: '最佳 {n}'
         },
         dodge: {
@@ -374,7 +374,7 @@
         },
         memory: {
           hint: '序列每轮都会变长，播放速度也会越来越快。按错一个就会结束本轮。',
-          seoNote: 'Simon Memory 是一款免费的高难度记忆游戏：观察颜色序列，然后重复出来。每轮都会多一步，只要失误一次就会结束——对任何自信记忆力不错的人来说都是严峻考验。',
+          seoNote: 'Neon Memory 是一款免费的高难度记忆游戏：观察颜色序列，然后重复出来。每轮都会多一步，只要失误一次就会结束——对任何自信记忆力不错的人来说都是严峻考验。',
           initialStatus: '记住颜色序列——然后按顺序重复', watch: '👀 请仔细观察…',
           yourTurn: '🎮 轮到你了！', almost: '差一点！你到达了第{n}轮', perfect: '✅ 完美！',
           round: '第{n}轮', start: '开始', playAgain: '再玩一次', bestLabel: '最佳 {n}'
@@ -440,7 +440,7 @@
         tagline: 'Fácil de jugar · Difícil de ganar', heroLine1: 'Fácil de jugar', heroLine2: 'Extremadamente difícil de ganar',
         heroP: 'Se agregan juegos nuevos todo el tiempo — no necesitas instalar nada. Haz clic y juega. ¿Crees que puedes vencerlos todos? 🔥',
         cta: 'JUGAR AHORA',
-        introP: 'Chuong US Games es una colección gratuita de juegos difíciles que puedes jugar en línea sin descargas ni registro. Cada uno se aprende en diez segundos — flappy bird, esquivar balas, entrenamiento de puntería, velocidad de reacción, memoria, laberintos y más — pero muy pocos jugadores logran superar su propio mejor puntaje. Si buscas un juego realmente difícil para poner a prueba tus reflejos y tu paciencia, empieza abajo.',
+        introP: 'Chuong US Games es una colección gratuita de juegos difíciles que puedes jugar en línea sin descargas ni registro. Cada uno se aprende en diez segundos — estilo flappy, esquivar balas, entrenamiento de puntería, velocidad de reacción, memoria, laberintos y más — pero muy pocos jugadores logran superar su propio mejor puntaje. Si buscas un juego realmente difícil para poner a prueba tus reflejos y tu paciencia, empieza abajo.',
         searchPlaceholder: '🔍 Buscar juegos… (ej. flappy, aim, maze)', faqTitle: 'Preguntas frecuentes',
         faq1Q: '¿Qué hace que estos juegos sean difíciles?',
         faq1A: 'Cada juego aquí tiene reglas simples de una línea, pero exige mucha precisión, tiempos exactos o reflejos rápidos. La mayoría de los jugadores no logra superar su propio mejor puntaje en los primeros intentos.',
@@ -483,7 +483,7 @@
       game: {
         flappy: {
           hint: 'Toca / haz clic / pulsa Espacio para volar. Pasa un hueco para sumar 1 punto.',
-          seoNote: 'Flappy Neon es un juego difícil estilo flappy bird que puedes jugar gratis en línea, directamente en tu navegador. La regla es simple — toca para volar por el hueco — pero superar los 10 puntos lo convierte en uno de los juegos flappy más difíciles.',
+          seoNote: 'Flappy Neon es un juego difícil estilo flappy que puedes jugar gratis en línea, directamente en tu navegador. La regla es simple — toca para volar por el hueco — pero superar los 10 puntos lo convierte en uno de los juegos flappy más difíciles.',
           tapToStart: 'Toca para empezar', gameOver: '¡Buen intento! Toca para jugar de nuevo', bestLabel: 'MEJOR {n}'
         },
         dodge: {
@@ -511,7 +511,7 @@
         },
         memory: {
           hint: 'La secuencia crece cada ronda y se reproduce MÁS RÁPIDO cada vez. Una nota equivocada termina la ronda.',
-          seoNote: 'Simon Memory es un juego de memoria gratuito y difícil en línea: observa una secuencia de colores y luego repítela. Cada ronda añade un paso más, así que un solo error termina la partida — una prueba dura para quien crea que su memoria es sólida.',
+          seoNote: 'Neon Memory es un juego de memoria gratuito y difícil en línea: observa una secuencia de colores y luego repítela. Cada ronda añade un paso más, así que un solo error termina la partida — una prueba dura para quien crea que su memoria es sólida.',
           initialStatus: 'Memoriza la secuencia — luego repítela en orden', watch: '👀 Observa con atención…',
           yourTurn: '🎮 ¡Tu turno!', almost: '¡Casi! Llegaste a la ronda {n}', perfect: '✅ ¡Perfecto!',
           round: 'Ronda {n}', start: 'INICIAR', playAgain: 'JUGAR DE NUEVO', bestLabel: 'MEJOR {n}'
@@ -577,7 +577,7 @@
         tagline: 'Fácil de jogar · Difícil de vencer', heroLine1: 'Fácil de jogar', heroLine2: 'Extremamente difícil de vencer',
         heroP: 'Novos jogos adicionados o tempo todo — sem necessidade de instalação. Clique e jogue. Acha que consegue vencer todos? 🔥',
         cta: 'JOGAR AGORA',
-        introP: 'Chuong US Games é uma coleção gratuita de jogos difíceis que você pode jogar on-line sem download nem cadastro. Cada um leva dez segundos para aprender — flappy bird, desviar de balas, treino de mira, velocidade de reação, memória, labirinto e muito mais — mas pouquíssimos jogadores conseguem superar sua própria melhor pontuação. Se você procura um jogo realmente difícil para testar seus reflexos e paciência, comece abaixo.',
+        introP: 'Chuong US Games é uma coleção gratuita de jogos difíceis que você pode jogar on-line sem download nem cadastro. Cada um leva dez segundos para aprender — estilo flappy, desviar de balas, treino de mira, velocidade de reação, memória, labirinto e muito mais — mas pouquíssimos jogadores conseguem superar sua própria melhor pontuação. Se você procura um jogo realmente difícil para testar seus reflexos e paciência, comece abaixo.',
         searchPlaceholder: '🔍 Buscar jogos… (ex.: flappy, aim, maze)', faqTitle: 'Perguntas frequentes',
         faq1Q: 'O que torna esses jogos difíceis?',
         faq1A: 'Cada jogo aqui tem regras simples de uma linha, mas exige tempo, precisão ou reflexos muito apertados. A maioria dos jogadores não consegue superar sua própria melhor pontuação nas primeiras tentativas.',
@@ -620,7 +620,7 @@
       game: {
         flappy: {
           hint: 'Toque / clique / pressione Espaço para voar. Passe por um vão para marcar 1 ponto.',
-          seoNote: 'Flappy Neon é um jogo difícil estilo flappy bird que você pode jogar de graça on-line, direto no navegador. A regra é simples — toque para voar pelo vão — mas ultrapassar 10 pontos faz dele um dos jogos flappy mais difíceis que existem.',
+          seoNote: 'Flappy Neon é um jogo difícil estilo flappy que você pode jogar de graça on-line, direto no navegador. A regra é simples — toque para voar pelo vão — mas ultrapassar 10 pontos faz dele um dos jogos flappy mais difíceis que existem.',
           tapToStart: 'Toque para começar', gameOver: 'Boa tentativa! Toque para jogar de novo', bestLabel: 'MELHOR {n}'
         },
         dodge: {
@@ -648,7 +648,7 @@
         },
         memory: {
           hint: 'A sequência cresce a cada rodada e fica MAIS RÁPIDA a cada vez. Uma nota errada encerra a rodada.',
-          seoNote: 'Simon Memory é um jogo de memória gratuito e difícil on-line: observe uma sequência de cores e depois repita. Cada rodada acrescenta mais um passo, então um único erro encerra a partida — um teste difícil para quem confia na própria memória.',
+          seoNote: 'Neon Memory é um jogo de memória gratuito e difícil on-line: observe uma sequência de cores e depois repita. Cada rodada acrescenta mais um passo, então um único erro encerra a partida — um teste difícil para quem confia na própria memória.',
           initialStatus: 'Memorize a sequência — depois repita na ordem', watch: '👀 Observe com atenção…',
           yourTurn: '🎮 Sua vez!', almost: 'Quase! Você chegou até a rodada {n}', perfect: '✅ Perfeito!',
           round: 'Rodada {n}', start: 'INICIAR', playAgain: 'JOGAR DE NOVO', bestLabel: 'MELHOR {n}'

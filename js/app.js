@@ -9,7 +9,7 @@
     dodge:   { name: 'Hardest Dodge',  icon: '🔵', unit: 'wins' },
     reaction:{ name: 'Reaction Test',  icon: '⚡', unit: 'ms', lowerBetter: true },
     timer:   { name: 'Perfect Second', icon: '⏱️', unit: 'streak' },
-    memory:  { name: 'Simon Memory',   icon: '🧠', unit: 'rounds' },
+    memory:  { name: 'Neon Memory',    icon: '🧠', unit: 'rounds' },
     avoid:   { name: 'Meteor Rain',   icon: '☄️', unit: 's' },
     stack:   { name: 'Neon Stack',     icon: '🧱', unit: 'blocks' },
     aim:     { name: 'Aim Trainer',    icon: '🎯', unit: 's', lowerBetter: true },
