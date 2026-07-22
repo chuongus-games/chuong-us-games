@@ -47,7 +47,9 @@
           stack: 'Stack blocks with perfect timing. Any overhang gets sliced off — run out and you\'re done.',
           aim: 'Hit 20 shrinking targets as fast as you can. Every miss adds a penalty.',
           maze: 'Trace your cursor through a narrow corridor to the goal. Touch a wall — back to start.',
-          runner: 'Jump over spikes at ever-increasing speed. How far can you run?'
+          runner: 'Jump over spikes at ever-increasing speed. How far can you run?',
+          colorrush: 'Tap only when the card matches the target color. One wrong tap or one miss ends your streak.',
+          numrush: 'Tap 1 to 25 in order as fast as you can. Every wrong tap costs you a second.'
         }
       },
       profile: {
@@ -129,6 +131,20 @@
           hint: 'Tap / Space to jump over the spikes. Speed increases forever — score is distance.',
           seoNote: 'Spike Runner is a free hard endless runner game online. Jump the spikes, survive the speed increases, and see how far you can get — a simple format that turns into one of the hardest runner games once the pace picks up.',
           tapToStart: 'Tap to run', gameOver: 'Great run! Tap to go again', bestMLabel: 'BEST {n}m'
+        },
+        colorrush: {
+          hint: 'Tap only when the card\'s color matches the TARGET swatch. Tapping the wrong color or missing a match resets your streak — the window gets shorter the longer you survive.',
+          seoNote: 'Color Rush is a free online go/no-go reflex game: watch the target color, then tap only when the flashing card matches it. Tap the wrong color or hesitate on a real match and your streak is gone, which makes staying calm under a shrinking time window one of the hardest reflex challenges around.',
+          targetLabel: 'TARGET', tapToStartTitle: 'Tap to start',
+          tapToStartBody: 'Watch the TARGET color. Tap the card only when it matches — don\'t tap when it doesn\'t!',
+          mistakeTapWrong: '❌ Wrong color — streak reset!', mistakeMissedMatch: '⏰ Missed it — streak reset!',
+          streakLabel: 'Streak {n}', bestStreakLabel: 'BEST STREAK {n}'
+        },
+        numrush: {
+          hint: 'Tap 1, 2, 3… all the way to 25, in order, as fast as you can. Every wrong tap adds a +1s penalty. Lowest time wins.',
+          seoNote: 'Number Rush is a free online speed and focus game built on the classic Schulte grid: find and tap every number from 1 to 25 in order, as fast as possible, while a single wrong tap costs you a time penalty. Simple to explain, brutally hard to do quickly.',
+          tapToStart: 'Tap 1 to begin — find every number in order', findLabel: 'Find {n}',
+          missPenalty: '(includes {miss}s miss penalty)', bestLabel: 'BEST {n}s'
         }
       }
     },
@@ -166,7 +182,9 @@
           stack: 'Xếp chồng khối với thời điểm hoàn hảo. Phần thừa sẽ bị cắt — hết khối là hết game.',
           aim: 'Bắn trúng 20 mục tiêu đang co nhỏ dần nhanh nhất có thể. Mỗi lần trượt bị phạt thời gian.',
           maze: 'Rê chuột qua hành lang hẹp để tới đích. Chạm tường — quay lại từ đầu.',
-          runner: 'Nhảy qua chông với tốc độ tăng dần. Bạn chạy được bao xa?'
+          runner: 'Nhảy qua chông với tốc độ tăng dần. Bạn chạy được bao xa?',
+          colorrush: 'Chỉ chạm khi thẻ đúng màu mục tiêu. Chạm sai hoặc bỏ lỡ là mất chuỗi ngay.',
+          numrush: 'Chạm số 1 đến 25 theo đúng thứ tự nhanh nhất có thể. Mỗi lần chạm sai bị cộng thêm 1 giây.'
         }
       },
       profile: {
@@ -248,6 +266,20 @@
           hint: 'Chạm / Space để nhảy qua chông. Tốc độ tăng liên tục — điểm là quãng đường.',
           seoNote: 'Spike Runner là trò endless runner khó, miễn phí. Nhảy qua chông, sống sót qua từng đợt tăng tốc, xem bạn chạy được bao xa — một luật chơi đơn giản nhưng trở nên cực khó khi tốc độ tăng lên.',
           tapToStart: 'Chạm để chạy', gameOver: 'Chạy tốt lắm! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
+        },
+        colorrush: {
+          hint: 'Chỉ chạm vào thẻ khi màu của nó trùng với ô màu MỤC TIÊU. Chạm sai màu hoặc bỏ lỡ khi trùng màu sẽ làm mất chuỗi — thời gian phản ứng càng ngắn dần khi bạn sống sót càng lâu.',
+          seoNote: 'Color Rush là trò chơi phản xạ kiểu "go/no-go" miễn phí: quan sát màu mục tiêu, rồi chỉ chạm khi thẻ nhấp nháy trùng màu đó. Chạm sai màu hoặc chần chừ khi đúng màu là mất chuỗi ngay lập tức, khiến việc giữ bình tĩnh dưới áp lực thời gian rút ngắn trở thành một trong những thử thách phản xạ khó nhất.',
+          targetLabel: 'MỤC TIÊU', tapToStartTitle: 'Chạm để bắt đầu',
+          tapToStartBody: 'Quan sát màu MỤC TIÊU. Chỉ chạm vào thẻ khi nó trùng màu — đừng chạm khi không trùng!',
+          mistakeTapWrong: '❌ Sai màu — mất chuỗi rồi!', mistakeMissedMatch: '⏰ Bỏ lỡ rồi — mất chuỗi!',
+          streakLabel: 'Chuỗi {n}', bestStreakLabel: 'CHUỖI CAO NHẤT {n}'
+        },
+        numrush: {
+          hint: 'Chạm lần lượt 1, 2, 3… cho tới 25, đúng thứ tự, nhanh nhất có thể. Mỗi lần chạm sai bị cộng thêm 1 giây. Thời gian thấp nhất thắng.',
+          seoNote: 'Number Rush là trò chơi miễn phí rèn tốc độ và sự tập trung dựa trên bảng Schulte kinh điển: tìm và chạm từng số từ 1 đến 25 theo đúng thứ tự, nhanh nhất có thể, trong khi mỗi lần chạm sai sẽ bị phạt thêm thời gian. Luật chơi đơn giản nhưng để làm thật nhanh thì cực kỳ khó.',
+          tapToStart: 'Chạm số 1 để bắt đầu — tìm đủ các số theo đúng thứ tự', findLabel: 'Tìm số {n}',
+          missPenalty: '(đã cộng {miss}s phạt chạm sai)', bestLabel: 'CAO NHẤT {n}s'
         }
       }
     },
@@ -285,7 +317,9 @@
           stack: '精准把握时机堆叠方块。任何悬空部分都会被切掉——方块用完游戏结束。',
           aim: '尽快击中20个不断缩小的目标。每次失手都会受到惩罚。',
           maze: '拖动光标穿过狭窄的通道到达终点。碰到墙壁就要从头再来。',
-          runner: '以不断加快的速度跳过尖刺。你能跑多远？'
+          runner: '以不断加快的速度跳过尖刺。你能跑多远？',
+          colorrush: '只有卡片颜色与目标一致时才能点击。点错或漏点都会立刻中断连击。',
+          numrush: '按顺序尽快点击1到25。每次点错都会被罚1秒。'
         }
       },
       profile: {
@@ -367,6 +401,20 @@
           hint: '轻点 / 空格键跳过尖刺。速度会持续加快 — 得分即为跑动距离。',
           seoNote: 'Spike Runner 是一款免费的高难度无尽奔跑游戏。跳过尖刺，挺过一次次加速，看看你能跑多远——规则简单，但一旦提速就成了最难的跑酷类游戏之一。',
           tapToStart: '轻点开始奔跑', gameOver: '跑得不错！轻点再来一次', bestMLabel: '最佳 {n}米'
+        },
+        colorrush: {
+          hint: '只有当卡片颜色与目标色块一致时才能点击。点错颜色或漏掉匹配都会让连击清零——存活越久，反应时间就越短。',
+          seoNote: 'Color Rush 是一款免费的“go/no-go”反应力游戏：观察目标颜色，只有当闪烁的卡片颜色与之匹配时才点击。点错颜色或该出手时犹豫，连击立刻归零，在不断缩短的时间窗口下保持冷静，是最考验反应力的挑战之一。',
+          targetLabel: '目标', tapToStartTitle: '轻点开始',
+          tapToStartBody: '注意观察目标颜色。只有卡片颜色与之匹配时才点击——不匹配时千万别点！',
+          mistakeTapWrong: '❌ 颜色不对 — 连击清零！', mistakeMissedMatch: '⏰ 漏掉了 — 连击清零！',
+          streakLabel: '连击 {n}', bestStreakLabel: '最佳连击 {n}'
+        },
+        numrush: {
+          hint: '按顺序依次点击1、2、3……直到25，越快越好。每次点错都会被罚1秒。用时最短获胜。',
+          seoNote: 'Number Rush 是一款基于经典施特勒方格（Schulte Grid）的免费速度与专注力游戏：按顺序尽快找到并点击1到25的每个数字，点错一次就会被罚时间。规则简单，但要做到又快又准却相当困难。',
+          tapToStart: '点击1开始 — 按顺序找出所有数字', findLabel: '寻找 {n}',
+          missPenalty: '（已含{miss}秒失误惩罚）', bestLabel: '最佳 {n}秒'
         }
       }
     },
@@ -404,7 +452,9 @@
           stack: 'Apila bloques con el momento perfecto. Cualquier saliente se corta — si te quedas sin bloque, se acabó.',
           aim: 'Acierta 20 objetivos cada vez más pequeños lo más rápido posible. Cada fallo añade una penalización.',
           maze: 'Guía tu cursor por un corredor estrecho hasta la meta. Tocar una pared te devuelve al inicio.',
-          runner: 'Salta sobre pinchos a una velocidad que aumenta sin parar. ¿Hasta dónde puedes llegar?'
+          runner: 'Salta sobre pinchos a una velocidad que aumenta sin parar. ¿Hasta dónde puedes llegar?',
+          colorrush: 'Toca solo cuando la tarjeta coincida con el color objetivo. Un toque erróneo o un fallo termina tu racha.',
+          numrush: 'Toca del 1 al 25 en orden lo más rápido posible. Cada toque erróneo te cuesta un segundo.'
         }
       },
       profile: {
@@ -486,6 +536,20 @@
           hint: 'Toca / Espacio para saltar los pinchos. La velocidad aumenta sin parar — el puntaje es la distancia.',
           seoNote: 'Spike Runner es un juego de correr sin fin, gratuito y difícil, en línea. Salta los pinchos, sobrevive a los aumentos de velocidad y descubre hasta dónde puedes llegar — un formato simple que se vuelve uno de los juegos de correr más difíciles cuando el ritmo se acelera.',
           tapToStart: 'Toca para correr', gameOver: '¡Buena carrera! Toca para jugar de nuevo', bestMLabel: 'MEJOR {n}m'
+        },
+        colorrush: {
+          hint: 'Toca la tarjeta solo cuando su color coincida con el color OBJETIVO. Tocar el color equivocado o fallar una coincidencia reinicia tu racha — la ventana se acorta cuanto más sobrevivas.',
+          seoNote: 'Color Rush es un juego gratuito en línea de reflejos tipo "go/no-go": observa el color objetivo y toca solo cuando la tarjeta que parpadea coincida con él. Tocar el color equivocado o dudar ante una coincidencia real termina tu racha, lo que hace que mantener la calma bajo una ventana de tiempo cada vez más corta sea uno de los retos de reflejos más difíciles.',
+          targetLabel: 'OBJETIVO', tapToStartTitle: 'Toca para empezar',
+          tapToStartBody: 'Observa el color OBJETIVO. Toca la tarjeta solo cuando coincida — ¡no toques cuando no coincida!',
+          mistakeTapWrong: '❌ Color equivocado — ¡racha reiniciada!', mistakeMissedMatch: '⏰ ¡Lo perdiste — racha reiniciada!',
+          streakLabel: 'Racha {n}', bestStreakLabel: 'MEJOR RACHA {n}'
+        },
+        numrush: {
+          hint: 'Toca 1, 2, 3… hasta el 25, en orden, lo más rápido que puedas. Cada toque erróneo añade una penalización de +1s. Gana el menor tiempo.',
+          seoNote: 'Number Rush es un juego gratuito en línea de velocidad y concentración basado en la clásica grilla de Schulte: encuentra y toca cada número del 1 al 25 en orden, lo más rápido posible, mientras cada toque erróneo te cuesta una penalización de tiempo. Fácil de explicar, brutalmente difícil de hacer rápido.',
+          tapToStart: 'Toca el 1 para empezar — encuentra todos los números en orden', findLabel: 'Buscar {n}',
+          missPenalty: '(incluye {miss}s de penalización por fallos)', bestLabel: 'MEJOR {n}s'
         }
       }
     },
@@ -523,7 +587,9 @@
           stack: 'Empilhe blocos com o tempo perfeito. Qualquer parte saliente é cortada — sem bloco, acabou.',
           aim: 'Acerte 20 alvos cada vez menores o mais rápido possível. Cada erro adiciona uma penalidade.',
           maze: 'Trace o cursor por um corredor estreito até a meta. Tocar uma parede te manda de volta ao início.',
-          runner: 'Pule espinhos numa velocidade que só aumenta. Até onde você consegue correr?'
+          runner: 'Pule espinhos numa velocidade que só aumenta. Até onde você consegue correr?',
+          colorrush: 'Toque só quando o cartão bater com a cor alvo. Um toque errado ou uma falha zera sua sequência.',
+          numrush: 'Toque de 1 a 25 em ordem o mais rápido possível. Cada toque errado custa um segundo.'
         }
       },
       profile: {
@@ -605,6 +671,20 @@
           hint: 'Toque / Espaço para pular os espinhos. A velocidade aumenta sem parar — a pontuação é a distância.',
           seoNote: 'Spike Runner é um jogo de corrida infinita gratuito e difícil, on-line. Pule os espinhos, sobreviva aos aumentos de velocidade e veja até onde consegue chegar — um formato simples que vira um dos jogos de corrida mais difíceis quando o ritmo acelera.',
           tapToStart: 'Toque para correr', gameOver: 'Boa corrida! Toque para jogar de novo', bestMLabel: 'MELHOR {n}m'
+        },
+        colorrush: {
+          hint: 'Toque no cartão somente quando a cor dele bater com a cor ALVO. Tocar a cor errada ou perder uma combinação zera sua sequência — a janela de tempo fica mais curta quanto mais você sobrevive.',
+          seoNote: 'Color Rush é um jogo gratuito de reflexos on-line no estilo "go/no-go": observe a cor alvo e toque somente quando o cartão piscante bater com ela. Tocar a cor errada ou hesitar numa combinação real zera sua sequência na hora, o que torna manter a calma sob uma janela de tempo cada vez menor um dos desafios de reflexo mais difíceis.',
+          targetLabel: 'ALVO', tapToStartTitle: 'Toque para começar',
+          tapToStartBody: 'Observe a cor ALVO. Toque no cartão somente quando ele bater com ela — não toque quando não bater!',
+          mistakeTapWrong: '❌ Cor errada — sequência zerada!', mistakeMissedMatch: '⏰ Você perdeu — sequência zerada!',
+          streakLabel: 'Sequência {n}', bestStreakLabel: 'MELHOR SEQUÊNCIA {n}'
+        },
+        numrush: {
+          hint: 'Toque 1, 2, 3… até o 25, em ordem, o mais rápido possível. Cada toque errado adiciona uma penalidade de +1s. Vence o menor tempo.',
+          seoNote: 'Number Rush é um jogo gratuito de velocidade e foco on-line baseado na clássica grade de Schulte: encontre e toque cada número de 1 a 25 em ordem, o mais rápido possível, enquanto cada toque errado custa uma penalidade de tempo. Fácil de explicar, brutalmente difícil de fazer rápido.',
+          tapToStart: 'Toque no 1 para começar — encontre todos os números em ordem', findLabel: 'Encontrar {n}',
+          missPenalty: '(inclui {miss}s de penalidade por erro)', bestLabel: 'MELHOR {n}s'
         }
       }
     }

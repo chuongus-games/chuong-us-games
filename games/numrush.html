@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Rush — Hardest 1-25 Grid Speed Game Online Free</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<style>
+#nrWrap { width: min(440px, 92vw); text-align: center; user-select: none; }
+#nrBar {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+  font-weight: 800; font-size: 1.05rem;
+}
+#nrFind { color: var(--neon); }
+#nrTimer { color: var(--gold); font-variant-numeric: tabular-nums; }
+#nrGrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.nrCell {
+  aspect-ratio: 1; border-radius: 10px; background: var(--card); border: 1px solid var(--line);
+  display: grid; place-items: center; font-weight: 800; font-size: clamp(1rem, 4.5vw, 1.3rem);
+  cursor: pointer; transition: background .12s, transform .08s, opacity .15s; color: var(--text);
+}
+.nrCell:active { transform: scale(.94); }
+.nrCell.done { background: #14532d; color: #4ade80; opacity: .5; pointer-events: none; }
+.nrCell.wrong { background: #7f1d2e; }
+#nrResult { display: none; margin-top: 18px; }
+#nrResult .big { font-size: 2.2rem; font-weight: 900; color: var(--neon); }
+#nrResult .sub { color: var(--muted); font-size: .88rem; margin-top: 6px; }
+#nrReady { margin-top: 14px; color: var(--muted); font-size: .9rem; }
+</style>
+<meta name="description" content="Tap the numbers 1 to 25 in order as fast as you can in Number Rush, a brutally hard Schulte-grid speed game online. Every miss adds a time penalty. Free, no signup.">
+<link rel="canonical" href="https://chuong.us/games/numrush.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Number Rush — Hardest 1-25 Grid Speed Game Online Free">
+<meta property="og:description" content="Tap the numbers 1 to 25 in order as fast as you can in Number Rush, a brutally hard Schulte-grid speed game online. Every miss adds a time penalty. Free, no signup.">
+<meta property="og:url" content="https://chuong.us/games/numrush.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Number Rush — Hardest 1-25 Grid Speed Game Online Free">
+<meta name="twitter:description" content="Tap the numbers 1 to 25 in order as fast as you can in Number Rush, a brutally hard Schulte-grid speed game online. Every miss adds a time penalty. Free, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Number Rush",
+  "url": "https://chuong.us/games/numrush.html",
+  "description": "Tap the numbers 1 to 25 in order as fast as you can in Number Rush, a brutally hard Schulte-grid speed game online. Every miss adds a time penalty. Free, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Chuong US Games",
+      "item": "https://chuong.us/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Number Rush",
+      "item": "https://chuong.us/games/numrush.html"
+    }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="numrush">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
+  <h1>🔢 Number Rush</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage">
+  <div id="nrWrap">
+    <div id="nrBar"><span id="nrFind"></span><span id="nrTimer">0.0s</span></div>
+    <div id="nrGrid"></div>
+    <p id="nrReady" data-i18n="game.numrush.tapToStart">Tap 1 to begin — find every number in order</p>
+    <div id="nrResult"><div class="big"></div><p class="sub"></p></div>
+  </div>
+</div>
+<p class="hint" data-i18n="game.numrush.hint">Tap 1, 2, 3… all the way to 25, in order, as fast as you can. Every wrong tap adds a +1s penalty. Lowest time wins.</p>
+<p class="seo-note" data-i18n="game.numrush.seoNote">Number Rush is a free online speed and focus game built on the classic Schulte grid: find and tap every number from 1 to 25 in order, as fast as possible, while a single wrong tap costs you a time penalty. Simple to explain, brutally hard to do quickly.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="aim.html">🎯 Aim Trainer</a>
+    <a href="colorrush.html">🎨 Color Rush</a>
+    <a href="memory.html">🧠 Simon Memory</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const grid = document.getElementById('nrGrid'), findEl = document.getElementById('nrFind'),
+      timerEl = document.getElementById('nrTimer'), readyEl = document.getElementById('nrReady'),
+      resultEl = document.getElementById('nrResult');
+const KEY = 'cug_numrush_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? I18N.t('game.numrush.bestLabel', { n: best.toFixed(2) }) : '';
+showBest();
+
+const TOTAL = 25;
+let state = 'ready', t0 = 0, next = 1, miss = 0, finalT = 0, cells = [];
+
+function shuffledNumbers() {
+  const arr = Array.from({ length: TOTAL }, (_, i) => i + 1);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function buildGrid() {
+  const nums = shuffledNumbers();
+  grid.innerHTML = '';
+  cells = nums.map(n => {
+    const el = document.createElement('div');
+    el.className = 'nrCell';
+    el.textContent = n;
+    el.addEventListener('pointerdown', () => onCellTap(n, el));
+    grid.appendChild(el);
+    return el;
+  });
+}
+
+function updateFindLabel() {
+  findEl.textContent = I18N.t('game.numrush.findLabel', { n: Math.min(next, TOTAL) });
+}
+
+function resetGame() {
+  state = 'ready';
+  next = 1; miss = 0;
+  buildGrid();
+  updateFindLabel();
+  readyEl.style.display = '';
+  resultEl.style.display = 'none';
+  timerEl.textContent = '0.0s';
+}
+
+function finish() {
+  state = 'done';
+  finalT = (performance.now() - t0) / 1000 + miss;
+  if (window.CUG) CUG.submitScore('numrush', +finalT.toFixed(2));
+  if (!best || finalT < best) { best = finalT; localStorage.setItem(KEY, best); showBest(); }
+  resultEl.querySelector('.big').textContent = finalT.toFixed(2) + 's';
+  resultEl.querySelector('.sub').textContent = I18N.t('game.numrush.missPenalty', { miss });
+  resultEl.style.display = '';
+}
+
+function onCellTap(n, el) {
+  if (state === 'done') { resetGame(); return; }
+  if (state === 'ready') { state = 'play'; t0 = performance.now(); readyEl.style.display = 'none'; }
+  if (n === next) {
+    el.classList.add('done');
+    next++;
+    if (next > TOTAL) { finish(); return; }
+  } else if (!el.classList.contains('done')) {
+    miss++;
+    el.classList.add('wrong');
+    setTimeout(() => el.classList.remove('wrong'), 200);
+  }
+  updateFindLabel();
+}
+
+function tick() {
+  if (state === 'play') timerEl.textContent = ((performance.now() - t0) / 1000).toFixed(1) + 's';
+  requestAnimationFrame(tick);
+}
+resetGame();
+tick();
+</script>
+</body>
+</html>

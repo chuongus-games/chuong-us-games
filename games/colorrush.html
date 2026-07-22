@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Rush — Hardest Go/No-Go Color Reflex Game Online Free</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<style>
+#crWrap { width: min(640px, 92vw); text-align: center; user-select: none; }
+#crTarget {
+  display: none; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px;
+  font-size: .85rem; font-weight: 800; letter-spacing: 1px; color: var(--muted);
+}
+#crTargetSwatch { width: 22px; height: 22px; border-radius: 7px; border: 2px solid rgba(255,255,255,.5); }
+#pad {
+  width: 100%; height: 340px; border-radius: 16px; border: 3px solid var(--line);
+  display: grid; place-items: center; text-align: center; cursor: pointer; user-select: none;
+  background: var(--bg2); transition: background .08s, box-shadow .15s; padding: 20px;
+}
+#pad.correct { box-shadow: 0 0 0 6px rgba(74,222,128,.6) inset; }
+#pad.wrong { box-shadow: 0 0 0 6px rgba(251,113,133,.7) inset; }
+#pad h2 { font-size: 1.5rem; margin-bottom: 8px; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
+#pad p { color: rgba(255,255,255,.85); text-shadow: 0 1px 4px rgba(0,0,0,.5); }
+#crStreak { margin-top: 14px; font-size: .95rem; color: var(--gold); font-weight: 700; min-height: 1.4em; }
+#crMsg { margin-top: 6px; font-size: .85rem; color: var(--danger); font-weight: 700; min-height: 1.4em; }
+</style>
+<meta name="description" content="Watch the target color and tap only when it matches in Color Rush, a brutally hard go/no-go reflex game online. One wrong tap or one missed match ends your streak. Free, no signup.">
+<link rel="canonical" href="https://chuong.us/games/colorrush.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Color Rush — Hardest Go/No-Go Color Reflex Game Online Free">
+<meta property="og:description" content="Watch the target color and tap only when it matches in Color Rush, a brutally hard go/no-go reflex game online. One wrong tap or one missed match ends your streak. Free, no signup.">
+<meta property="og:url" content="https://chuong.us/games/colorrush.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Color Rush — Hardest Go/No-Go Color Reflex Game Online Free">
+<meta name="twitter:description" content="Watch the target color and tap only when it matches in Color Rush, a brutally hard go/no-go reflex game online. One wrong tap or one missed match ends your streak. Free, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Color Rush",
+  "url": "https://chuong.us/games/colorrush.html",
+  "description": "Watch the target color and tap only when it matches in Color Rush, a brutally hard go/no-go reflex game online. One wrong tap or one missed match ends your streak. Free, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Chuong US Games",
+      "item": "https://chuong.us/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Color Rush",
+      "item": "https://chuong.us/games/colorrush.html"
+    }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="colorrush">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
+  <h1>🎨 Color Rush</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage">
+  <div id="crWrap">
+    <div id="crTarget"><span data-i18n="game.colorrush.targetLabel">TARGET</span><div id="crTargetSwatch"></div></div>
+    <div id="pad"><div id="padInner"><h2 data-i18n="game.colorrush.tapToStartTitle">Tap to start</h2><p data-i18n="game.colorrush.tapToStartBody">Watch the TARGET color. Tap the card only when it matches — don't tap when it doesn't!</p></div></div>
+    <div id="crStreak"></div>
+    <div id="crMsg"></div>
+  </div>
+</div>
+<p class="hint" data-i18n="game.colorrush.hint">Tap only when the card's color matches the TARGET swatch. Tapping the wrong color or missing a match resets your streak — the window gets shorter the longer you survive.</p>
+<p class="seo-note" data-i18n="game.colorrush.seoNote">Color Rush is a free online go/no-go reflex game: watch the target color, then tap only when the flashing card matches it. Tap the wrong color or hesitate on a real match and your streak is gone, which makes staying calm under a shrinking time window one of the hardest reflex challenges around.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="reaction.html">⚡ Reaction Test</a>
+    <a href="numrush.html">🔢 Number Rush</a>
+    <a href="memory.html">🧠 Simon Memory</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const pad = document.getElementById('pad'), padInner = document.getElementById('padInner');
+const targetBox = document.getElementById('crTarget'), targetSwatch = document.getElementById('crTargetSwatch');
+const streakEl = document.getElementById('crStreak'), msgEl = document.getElementById('crMsg');
+const KEY = 'cug_colorrush_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.colorrush.bestStreakLabel', { n: best });
+showBest();
+
+const PALETTE = ['#fb7185', '#22d3ee', '#4ade80', '#fbbf24', '#a78bfa'];
+const ROUND_MS = s => Math.max(420, 1100 - s * 40);
+
+let state = 'idle', target = null, roundColor = null, streak = 0, timer = null;
+
+function updateStreak() { streakEl.textContent = I18N.t('game.colorrush.streakLabel', { n: streak }); }
+
+function startGame() {
+  target = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+  targetSwatch.style.background = target;
+  targetBox.style.display = 'flex';
+  padInner.style.display = 'none';
+  streak = 0; msgEl.textContent = '';
+  updateStreak();
+  nextRound();
+}
+
+function nextRound() {
+  state = 'show';
+  pad.classList.remove('correct', 'wrong');
+  roundColor = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+  pad.style.background = roundColor;
+  clearTimeout(timer);
+  timer = setTimeout(() => resolve(false), ROUND_MS(streak));
+}
+
+function resolve(tapped) {
+  if (state !== 'show') return;
+  state = 'resolved';
+  clearTimeout(timer);
+  const isMatch = roundColor === target;
+  const correct = tapped ? isMatch : !isMatch;
+  if (correct) {
+    streak++;
+    if (window.CUG && streak > 0) CUG.submitScore('colorrush', streak);
+    if (streak > best) { best = streak; localStorage.setItem(KEY, best); showBest(); }
+    pad.classList.add('correct');
+    msgEl.textContent = '';
+  } else {
+    streak = 0;
+    pad.classList.add('wrong');
+    msgEl.textContent = I18N.t(tapped ? 'game.colorrush.mistakeTapWrong' : 'game.colorrush.mistakeMissedMatch');
+  }
+  updateStreak();
+  setTimeout(nextRound, correct ? 220 : 750);
+}
+
+pad.addEventListener('pointerdown', () => {
+  if (state === 'idle') { startGame(); return; }
+  if (state === 'show') resolve(true);
+});
+</script>
+</body>
+</html>

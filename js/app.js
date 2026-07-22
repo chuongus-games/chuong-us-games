@@ -14,7 +14,9 @@
     stack:   { name: 'Neon Stack',     icon: '🧱', unit: 'blocks' },
     aim:     { name: 'Aim Trainer',    icon: '🎯', unit: 's', lowerBetter: true },
     maze:    { name: 'Wire Maze',      icon: '🌀', unit: 'wins' },
-    runner:  { name: 'Spike Runner',   icon: '🏃', unit: 'm' }
+    runner:  { name: 'Spike Runner',   icon: '🏃', unit: 'm' },
+    colorrush: { name: 'Color Rush',   icon: '🎨', unit: 'streak' },
+    numrush:   { name: 'Number Rush',  icon: '🔢', unit: 's', lowerBetter: true }
   };
 
   const CUG = {
