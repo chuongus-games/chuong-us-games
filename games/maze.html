@@ -5,6 +5,7 @@
 <title>Wire Maze — Hardest Steady Hand Maze Game Online Free</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="../js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/app.js"></script>
 <meta name="description" content="Trace your cursor through a narrow corridor without touching a wall in Wire Maze, a hardest steady-hand maze game online. Free, no download.">
@@ -58,15 +59,15 @@
 </head>
 <body class="game-page" data-game="maze">
 <header class="game-top">
-  <a class="back" href="../index.html">◂ Games</a>
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
   <h1>🌀 Wire Maze</h1>
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="640" height="440"></canvas></div>
-<p class="hint">Enter the START box, then trace the dark corridor to GOAL. Touch the bright area = back to start. Mobile: drag your finger.</p>
-<p class="seo-note">Wire Maze is a free steady-hand maze game online: trace your cursor through a narrow corridor to the goal, and touching a wall sends you straight back to start. Simple to understand, genuinely hard to finish.</p>
+<p class="hint" data-i18n="game.maze.hint">Enter the START box, then trace the dark corridor to GOAL. Touch the bright area = back to start. Mobile: drag your finger.</p>
+<p class="seo-note" data-i18n="game.maze.seoNote">Wire Maze is a free steady-hand maze game online: trace your cursor through a narrow corridor to the goal, and touching a wall sends you straight back to start. Simple to understand, genuinely hard to finish.</p>
 <nav class="related" aria-label="More hard games">
-  <span>More hard games:</span>
+  <span data-i18n="common.moreHardGames">More hard games:</span>
   <a href="dodge.html">🔵 Hardest Dodge</a>
     <a href="avoid.html">☄️ Meteor Rain</a>
     <a href="aim.html">🎯 Aim Trainer</a>
@@ -77,7 +78,7 @@ const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_maze_best';
 let best = +(localStorage.getItem(KEY) || 0);
 const bestEl = document.getElementById('best');
-const showBest = () => bestEl.textContent = 'WINS ' + best;
+const showBest = () => bestEl.textContent = I18N.t('game.maze.winsLabel', { n: best });
 showBest();
 
 // corridor path: sequence of rects forming a snake-like tunnel
@@ -90,7 +91,9 @@ const segs = [
 ];
 const START = { x: 20, y: 180, w: 40, h: W };
 const GOAL = { x: 460, y: 100, w: 40, h: W };
-let armed = false, wins = 0, deaths = 0, msg = 'Move your cursor into START';
+let armed = false, wins = 0, deaths = 0, msg;
+function setMsgKey(k) { msg = I18N.t(k); }
+setMsgKey('game.maze.moveIntoStart');
 function inRect(p, r) { return p.x >= r.x && p.x <= r.x + r.w && p.y >= r.y && p.y <= r.y + r.h; }
 function inPath(p) { return segs.some(r => inRect(p, { x: r[0], y: r[1], w: r[2], h: r[3] })) || inRect(p, START) || inRect(p, GOAL); }
 function pos(e) {
@@ -98,18 +101,18 @@ function pos(e) {
   return { x: (e.clientX - rc.left) * cv.width / rc.width, y: (e.clientY - rc.top) * cv.height / rc.height };
 }
 function handle(p) {
-  if (!armed) { if (inRect(p, START)) { armed = true; msg = 'Head to GOAL — don\'t touch the bright walls!'; } return; }
-  if (!inPath(p)) { armed = false; deaths++; msg = 'Wall touched — back to START!'; return; }
+  if (!armed) { if (inRect(p, START)) { armed = true; setMsgKey('game.maze.headToGoal'); } return; }
+  if (!inPath(p)) { armed = false; deaths++; setMsgKey('game.maze.wallTouched'); return; }
   if (inRect(p, GOAL)) {
     armed = false; wins++;
     if (window.CUG) CUG.submitScore('maze', wins);
     if (wins > best) { best = wins; localStorage.setItem(KEY, best); showBest(); }
-    msg = '🏆 CLEARED! Enter START to go again.';
+    setMsgKey('game.maze.cleared');
   }
 }
 cv.addEventListener('pointermove', e => handle(pos(e)));
 cv.addEventListener('pointerdown', e => handle(pos(e)));
-cv.addEventListener('pointerleave', () => { if (armed) { armed = false; deaths++; msg = 'Out of bounds — back to START!'; } });
+cv.addEventListener('pointerleave', () => { if (armed) { armed = false; deaths++; setMsgKey('game.maze.outOfBounds'); } });
 
 function draw() {
   ctx.clearRect(0, 0, cv.width, cv.height);
@@ -119,10 +122,10 @@ function draw() {
   ctx.fillStyle = '#164e63'; ctx.fillRect(START.x, START.y, START.w, START.h);
   ctx.fillStyle = '#14532d'; ctx.fillRect(GOAL.x, GOAL.y, GOAL.w, GOAL.h);
   ctx.fillStyle = '#22d3ee'; ctx.font = '800 13px Segoe UI, sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('START', START.x + 20, START.y + 21);
-  ctx.fillStyle = '#4ade80'; ctx.fillText('GOAL', GOAL.x + 20, GOAL.y + 21);
+  ctx.fillText(I18N.t('common.start'), START.x + 20, START.y + 21);
+  ctx.fillStyle = '#4ade80'; ctx.fillText(I18N.t('common.goal'), GOAL.x + 20, GOAL.y + 21);
   ctx.fillStyle = armed ? '#4ade80' : '#e8edf7'; ctx.font = '700 15px Segoe UI, sans-serif'; ctx.textAlign = 'left';
-  ctx.fillText(msg + '   (Wins ' + wins + ' · Retries ' + deaths + ')', 14, cv.height - 14);
+  ctx.fillText(I18N.t('game.maze.statusLine', { msg, wins, deaths }), 14, cv.height - 14);
   requestAnimationFrame(draw);
 }
 draw();

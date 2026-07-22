@@ -5,6 +5,7 @@
 <title>Meteor Rain — Hardest Avoid Game Online Free</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☄️</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="../js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/app.js"></script>
 <meta name="description" content="Dodge a speeding meteor shower in Meteor Rain, one of the hardest avoid games online. Survive one second at a time. Free to play, no signup.">
@@ -58,15 +59,15 @@
 </head>
 <body class="game-page" data-game="avoid">
 <header class="game-top">
-  <a class="back" href="../index.html">◂ Games</a>
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
   <h1>☄️ Meteor Rain</h1>
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="480" height="600"></canvas></div>
-<p class="hint">Move your mouse / drag your finger to dodge the meteors. Score = seconds survived.</p>
-<p class="seo-note">Meteor Rain drops you into a constant meteor shower that keeps speeding up. It's a free hard avoid game online with no safe pattern to memorize — just fast reflexes and a bit of luck to survive one more second.</p>
+<p class="hint" data-i18n="game.avoid.hint">Move your mouse / drag your finger to dodge the meteors. Score = seconds survived.</p>
+<p class="seo-note" data-i18n="game.avoid.seoNote">Meteor Rain drops you into a constant meteor shower that keeps speeding up. It's a free hard avoid game online with no safe pattern to memorize — just fast reflexes and a bit of luck to survive one more second.</p>
 <nav class="related" aria-label="More hard games">
-  <span>More hard games:</span>
+  <span data-i18n="common.moreHardGames">More hard games:</span>
   <a href="dodge.html">🔵 Hardest Dodge</a>
     <a href="runner.html">🏃 Spike Runner</a>
     <a href="maze.html">🌀 Wire Maze</a>
@@ -77,7 +78,7 @@ const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_avoid_best';
 let best = +(localStorage.getItem(KEY) || 0);
 const bestEl = document.getElementById('best');
-const showBest = () => bestEl.textContent = 'BEST ' + best + 's';
+const showBest = () => bestEl.textContent = I18N.t('game.avoid.bestSecLabel', { n: best });
 showBest();
 
 let px = 240, state = 'ready', t0 = 0, rocks = [], secs = 0;
@@ -127,8 +128,8 @@ function draw() {
   ctx.font = '800 38px Segoe UI, sans-serif';
   ctx.fillText(Math.floor(secs) + 's', cv.width / 2, 60);
   ctx.font = '700 19px Segoe UI, sans-serif';
-  if (state === 'ready') ctx.fillText('Tap to start', cv.width / 2, 320);
-  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('So close! Tap to play again', cv.width / 2, 320); }
+  if (state === 'ready') ctx.fillText(I18N.t('game.avoid.tapToStart'), cv.width / 2, 320);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.avoid.gameOver'), cv.width / 2, 320); }
 }
 step();
 </script>

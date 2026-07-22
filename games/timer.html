@@ -5,6 +5,7 @@
 <title>Perfect Second — Hardest Timing Game Online Free</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="../js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/app.js"></script>
 <style>
@@ -75,22 +76,22 @@
 </head>
 <body class="game-page" data-game="timer">
 <header class="game-top">
-  <a class="back" href="../index.html">◂ Games</a>
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
   <h1>⏱️ Perfect Second</h1>
   <span class="best" id="best"></span>
 </header>
 <div class="stage">
   <div id="box">
     <div id="clock">0.000</div>
-    <div id="msg">Press START — the clock runs and <b>HIDES after 0.3s</b>.<br>Press STOP at exactly <b>1.000 seconds</b>.</div>
-    <button id="btn">START</button>
+    <div id="msg" data-i18n-html="game.timer.initialMsg">Press START — the clock runs and <b>HIDES after 0.3s</b>.<br>Press STOP at exactly <b>1.000 seconds</b>.</div>
+    <button id="btn" data-i18n="game.timer.startBtn">START</button>
     <div id="streak"></div>
   </div>
 </div>
-<p class="hint">Off by ≤ 0.010s: godlike · ≤ 0.030s: pass · &gt; 0.030s: fail. Your score is your win streak.</p>
-<p class="seo-note">Perfect Second is a hard timing game with one rule: stop the clock at exactly 1.000 seconds. There's no visual cue to help — one millisecond off counts as a loss, making this one of the hardest precision games you can play free online.</p>
+<p class="hint" data-i18n="game.timer.hint">Off by ≤ 0.010s: godlike · ≤ 0.030s: pass · &gt; 0.030s: fail. Your score is your win streak.</p>
+<p class="seo-note" data-i18n="game.timer.seoNote">Perfect Second is a hard timing game with one rule: stop the clock at exactly 1.000 seconds. There's no visual cue to help — one millisecond off counts as a loss, making this one of the hardest precision games you can play free online.</p>
 <nav class="related" aria-label="More hard games">
-  <span>More hard games:</span>
+  <span data-i18n="common.moreHardGames">More hard games:</span>
   <a href="reaction.html">⚡ Reaction Test</a>
     <a href="memory.html">🧠 Simon Memory</a>
     <a href="stack.html">🧱 Neon Stack</a>
@@ -102,7 +103,7 @@ const clock = document.getElementById('clock'), msg = document.getElementById('m
 const KEY = 'cug_timer_best';
 let best = +(localStorage.getItem(KEY) || 0);
 const bestEl = document.getElementById('best');
-const showBest = () => bestEl.textContent = 'BEST STREAK ' + best;
+const showBest = () => bestEl.textContent = I18N.t('game.timer.bestStreakLabel', { n: best });
 showBest();
 
 let running = false, t0 = 0, raf = null, streak = 0;
@@ -113,20 +114,20 @@ function tick() {
 }
 btn.addEventListener('click', () => {
   if (!running) {
-    running = true; t0 = performance.now(); btn.textContent = 'STOP';
-    msg.innerHTML = 'Count in your head… press STOP at <b>1.000s</b>!';
+    running = true; t0 = performance.now(); btn.textContent = I18N.t('game.timer.stopBtn');
+    msg.innerHTML = I18N.t('game.timer.runningMsg');
     tick();
   } else {
     running = false; cancelAnimationFrame(raf);
     const el = (performance.now() - t0) / 1000, diff = Math.abs(el - 1);
     clock.textContent = el.toFixed(3);
-    btn.textContent = 'START';
-    if (diff <= 0.01) { streak++; msg.innerHTML = '🏆 <b>' + el.toFixed(3) + 's</b> — GODLIKE! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
-    else if (diff <= 0.03) { streak++; msg.innerHTML = '✅ <b>' + el.toFixed(3) + 's</b> — Pass! Off by ' + (diff * 1000).toFixed(0) + 'ms'; }
-    else { streak = 0; msg.innerHTML = '<b>' + el.toFixed(3) + 's</b> — Off by ' + (diff * 1000).toFixed(0) + 'ms — try again!'; }
+    btn.textContent = I18N.t('game.timer.startBtn');
+    if (diff <= 0.01) { streak++; msg.innerHTML = I18N.t('game.timer.godlike', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
+    else if (diff <= 0.03) { streak++; msg.innerHTML = I18N.t('game.timer.pass', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
+    else { streak = 0; msg.innerHTML = I18N.t('game.timer.fail', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
     if (window.CUG && streak > 0) CUG.submitScore('timer', streak);
     if (streak > best) { best = streak; localStorage.setItem(KEY, best); showBest(); }
-    streakEl.textContent = streak > 0 ? '🔥 Win streak: ' + streak : '';
+    streakEl.textContent = streak > 0 ? I18N.t('game.timer.winStreak', { n: streak }) : '';
   }
 });
 </script>

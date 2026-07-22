@@ -5,6 +5,7 @@
 <title>Spike Runner — Hardest Endless Runner Game Online Free</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="../js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/app.js"></script>
 <meta name="description" content="Jump over spikes at ever-increasing speed in Spike Runner, one of the hardest endless runner games online. How far can you run? Free to play.">
@@ -58,15 +59,15 @@
 </head>
 <body class="game-page" data-game="runner">
 <header class="game-top">
-  <a class="back" href="../index.html">◂ Games</a>
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
   <h1>🏃 Spike Runner</h1>
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="680" height="380"></canvas></div>
-<p class="hint">Tap / Space to jump over the spikes. Speed increases forever — score is distance.</p>
-<p class="seo-note">Spike Runner is a free hard endless runner game online. Jump the spikes, survive the speed increases, and see how far you can get — a simple format that turns into one of the hardest runner games once the pace picks up.</p>
+<p class="hint" data-i18n="game.runner.hint">Tap / Space to jump over the spikes. Speed increases forever — score is distance.</p>
+<p class="seo-note" data-i18n="game.runner.seoNote">Spike Runner is a free hard endless runner game online. Jump the spikes, survive the speed increases, and see how far you can get — a simple format that turns into one of the hardest runner games once the pace picks up.</p>
 <nav class="related" aria-label="More hard games">
-  <span>More hard games:</span>
+  <span data-i18n="common.moreHardGames">More hard games:</span>
   <a href="flappy.html">🐤 Flappy Neon</a>
     <a href="avoid.html">☄️ Meteor Rain</a>
     <a href="stack.html">🧱 Neon Stack</a>
@@ -77,7 +78,7 @@ const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_runner_best';
 let best = +(localStorage.getItem(KEY) || 0);
 const bestEl = document.getElementById('best');
-const showBest = () => bestEl.textContent = 'BEST ' + best + 'm';
+const showBest = () => bestEl.textContent = I18N.t('game.runner.bestMLabel', { n: best });
 showBest();
 
 const GROUND = 310, G = 0.7, JUMP = -13;
@@ -135,8 +136,8 @@ function draw() {
   ctx.font = '800 34px Segoe UI, sans-serif';
   ctx.fillText(Math.floor(dist) + 'm', cv.width / 2, 58);
   ctx.font = '700 18px Segoe UI, sans-serif';
-  if (state === 'ready') ctx.fillText('Tap to run', cv.width / 2, 170);
-  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText('Great run! Tap to go again', cv.width / 2, 170); }
+  if (state === 'ready') ctx.fillText(I18N.t('game.runner.tapToStart'), cv.width / 2, 170);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.runner.gameOver'), cv.width / 2, 170); }
 }
 reset(); step();
 </script>

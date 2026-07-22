@@ -15,31 +15,32 @@
 </header>
 
 <main class="panel-page">
-  <h1>👤 My Profile</h1>
-  <p class="sub">Your username, games played, best scores and ranks.</p>
+  <h1 data-i18n="profile.title">👤 My Profile</h1>
+  <p class="sub" data-i18n="profile.sub">Your username, games played, best scores and ranks.</p>
 
   <div id="signed-out" class="panel" style="display:none">
-    <p class="msg-note">Sign in with Google to save scores, compete on leaderboards and edit your profile.</p>
+    <p class="msg-note" data-i18n="profile.signInNote">Sign in with Google to save scores, compete on leaderboards and edit your profile.</p>
     <br><div id="gbtn"></div>
   </div>
 
   <div id="signed-in" style="display:none">
     <div class="panel">
-      <h2>Username</h2>
+      <h2 data-i18n="profile.usernameLabel">Username</h2>
       <div class="uname-row">
-        <input id="uname" maxlength="20" placeholder="your_name">
-        <button class="btn-primary" id="save-uname">Save</button>
+        <input id="uname" maxlength="20" data-i18n-placeholder="profile.usernamePlaceholder" placeholder="your_name">
+        <button class="btn-primary" id="save-uname" data-i18n="profile.save">Save</button>
       </div>
       <p class="msg-note" id="uname-msg" style="margin-top:10px"></p>
     </div>
 
     <div class="panel">
-      <h2>🎮 Games played</h2>
-      <div id="stats">Loading…</div>
+      <h2 data-i18n="profile.gamesPlayed">🎮 Games played</h2>
+      <div id="stats" data-i18n="common.loading">Loading…</div>
     </div>
   </div>
 </main>
 
+<script src="js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/app.js"></script>
 <script>
@@ -56,16 +57,20 @@ document.addEventListener('cug-ready', async () => {
   const msg = document.getElementById('uname-msg');
   document.getElementById('save-uname').onclick = async () => {
     const v = uname.value.trim();
-    if (!/^[a-zA-Z0-9_]{3,20}$/.test(v)) { msg.textContent = '⚠️ 3–20 chars, letters/numbers/_ only.'; return; }
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(v)) { msg.textContent = I18N.t('profile.usernameInvalid'); return; }
     const { error } = await CUG.sb.from('profiles').update({ username: v }).eq('id', CUG.user.id);
-    if (error) msg.textContent = error.code === '23505' ? '⚠️ That username is taken.' : '⚠️ ' + error.message;
-    else { msg.textContent = '✅ Saved!'; CUG.profile.username = v; CUG.renderAuth(); }
+    if (error) msg.textContent = error.code === '23505' ? I18N.t('profile.usernameTaken') : '⚠️ ' + error.message;
+    else { msg.textContent = I18N.t('profile.saved'); CUG.profile.username = v; CUG.renderAuth(); }
   };
 
   const host = document.getElementById('stats');
   const rows = await CUG.myStats();
-  if (!rows.length) { host.innerHTML = '<p class="msg-note">No scores yet. <a href="index.html#games">Go play something challenging 🔥</a></p>'; return; }
-  host.innerHTML = '<table class="stat-table"><tr><th>Game</th><th class="num">Best</th><th class="num">Plays</th><th class="num">Rank</th></tr>' +
+  if (!rows.length) {
+    host.innerHTML = '<p class="msg-note">' + I18N.t('profile.noScores') + '<a href="index.html#games">' + I18N.t('profile.goPlay') + '</a></p>';
+    return;
+  }
+  host.innerHTML = '<table class="stat-table"><tr><th>' + I18N.t('profile.tableGame') + '</th><th class="num">' + I18N.t('profile.tableBest') +
+    '</th><th class="num">' + I18N.t('profile.tablePlays') + '</th><th class="num">' + I18N.t('profile.tableRank') + '</th></tr>' +
     rows.map(r => {
       const m = CUG.meta[r.game] || { name: r.game, icon: '🎮', unit: '' };
       return '<tr><td>' + m.icon + ' ' + m.name + '</td>' +

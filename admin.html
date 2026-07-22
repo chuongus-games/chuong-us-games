@@ -16,34 +16,36 @@
 </header>
 
 <main class="panel-page">
-  <h1>📊 Admin Dashboard</h1>
-  <p class="sub">Player and play statistics per game. Admin only.</p>
-  <div id="out"><p class="msg-note">Loading…</p></div>
+  <h1 data-i18n="admin.title">📊 Admin Dashboard</h1>
+  <p class="sub" data-i18n="admin.sub">Player and play statistics per game. Admin only.</p>
+  <div id="out"><p class="msg-note" data-i18n="common.loading">Loading…</p></div>
 </main>
 
+<script src="js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/app.js"></script>
 <script>
 document.addEventListener('cug-ready', async () => {
   const out = document.getElementById('out');
   if (!CUG.user) {
-    out.innerHTML = '<div class="panel"><p class="msg-note">Admin access requires sign-in.</p><br><div id="gbtn"></div></div>';
+    out.innerHTML = '<div class="panel"><p class="msg-note">' + I18N.t('admin.signInRequired') + '</p><br><div id="gbtn"></div></div>';
     CUG.renderGoogleButton(document.getElementById('gbtn'));
     return;
   }
   const [ov, st] = await Promise.all([CUG.sb.rpc('admin_overview'), CUG.sb.rpc('admin_stats')]);
   if (ov.error || st.error) {
-    out.innerHTML = '<div class="panel"><p class="msg-note">⛔ This account is not an admin.</p></div>';
+    out.innerHTML = '<div class="panel"><p class="msg-note">' + I18N.t('admin.notAdmin') + '</p></div>';
     return;
   }
   const o = ov.data[0] || { total_users: 0, total_plays: 0 };
   out.innerHTML =
-    '<div class="panel"><h2>Overview</h2><div class="tiles">' +
-    '<div class="tile"><div class="v">' + (+o.total_users).toLocaleString('en-US') + '</div><div class="l">REGISTERED PLAYERS</div></div>' +
-    '<div class="tile"><div class="v">' + (+o.total_plays).toLocaleString('en-US') + '</div><div class="l">TOTAL PLAYS (ALL VISITORS)</div></div>' +
+    '<div class="panel"><h2>' + I18N.t('admin.overview') + '</h2><div class="tiles">' +
+    '<div class="tile"><div class="v">' + (+o.total_users).toLocaleString('en-US') + '</div><div class="l">' + I18N.t('admin.registeredPlayers') + '</div></div>' +
+    '<div class="tile"><div class="v">' + (+o.total_plays).toLocaleString('en-US') + '</div><div class="l">' + I18N.t('admin.totalPlaysAll') + '</div></div>' +
     '</div></div>' +
-    '<div class="panel"><h2>Per game</h2><table class="stat-table">' +
-    '<tr><th>Game</th><th class="num">Players with scores</th><th class="num">Plays by players</th><th class="num">Total plays</th></tr>' +
+    '<div class="panel"><h2>' + I18N.t('admin.perGame') + '</h2><table class="stat-table">' +
+    '<tr><th>' + I18N.t('admin.tableGame') + '</th><th class="num">' + I18N.t('admin.tablePlayersWithScores') +
+    '</th><th class="num">' + I18N.t('admin.tablePlaysByPlayers') + '</th><th class="num">' + I18N.t('admin.tableTotalPlays') + '</th></tr>' +
     st.data.map(r => {
       const m = CUG.meta[r.game] || { name: r.game, icon: '🎮' };
       return '<tr><td>' + m.icon + ' ' + m.name + '</td>' +

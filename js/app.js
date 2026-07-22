@@ -73,7 +73,7 @@
       CUG.loadGIS().then(() => {
         google.accounts.id.renderButton(el, { theme: 'filled_black', text: 'signin_with', shape: 'pill', size: 'medium' });
       }).catch(() => {
-        el.innerHTML = '<button class="cug-btn cug-google">Sign in with Google</button>';
+        el.innerHTML = '<button class="cug-btn cug-google">' + I18N.t('common.signInGoogleFallback') + '</button>';
         el.firstChild.onclick = CUG.signIn;
       });
     },
@@ -95,10 +95,10 @@
         top.appendChild(host);
       }
       if (CUG.user) {
-        const name = CUG.profile ? CUG.profile.username : 'player';
+        const name = CUG.profile ? CUG.profile.username : I18N.t('common.player');
         host.innerHTML =
           '<a class="cug-user" href="' + CUG.rel('profile.html') + '">👤 ' + CUG.esc(name) + '</a>' +
-          '<button class="cug-btn cug-out" title="Sign out">⏻</button>';
+          '<button class="cug-btn cug-out" title="' + I18N.t('common.signOutTitle') + '">⏻</button>';
         host.querySelector('.cug-out').onclick = CUG.signOut;
       } else {
         host.innerHTML = '';
@@ -138,11 +138,10 @@
       ov.innerHTML =
         '<div class="cug-gate-box">' +
         '<div class="gicon">🔒</div>' +
-        '<h2>Sign in to play</h2>' +
-        '<p>Sign in with Google to play ' + (GAME_META[game] ? GAME_META[game].name : 'this game') +
-        ', save your best scores and climb the leaderboard.</p>' +
+        '<h2>' + I18N.t('common.signInToPlayTitle') + '</h2>' +
+        '<p>' + I18N.t('common.signInToPlayBody', { game: GAME_META[game] ? GAME_META[game].name : 'this game' }) + '</p>' +
         '<div class="gbtn"></div>' +
-        '<a class="ghome" href="../index.html">◂ Back to all games</a>' +
+        '<a class="ghome" href="../index.html">' + I18N.t('common.backAll') + '</a>' +
         '</div>';
       document.body.appendChild(ov);
       CUG.renderGoogleButton(ov.querySelector('.gbtn'));
@@ -167,18 +166,18 @@
       if (!top) return;
       const btn = document.createElement('button');
       btn.className = 'cug-btn cug-lb-btn';
-      btn.textContent = '🏆 Leaderboard';
+      btn.textContent = I18N.t('common.leaderboard');
       top.insertBefore(btn, document.getElementById('cug-auth'));
       const panel = document.createElement('div');
       panel.className = 'cug-lb-panel';
-      panel.innerHTML = '<h2>🏆 Top 10 — ' + GAME_META[game].name + '</h2><div class="cug-lb-list">Loading…</div><p class="cug-lb-note"></p>';
+      panel.innerHTML = '<h2>' + I18N.t('common.top10', { game: GAME_META[game].name }) + '</h2><div class="cug-lb-list">' + I18N.t('common.loading') + '</div><p class="cug-lb-note"></p>';
       document.body.appendChild(panel);
       btn.onclick = async () => {
         panel.classList.toggle('open');
         if (!panel.classList.contains('open')) return;
         const list = panel.querySelector('.cug-lb-list');
         const rows = await CUG.leaderboard(game, 10);
-        if (!rows.length) { list.innerHTML = '<div class="cug-lb-row">No scores yet — be the first! 🔥</div>'; }
+        if (!rows.length) { list.innerHTML = '<div class="cug-lb-row">' + I18N.t('common.noScoresYet') + '</div>'; }
         else {
           list.innerHTML = rows.map((r, i) =>
             '<div class="cug-lb-row"><span class="r">' + (i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1)) + '</span>' +
@@ -186,7 +185,7 @@
             '<span class="s">' + r.best + ' ' + GAME_META[game].unit + '</span></div>').join('');
         }
         panel.querySelector('.cug-lb-note').textContent =
-          CUG.user ? 'Your best score is saved automatically.' : 'Sign in with Google to get on the board!';
+          CUG.user ? I18N.t('common.scoreSavedAuto') : I18N.t('common.signInToBoard');
       };
     }
   };

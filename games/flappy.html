@@ -5,6 +5,7 @@
 <title>Flappy Neon — Hardest Flappy Bird Game Online Free</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐤</text></svg>">
 <link rel="stylesheet" href="../css/style.css">
+<script src="../js/i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/app.js"></script>
 <meta name="description" content="Play Flappy Neon, one of the hardest flappy bird style games online. One tap to fly through neon gaps — free, no download, no signup required.">
@@ -58,15 +59,15 @@
 </head>
 <body class="game-page" data-game="flappy">
 <header class="game-top">
-  <a class="back" href="../index.html">◂ Games</a>
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
   <h1>🐤 Flappy Neon</h1>
   <span class="best" id="best"></span>
 </header>
 <div class="stage"><canvas class="game" id="cv" width="420" height="600"></canvas></div>
-<p class="hint">Tap / click / press Space to fly. Pass a gap to score 1 point.</p>
-<p class="seo-note">Flappy Neon is a hard flappy bird game you can play free online, right in your browser. The rule is simple — tap to fly through the gap — but scoring past 10 makes this one of the hardest flappy-style games around.</p>
+<p class="hint" data-i18n="game.flappy.hint">Tap / click / press Space to fly. Pass a gap to score 1 point.</p>
+<p class="seo-note" data-i18n="game.flappy.seoNote">Flappy Neon is a hard flappy bird game you can play free online, right in your browser. The rule is simple — tap to fly through the gap — but scoring past 10 makes this one of the hardest flappy-style games around.</p>
 <nav class="related" aria-label="More hard games">
-  <span>More hard games:</span>
+  <span data-i18n="common.moreHardGames">More hard games:</span>
   <a href="dodge.html">🔵 Hardest Dodge</a>
     <a href="runner.html">🏃 Spike Runner</a>
     <a href="stack.html">🧱 Neon Stack</a>
@@ -77,7 +78,7 @@ const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const KEY = 'cug_flappy_best';
 let best = +(localStorage.getItem(KEY) || 0);
 const bestEl = document.getElementById('best');
-const showBest = () => bestEl.textContent = 'BEST ' + best;
+const showBest = () => bestEl.textContent = I18N.t('game.flappy.bestLabel', { n: best });
 showBest();
 
 const G = 0.45, FLAP = -7.6, GAP = 138, PW = 62, SPEED = 2.6;
@@ -142,10 +143,10 @@ function draw() {
   ctx.font = '800 44px Segoe UI, sans-serif';
   ctx.fillText(score, cv.width / 2, 70);
   ctx.font = '700 20px Segoe UI, sans-serif';
-  if (state === 'ready') ctx.fillText('Tap to start', cv.width / 2, 320);
+  if (state === 'ready') ctx.fillText(I18N.t('game.flappy.tapToStart'), cv.width / 2, 320);
   if (state === 'dead') {
     ctx.fillStyle = '#fb7185';
-    ctx.fillText('Nice try! Tap to play again', cv.width / 2, 320);
+    ctx.fillText(I18N.t('game.flappy.gameOver'), cv.width / 2, 320);
   }
 }
 reset(); step();
