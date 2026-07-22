@@ -5,6 +5,9 @@
 <title>My Profile — Chuong US Games</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👤</text></svg>">
 <link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
 </head>
 <body>
 
@@ -40,9 +43,9 @@
   </div>
 </main>
 
-<script src="js/i18n.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/app.js"></script>
+<script src="js/i18n.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/app.js" defer></script>
 <script>
 document.addEventListener('cug-ready', async () => {
   if (!CUG.user) {
@@ -69,7 +72,7 @@ document.addEventListener('cug-ready', async () => {
     host.innerHTML = '<p class="msg-note">' + I18N.t('profile.noScores') + '<a href="index.html#games">' + I18N.t('profile.goPlay') + '</a></p>';
     return;
   }
-  host.innerHTML = '<table class="stat-table"><tr><th>' + I18N.t('profile.tableGame') + '</th><th class="num">' + I18N.t('profile.tableBest') +
+  host.innerHTML = '<div class="stat-table-wrap"><table class="stat-table"><tr><th>' + I18N.t('profile.tableGame') + '</th><th class="num">' + I18N.t('profile.tableBest') +
     '</th><th class="num">' + I18N.t('profile.tablePlays') + '</th><th class="num">' + I18N.t('profile.tableRank') + '</th></tr>' +
     rows.map(r => {
       const m = CUG.meta[r.game] || { name: r.game, icon: '🎮', unit: '' };
@@ -77,7 +80,7 @@ document.addEventListener('cug-ready', async () => {
         '<td class="num">' + r.best + ' ' + m.unit + '</td>' +
         '<td class="num">' + r.plays + '</td>' +
         '<td class="num rank">#' + r.rank + '</td></tr>';
-    }).join('') + '</table>';
+    }).join('') + '</table></div>';
 });
 </script>
 </body>

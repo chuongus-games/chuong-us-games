@@ -6,6 +6,9 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 <link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
 </head>
 <body>
 
@@ -21,9 +24,9 @@
   <div id="out"><p class="msg-note" data-i18n="common.loading">Loading…</p></div>
 </main>
 
-<script src="js/i18n.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/app.js"></script>
+<script src="js/i18n.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/app.js" defer></script>
 <script>
 document.addEventListener('cug-ready', async () => {
   const out = document.getElementById('out');
@@ -43,7 +46,7 @@ document.addEventListener('cug-ready', async () => {
     '<div class="tile"><div class="v">' + (+o.total_users).toLocaleString('en-US') + '</div><div class="l">' + I18N.t('admin.registeredPlayers') + '</div></div>' +
     '<div class="tile"><div class="v">' + (+o.total_plays).toLocaleString('en-US') + '</div><div class="l">' + I18N.t('admin.totalPlaysAll') + '</div></div>' +
     '</div></div>' +
-    '<div class="panel"><h2>' + I18N.t('admin.perGame') + '</h2><table class="stat-table">' +
+    '<div class="panel"><h2>' + I18N.t('admin.perGame') + '</h2><div class="stat-table-wrap"><table class="stat-table">' +
     '<tr><th>' + I18N.t('admin.tableGame') + '</th><th class="num">' + I18N.t('admin.tablePlayersWithScores') +
     '</th><th class="num">' + I18N.t('admin.tablePlaysByPlayers') + '</th><th class="num">' + I18N.t('admin.tableTotalPlays') + '</th></tr>' +
     st.data.map(r => {
@@ -52,7 +55,7 @@ document.addEventListener('cug-ready', async () => {
         '<td class="num">' + r.players + '</td>' +
         '<td class="num">' + r.player_plays + '</td>' +
         '<td class="num rank">' + (+r.total_plays).toLocaleString('en-US') + '</td></tr>';
-    }).join('') + '</table></div>';
+    }).join('') + '</table></div></div>';
 });
 </script>
 </body>

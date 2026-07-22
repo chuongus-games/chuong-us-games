@@ -36,7 +36,7 @@
         faq2A: 'Yes — all games are free, with no download and no signup required. A free account only unlocks the leaderboard.',
         faq3Q: 'Do I need to download anything to play?',
         faq3A: 'No. Every game runs directly in your browser on desktop or mobile.',
-        footer: '© 2026 chuong.us — Simple games, extreme challenge. Made with 🔥 in Da Lat.',
+        footer: '© 2026 Chuong.us | chuonglife@gmail.com',
         card: {
           flappy: 'Tap to fly through the gaps. Everyone knows how to play. Almost nobody scores 10.',
           dodge: 'Guide the blue square through spinning bullets to the goal. One touch sends you back to start.',
@@ -155,7 +155,7 @@
         faq2A: 'Có — tất cả trò chơi đều miễn phí, không cần tải về hay đăng ký. Tài khoản miễn phí chỉ mở khóa bảng xếp hạng.',
         faq3Q: 'Tôi có cần tải gì để chơi không?',
         faq3A: 'Không. Mọi trò chơi chạy trực tiếp trên trình duyệt của bạn, cả máy tính lẫn di động.',
-        footer: '© 2026 chuong.us — Trò chơi đơn giản, thử thách cực độ. Làm với 🔥 tại Đà Lạt.',
+        footer: '© 2026 Chuong.us | chuonglife@gmail.com',
         card: {
           flappy: 'Chạm để bay qua khe hở. Ai cũng biết cách chơi. Gần như không ai đạt điểm 10.',
           dodge: 'Dẫn ô vuông xanh vượt qua các viên đạn xoay để tới đích. Chạm một cái là quay lại từ đầu.',
@@ -274,7 +274,7 @@
         faq2A: '是的 — 所有游戏均免费，无需下载也无需注册。免费账号仅用于解锁排行榜功能。',
         faq3Q: '游玩需要下载什么吗？',
         faq3A: '不需要。所有游戏都直接在你的浏览器中运行，电脑和手机均可。',
-        footer: '© 2026 chuong.us — 简单的游戏，极致的挑战。用 🔥 制作于大叻。',
+        footer: '© 2026 Chuong.us | chuonglife@gmail.com',
         card: {
           flappy: '轻点让小鸟飞过缝隙。规则人人都懂，但几乎没人能得10分。',
           dodge: '操控蓝色方块穿过旋转的子弹到达终点。碰到一下就要从头再来。',
@@ -393,7 +393,7 @@
         faq2A: 'Sí — todos los juegos son gratuitos, sin descargas ni registro. Una cuenta gratuita solo desbloquea la clasificación.',
         faq3Q: '¿Necesito descargar algo para jugar?',
         faq3A: 'No. Todos los juegos funcionan directamente en tu navegador, en computadora o celular.',
-        footer: '© 2026 chuong.us — Juegos simples, desafío extremo. Hecho con 🔥 en Da Lat.',
+        footer: '© 2026 Chuong.us | chuonglife@gmail.com',
         card: {
           flappy: 'Toca para volar a través de los huecos. Todos saben jugarlo. Casi nadie llega a 10 puntos.',
           dodge: 'Guía el cuadrado azul a través de balas giratorias hasta la meta. Un toque te devuelve al inicio.',
@@ -512,7 +512,7 @@
         faq2A: 'Sim — todos os jogos são gratuitos, sem download nem cadastro. Uma conta gratuita apenas desbloqueia a classificação.',
         faq3Q: 'Preciso baixar algo para jogar?',
         faq3A: 'Não. Todos os jogos rodam direto no seu navegador, no computador ou no celular.',
-        footer: '© 2026 chuong.us — Jogos simples, desafio extremo. Feito com 🔥 em Da Lat.',
+        footer: '© 2026 Chuong.us | chuonglife@gmail.com',
         card: {
           flappy: 'Toque para voar pelos vãos. Todo mundo sabe jogar. Quase ninguém marca 10.',
           dodge: 'Guie o quadrado azul por entre balas giratórias até a meta. Um toque te manda de volta ao início.',
