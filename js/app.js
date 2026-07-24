@@ -16,7 +16,8 @@
     maze:    { name: 'Wire Maze',      icon: '🌀', unit: 'wins' },
     runner:  { name: 'Spike Runner',   icon: '🏃', unit: 'm' },
     colorrush: { name: 'Color Rush',   icon: '🎨', unit: 'streak' },
-    numrush:   { name: 'Number Rush',  icon: '🔢', unit: 's', lowerBetter: true }
+    numrush:   { name: 'Number Rush',  icon: '🔢', unit: 's', lowerBetter: true },
+    serpent:   { name: 'Neon Serpent', icon: '🐍', unit: 'pts' }
   };
 
   const CUG = {

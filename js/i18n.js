@@ -50,7 +50,8 @@
           maze: 'Trace your cursor through a narrow corridor to the goal. Touch a wall — back to start.',
           runner: 'Jump over spikes at ever-increasing speed. How far can you run?',
           colorrush: 'Tap only when the card matches the target color. One wrong tap or one miss ends your streak.',
-          numrush: 'Tap 1 to 25 in order as fast as you can. Every wrong tap costs you a second.'
+          numrush: 'Tap 1 to 25 in order as fast as you can. Every wrong tap costs you a second.',
+          serpent: 'Steer a growing snake around a 20x20 grid. Every bite makes it faster — one wrong turn ends the run.'
         }
       },
       profile: {
@@ -147,6 +148,11 @@
           seoNote: 'Number Rush is a free online speed and focus game built on the classic Schulte grid: find and tap every number from 1 to 25 in order, as fast as possible, while a single wrong tap costs you a time penalty. Simple to explain, brutally hard to do quickly.',
           tapToStart: 'Tap 1 to begin — find every number in order', findLabel: 'Find {n}',
           missPenalty: '(includes {miss}s miss penalty)', bestLabel: 'BEST {n}s'
+        },
+        serpent: {
+          hint: 'Arrow keys / WASD, or swipe on mobile, to steer. Eat the dot to grow — speed increases every time. Hit a wall or your own tail and it\'s over.',
+          seoNote: 'Neon Serpent is a free hard snake game online: steer a growing serpent around a 20x20 grid, eating dots while dodging the walls and your own ever-longer tail. The rules are the classic ones everyone knows — the speed ramp is what makes this one of the hardest snake games to play for very long.',
+          tapToStart: 'Tap or press any arrow key to start', gameOver: 'Nice run! Tap to play again', bestLabel: 'BEST {n} pts'
         }
       }
     },
@@ -187,7 +193,8 @@
           maze: 'Rê chuột qua hành lang hẹp để tới đích. Chạm tường — quay lại từ đầu.',
           runner: 'Nhảy qua chông với tốc độ tăng dần. Bạn chạy được bao xa?',
           colorrush: 'Chỉ chạm khi thẻ đúng màu mục tiêu. Chạm sai hoặc bỏ lỡ là mất chuỗi ngay.',
-          numrush: 'Chạm số 1 đến 25 theo đúng thứ tự nhanh nhất có thể. Mỗi lần chạm sai bị cộng thêm 1 giây.'
+          numrush: 'Chạm số 1 đến 25 theo đúng thứ tự nhanh nhất có thể. Mỗi lần chạm sai bị cộng thêm 1 giây.',
+          serpent: 'Điều khiển con rắn lớn dần trên lưới 20x20. Mỗi lần ăn mồi tốc độ lại tăng — rẽ sai là kết thúc.'
         }
       },
       profile: {
@@ -284,6 +291,11 @@
           seoNote: 'Number Rush là trò chơi miễn phí rèn tốc độ và sự tập trung dựa trên bảng Schulte kinh điển: tìm và chạm từng số từ 1 đến 25 theo đúng thứ tự, nhanh nhất có thể, trong khi mỗi lần chạm sai sẽ bị phạt thêm thời gian. Luật chơi đơn giản nhưng để làm thật nhanh thì cực kỳ khó.',
           tapToStart: 'Chạm số 1 để bắt đầu — tìm đủ các số theo đúng thứ tự', findLabel: 'Tìm số {n}',
           missPenalty: '(đã cộng {miss}s phạt chạm sai)', bestLabel: 'CAO NHẤT {n}s'
+        },
+        serpent: {
+          hint: 'Dùng phím mũi tên / WASD, hoặc vuốt trên di động, để điều khiển. Ăn chấm để lớn lên — tốc độ tăng mỗi lần ăn. Chạm tường hoặc tự cắn đuôi là thua.',
+          seoNote: 'Neon Serpent là trò rắn săn mồi khó, miễn phí: điều khiển con rắn lớn dần trên lưới 20x20, vừa ăn mồi vừa né tường và cái đuôi ngày càng dài của chính mình. Luật chơi kinh điển ai cũng biết — tốc độ tăng dần mới là thứ khiến đây thành một trong những trò rắn khó sống lâu nhất.',
+          tapToStart: 'Chạm hoặc bấm phím mũi tên để bắt đầu', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} điểm'
         }
       }
     },
@@ -324,7 +336,8 @@
           maze: '拖动光标穿过狭窄的通道到达终点。碰到墙壁就要从头再来。',
           runner: '以不断加快的速度跳过尖刺。你能跑多远？',
           colorrush: '只有卡片颜色与目标一致时才能点击。点错或漏点都会立刻中断连击。',
-          numrush: '按顺序尽快点击1到25。每次点错都会被罚1秒。'
+          numrush: '按顺序尽快点击1到25。每次点错都会被罚1秒。',
+          serpent: '操控一条不断变长的蛇在20x20的网格上移动。每吃一口速度就更快——转错方向就结束了。'
         }
       },
       profile: {
@@ -421,6 +434,11 @@
           seoNote: 'Number Rush 是一款基于经典施特勒方格（Schulte Grid）的免费速度与专注力游戏：按顺序尽快找到并点击1到25的每个数字，点错一次就会被罚时间。规则简单，但要做到又快又准却相当困难。',
           tapToStart: '点击1开始 — 按顺序找出所有数字', findLabel: '寻找 {n}',
           missPenalty: '（已含{miss}秒失误惩罚）', bestLabel: '最佳 {n}秒'
+        },
+        serpent: {
+          hint: '使用方向键 / WASD，或在手机上滑动，来控制方向。吃到圆点会变长——每次都会加速。撞到墙壁或自己的尾巴就结束了。',
+          seoNote: 'Neon Serpent 是一款免费的高难度贪吃蛇游戏：操控一条不断变长的蛇在20x20的网格上移动，一边吃圆点一边躲避墙壁和自己越来越长的尾巴。规则是大家都熟悉的经典玩法——不断加快的速度才是让它成为最难长时间存活的贪吃蛇游戏之一的原因。',
+          tapToStart: '轻点或按任意方向键开始', gameOver: '玩得不错！轻点重新开始', bestLabel: '最佳 {n} 分'
         }
       }
     },
@@ -461,7 +479,8 @@
           maze: 'Guía tu cursor por un corredor estrecho hasta la meta. Tocar una pared te devuelve al inicio.',
           runner: 'Salta sobre pinchos a una velocidad que aumenta sin parar. ¿Hasta dónde puedes llegar?',
           colorrush: 'Toca solo cuando la tarjeta coincida con el color objetivo. Un toque erróneo o un fallo termina tu racha.',
-          numrush: 'Toca del 1 al 25 en orden lo más rápido posible. Cada toque erróneo te cuesta un segundo.'
+          numrush: 'Toca del 1 al 25 en orden lo más rápido posible. Cada toque erróneo te cuesta un segundo.',
+          serpent: 'Guía una serpiente que crece en una cuadrícula de 20x20. Cada bocado la hace más rápida — un giro en falso termina la partida.'
         }
       },
       profile: {
@@ -558,6 +577,11 @@
           seoNote: 'Number Rush es un juego gratuito en línea de velocidad y concentración basado en la clásica grilla de Schulte: encuentra y toca cada número del 1 al 25 en orden, lo más rápido posible, mientras cada toque erróneo te cuesta una penalización de tiempo. Fácil de explicar, brutalmente difícil de hacer rápido.',
           tapToStart: 'Toca el 1 para empezar — encuentra todos los números en orden', findLabel: 'Buscar {n}',
           missPenalty: '(incluye {miss}s de penalización por fallos)', bestLabel: 'MEJOR {n}s'
+        },
+        serpent: {
+          hint: 'Usa las flechas / WASD, o desliza en móvil, para dirigirte. Come el punto para crecer — la velocidad aumenta cada vez. Chocar con una pared o tu propia cola termina la partida.',
+          seoNote: 'Neon Serpent es un juego gratuito de serpiente en línea, difícil: guía una serpiente que crece en una cuadrícula de 20x20, comiendo puntos mientras esquivas las paredes y tu propia cola cada vez más larga. Las reglas son las clásicas que todos conocen — el aumento de velocidad es lo que lo convierte en uno de los juegos de serpiente más difíciles de sostener por mucho tiempo.',
+          tapToStart: 'Toca o pulsa cualquier flecha para empezar', gameOver: '¡Buena partida! Toca para jugar de nuevo', bestLabel: 'MEJOR {n} pts'
         }
       }
     },
@@ -598,7 +622,8 @@
           maze: 'Trace o cursor por um corredor estreito até a meta. Tocar uma parede te manda de volta ao início.',
           runner: 'Pule espinhos numa velocidade que só aumenta. Até onde você consegue correr?',
           colorrush: 'Toque só quando o cartão bater com a cor alvo. Um toque errado ou uma falha zera sua sequência.',
-          numrush: 'Toque de 1 a 25 em ordem o mais rápido possível. Cada toque errado custa um segundo.'
+          numrush: 'Toque de 1 a 25 em ordem o mais rápido possível. Cada toque errado custa um segundo.',
+          serpent: 'Guie uma cobra que cresce numa grade de 20x20. Cada mordida deixa tudo mais rápido — uma curva errada encerra a corrida.'
         }
       },
       profile: {
@@ -695,6 +720,11 @@
           seoNote: 'Number Rush é um jogo gratuito de velocidade e foco on-line baseado na clássica grade de Schulte: encontre e toque cada número de 1 a 25 em ordem, o mais rápido possível, enquanto cada toque errado custa uma penalidade de tempo. Fácil de explicar, brutalmente difícil de fazer rápido.',
           tapToStart: 'Toque no 1 para começar — encontre todos os números em ordem', findLabel: 'Encontrar {n}',
           missPenalty: '(inclui {miss}s de penalidade por erro)', bestLabel: 'MELHOR {n}s'
+        },
+        serpent: {
+          hint: 'Use as setas / WASD, ou deslize no celular, para guiar. Coma o ponto para crescer — a velocidade aumenta a cada vez. Bater na parede ou no próprio rabo encerra a partida.',
+          seoNote: 'Neon Serpent é um jogo gratuito de cobrinha on-line, difícil: guie uma cobra que cresce numa grade de 20x20, comendo pontos enquanto desvia das paredes e do próprio rabo cada vez mais longo. As regras são as clássicas que todo mundo conhece — o aumento de velocidade é o que faz dele um dos jogos de cobrinha mais difíceis de sustentar por muito tempo.',
+          tapToStart: 'Toque ou pressione qualquer seta para começar', gameOver: 'Boa corrida! Toque para jogar de novo', bestLabel: 'MELHOR {n} pts'
         }
       }
     }

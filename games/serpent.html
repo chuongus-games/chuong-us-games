@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Serpent — Hardest Snake Game Online Free</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Grow a neon snake on a 20x20 grid in Neon Serpent, a brutally hard free snake game online. Speed ramps up with every bite and one wrong turn ends the run. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/serpent.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Neon Serpent — Hardest Snake Game Online Free">
+<meta property="og:description" content="Grow a neon snake on a 20x20 grid in Neon Serpent, a brutally hard free snake game online. Speed ramps up with every bite and one wrong turn ends the run. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/serpent.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neon Serpent — Hardest Snake Game Online Free">
+<meta name="twitter:description" content="Grow a neon snake on a 20x20 grid in Neon Serpent, a brutally hard free snake game online. Speed ramps up with every bite and one wrong turn ends the run. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Neon Serpent",
+  "url": "https://chuong.us/games/serpent.html",
+  "description": "Grow a neon snake on a 20x20 grid in Neon Serpent, a brutally hard free snake game online. Speed ramps up with every bite and one wrong turn ends the run. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Chuong US Games",
+      "item": "https://chuong.us/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Neon Serpent",
+      "item": "https://chuong.us/games/serpent.html"
+    }
+  ]
+}
+</script>
+<style>
+#spWrap { text-align: center; }
+#spCanvasBox { position: relative; }
+</style>
+</head>
+<body class="game-page" data-game="serpent">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
+  <h1>🐍 Neon Serpent</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="400" height="400"></canvas></div>
+<p class="hint" data-i18n="game.serpent.hint">Arrow keys / WASD, or swipe on mobile, to steer. Eat the dot to grow — speed increases every time. Hit a wall or your own tail and it's over.</p>
+<p class="seo-note" data-i18n="game.serpent.seoNote">Neon Serpent is a free hard snake game online: steer a growing serpent around a 20x20 grid, eating dots while dodging the walls and your own ever-longer tail. The rules are the classic ones everyone knows — the speed ramp is what makes this one of the hardest snake games to play for very long.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="avoid.html">☄️ Meteor Rain</a>
+    <a href="maze.html">🌀 Wire Maze</a>
+    <a href="stack.html">🧱 Neon Stack</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_serpent_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? I18N.t('game.serpent.bestLabel', { n: best }) : '';
+showBest();
+
+const N = 20, CELL = cv.width / N; // 20x20 grid
+let body, dir, queued, food, score, state = 'ready';
+
+function resetGame() {
+  body = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
+  dir = { x: 1, y: 0 };
+  queued = null;
+  score = 0;
+  spawnFood();
+  state = 'ready';
+}
+
+function spawnFood() {
+  const occ = new Set(body.map(s => s.x + ',' + s.y));
+  const free = [];
+  for (let x = 0; x < N; x++) for (let y = 0; y < N; y++) {
+    if (!occ.has(x + ',' + y)) free.push({ x, y });
+  }
+  food = free.length ? free[Math.floor(Math.random() * free.length)] : null;
+}
+
+function setDir(dx, dy) {
+  if (state !== 'play') return; // lock input outside an active round
+  const base = queued || dir;
+  if (dx === -base.x && dy === -base.y) return; // no direct reversal into own neck
+  if (dx === base.x && dy === base.y) return;
+  queued = { x: dx, y: dy };
+}
+
+function intervalFor(s) { return Math.max(70, 260 - s * 4); }
+
+function endRun() {
+  if (state === 'dead') return; // guard: submit exactly once
+  state = 'dead';
+  if (window.CUG) CUG.submitScore('serpent', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function doTick() {
+  if (queued) { dir = queued; queued = null; }
+  const head = body[0];
+  const nx = head.x + dir.x, ny = head.y + dir.y;
+  if (nx < 0 || ny < 0 || nx >= N || ny >= N) { endRun(); return; }
+  const growing = food && nx === food.x && ny === food.y;
+  // the tail vacates this same tick unless we're growing, so it must not block the move
+  const bodyForCollision = growing ? body : body.slice(0, -1);
+  if (bodyForCollision.some(s => s.x === nx && s.y === ny)) { endRun(); return; }
+  body.unshift({ x: nx, y: ny });
+  if (growing) { score++; spawnFood(); }
+  else body.pop();
+}
+
+function startOrRestart() {
+  if (state === 'ready') { state = 'play'; }
+  else if (state === 'dead') { resetGame(); state = 'play'; }
+}
+
+// keyboard
+addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  const map = { arrowup: [0, -1], arrowdown: [0, 1], arrowleft: [-1, 0], arrowright: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0] };
+  if (map[k]) {
+    e.preventDefault();
+    if (state === 'play') setDir(map[k][0], map[k][1]);
+    else startOrRestart();
+    return;
+  }
+  if (k === ' ') { e.preventDefault(); startOrRestart(); }
+});
+
+// swipe controls for mobile
+let touchStart = null;
+cv.addEventListener('pointerdown', e => {
+  touchStart = { x: e.clientX, y: e.clientY };
+  if (state !== 'play') startOrRestart();
+});
+cv.addEventListener('pointermove', e => {
+  if (!touchStart || state !== 'play') return;
+  const dx = e.clientX - touchStart.x, dy = e.clientY - touchStart.y;
+  const THRESH = 24;
+  if (Math.abs(dx) < THRESH && Math.abs(dy) < THRESH) return;
+  if (Math.abs(dx) > Math.abs(dy)) setDir(dx > 0 ? 1 : -1, 0);
+  else setDir(0, dy > 0 ? 1 : -1);
+  touchStart = { x: e.clientX, y: e.clientY };
+});
+
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, cv.width, cv.height);
+  if (food) {
+    ctx.fillStyle = '#f472b6'; ctx.shadowColor = '#f472b6'; ctx.shadowBlur = 12;
+    ctx.beginPath();
+    ctx.arc((food.x + .5) * CELL, (food.y + .5) * CELL, CELL * .32, 0, 7);
+    ctx.fill(); ctx.shadowBlur = 0;
+  }
+  body.forEach((s, i) => {
+    ctx.fillStyle = i === 0 ? '#22d3ee' : '#0e9aae';
+    ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = i === 0 ? 12 : 4;
+    const pad = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(s.x * CELL + pad, s.y * CELL + pad, CELL - pad * 2, CELL - pad * 2, 5);
+    ctx.fill();
+  });
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 26px Segoe UI, sans-serif';
+  ctx.fillText(score + ' pts', cv.width / 2, 34);
+  ctx.font = '700 17px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText(I18N.t('game.serpent.tapToStart'), cv.width / 2, cv.height / 2);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.serpent.gameOver'), cv.width / 2, cv.height / 2); }
+}
+
+let lastTs = 0, acc = 0;
+function step(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = ts - lastTs;
+  lastTs = ts;
+  if (state === 'play') {
+    acc += dt;
+    const iv = intervalFor(score);
+    while (acc >= iv && state === 'play') { doTick(); acc -= iv; }
+  } else {
+    acc = 0;
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+resetGame();
+requestAnimationFrame(step);
+</script>
+</body>
+</html>
