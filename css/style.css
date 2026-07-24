@@ -273,3 +273,21 @@ canvas.game {
   width: 28px; height: 28px; cursor: pointer; font-size: .85rem; flex-shrink: 0;
 }
 .fav-unpin:hover { color: var(--danger); border-color: var(--danger); }
+
+/* ---------- mobile ---------- */
+@media (max-width: 680px) {
+  header.site .wrap { flex-direction: column; }
+  .tag-hard, header.site #cug-auth { margin-left: 0; }
+
+  .hero { padding: 36px 0 26px; }
+  .hero p { font-size: .95rem; }
+
+  .game-top { justify-content: center; }
+  .game-top .best { margin-left: 0; }
+
+  .cug-lb-panel { width: 100vw; }
+
+  .panel-page { padding: 24px 16px 50px; }
+  .tiles { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+}
+
