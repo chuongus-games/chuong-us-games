@@ -55,6 +55,7 @@
       CUG.gateGames();
       CUG.renderFavButton();
       CUG.renderLeaderboardWidget();
+      CUG.renderDonateButton();
       sb.auth.onAuthStateChange(async (_e, session) => {
         const had = !!CUG.user;
         CUG.user = session ? session.user : null;
@@ -205,10 +206,28 @@
       document.body.appendChild(ov);
       CUG.renderGoogleButton(ov.querySelector('.gbtn'));
       const block = e => {
-        if (!ov.contains(e.target)) { e.stopPropagation(); e.preventDefault(); }
+        // let the donate button through even while the login gate is up —
+        // no reason to force a sign-in just to support the site
+        if (!ov.contains(e.target) && !(e.target.closest && e.target.closest('.cug-donate-btn'))) {
+          e.stopPropagation(); e.preventDefault();
+        }
       };
       addEventListener('keydown', block, true);
       addEventListener('pointerdown', block, true);
+    },
+
+    /* floating donate button, shown site-wide */
+    DONATE_URL: 'https://www.paypal.com/donate/?business=chuongsala%40gmail.com&currency_code=USD',
+    renderDonateButton() {
+      if (document.querySelector('.cug-donate-btn')) return;
+      const a = document.createElement('a');
+      a.className = 'cug-donate-btn';
+      a.href = CUG.DONATE_URL;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.title = I18N.t('common.donateTooltip');
+      a.innerHTML = '<span class="heart">❤️</span><span class="label">' + I18N.t('common.donate') + '</span>';
+      document.body.appendChild(a);
     },
 
     /* leaderboard button + slide panel on game pages (body[data-game]) */

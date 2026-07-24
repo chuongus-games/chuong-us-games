@@ -23,7 +23,8 @@
         signInToPlayBody: 'Sign in with Google to play {game}, save your best scores and climb the leaderboard.',
         signInGoogleFallback: 'Sign in with Google', player: 'player', signOutTitle: 'Sign out', close: 'Close',
         start: 'START', goal: 'GOAL', playsLine: '▶ <b>{n}</b> plays',
-        pin: 'Pin to favorites', unpin: 'Remove from favorites'
+        pin: 'Pin to favorites', unpin: 'Remove from favorites',
+        donate: 'Donate', donateTooltip: 'Support Chuong US Games via PayPal ❤️'
       },
       index: {
         tagline: 'Easy to play · Hard to win', heroLine1: 'Simple to play', heroLine2: 'Extremely hard to win',
@@ -185,7 +186,8 @@
         signInToPlayBody: 'Đăng nhập bằng Google để chơi {game}, lưu điểm cao nhất và leo lên bảng xếp hạng.',
         signInGoogleFallback: 'Đăng nhập bằng Google', player: 'người chơi', signOutTitle: 'Đăng xuất', close: 'Đóng',
         start: 'BẮT ĐẦU', goal: 'ĐÍCH', playsLine: '▶ <b>{n}</b> lượt chơi',
-        pin: 'Ghim vào yêu thích', unpin: 'Bỏ ghim yêu thích'
+        pin: 'Ghim vào yêu thích', unpin: 'Bỏ ghim yêu thích',
+        donate: 'Ủng hộ', donateTooltip: 'Ủng hộ Chuong US Games qua PayPal ❤️'
       },
       index: {
         tagline: 'Dễ chơi · Khó thắng', heroLine1: 'Chơi thì dễ', heroLine2: 'Thắng thì cực khó',
@@ -347,7 +349,8 @@
         signInToPlayBody: '使用 Google 登录来玩{game}，保存最佳成绩并冲击排行榜。',
         signInGoogleFallback: '使用 Google 登录', player: '玩家', signOutTitle: '退出登录', close: '关闭',
         start: '起点', goal: '终点', playsLine: '▶ <b>{n}</b> 次游玩',
-        pin: '加入收藏', unpin: '取消收藏'
+        pin: '加入收藏', unpin: '取消收藏',
+        donate: '捐赠', donateTooltip: '通过 PayPal 支持 Chuong US Games ❤️'
       },
       index: {
         tagline: '易上手 · 难通关', heroLine1: '上手很简单', heroLine2: '通关极其困难',
@@ -509,7 +512,8 @@
         signInToPlayBody: 'Inicia sesión con Google para jugar {game}, guardar tus mejores puntuaciones y subir en la clasificación.',
         signInGoogleFallback: 'Iniciar sesión con Google', player: 'jugador', signOutTitle: 'Cerrar sesión', close: 'Cerrar',
         start: 'INICIO', goal: 'META', playsLine: '▶ <b>{n}</b> partidas',
-        pin: 'Fijar en favoritos', unpin: 'Quitar de favoritos'
+        pin: 'Fijar en favoritos', unpin: 'Quitar de favoritos',
+        donate: 'Donar', donateTooltip: 'Apoya a Chuong US Games por PayPal ❤️'
       },
       index: {
         tagline: 'Fácil de jugar · Difícil de ganar', heroLine1: 'Fácil de jugar', heroLine2: 'Extremadamente difícil de ganar',
@@ -671,7 +675,8 @@
         signInToPlayBody: 'Entre com o Google para jogar {game}, salvar suas melhores pontuações e subir na classificação.',
         signInGoogleFallback: 'Entrar com o Google', player: 'jogador', signOutTitle: 'Sair', close: 'Fechar',
         start: 'INÍCIO', goal: 'META', playsLine: '▶ <b>{n}</b> jogadas',
-        pin: 'Fixar nos favoritos', unpin: 'Remover dos favoritos'
+        pin: 'Fixar nos favoritos', unpin: 'Remover dos favoritos',
+        donate: 'Doar', donateTooltip: 'Apoie o Chuong US Games pelo PayPal ❤️'
       },
       index: {
         tagline: 'Fácil de jogar · Difícil de vencer', heroLine1: 'Fácil de jogar', heroLine2: 'Extremamente difícil de vencer',
