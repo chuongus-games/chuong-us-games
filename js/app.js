@@ -217,7 +217,7 @@
     },
 
     /* floating donate button, shown site-wide */
-    DONATE_URL: 'https://www.paypal.com/donate/?business=chuongsala%40gmail.com&currency_code=USD',
+    DONATE_URL: 'https://paypal.me/chuongsala',
     renderDonateButton() {
       if (document.querySelector('.cug-donate-btn')) return;
       const a = document.createElement('a');
