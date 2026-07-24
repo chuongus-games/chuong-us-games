@@ -20,6 +20,24 @@
     serpent:   { name: 'Neon Serpent', icon: '🐍', unit: 'pts' }
   };
 
+  /* fixed filler leaderboard rows (social proof) — merged with real scores at render time,
+     never written to the database. Each list is already sorted best-to-worst for that game's metric. */
+  const FAKE_LB = {
+    flappy:    [['ShadowByte', 47], ['PixelNinja', 39], ['NeonFox', 33], ['TurboTaco', 28], ['GlitchRider', 24], ['MidnightAce', 21], ['CryoWolf', 18], ['ByteRunner87', 15], ['ZenModeX', 12], ['VelvetHawk', 10]],
+    dodge:     [['RapidLynx', 34], ['EchoDrift', 29], ['SolarFlare7', 25], ['IronWhisper', 21], ['DuskRaven', 18], ['BlazeCipher', 15], ['FrostVein', 12], ['NovaSprint', 10], ['CobaltEdge', 8], ['WildMantis', 6]],
+    reaction:  [['SteelOrbit', 142], ['LunarKite', 151], ['EmberFalcon', 158], ['VortexJay', 163], ['ShadowByte', 169], ['PixelNinja', 175], ['NeonFox', 181], ['TurboTaco', 188], ['GlitchRider', 194], ['MidnightAce', 201]],
+    timer:     [['CryoWolf', 22], ['ByteRunner87', 18], ['ZenModeX', 15], ['VelvetHawk', 13], ['RapidLynx', 11], ['EchoDrift', 9], ['SolarFlare7', 8], ['IronWhisper', 6], ['DuskRaven', 5], ['BlazeCipher', 4]],
+    memory:    [['FrostVein', 34], ['NovaSprint', 29], ['CobaltEdge', 25], ['WildMantis', 22], ['SteelOrbit', 19], ['LunarKite', 17], ['EmberFalcon', 15], ['VortexJay', 13], ['ShadowByte', 11], ['PixelNinja', 9]],
+    avoid:     [['NeonFox', 61], ['TurboTaco', 54], ['GlitchRider', 48], ['MidnightAce', 43], ['CryoWolf', 38], ['ByteRunner87', 34], ['ZenModeX', 30], ['VelvetHawk', 26], ['RapidLynx', 23], ['EchoDrift', 20]],
+    stack:     [['SolarFlare7', 47], ['IronWhisper', 41], ['DuskRaven', 36], ['BlazeCipher', 32], ['FrostVein', 28], ['NovaSprint', 24], ['CobaltEdge', 21], ['WildMantis', 18], ['SteelOrbit', 15], ['LunarKite', 12]],
+    aim:       [['EmberFalcon', 8.42], ['VortexJay', 9.15], ['ShadowByte', 9.87], ['PixelNinja', 10.36], ['NeonFox', 10.94], ['TurboTaco', 11.52], ['GlitchRider', 12.18], ['MidnightAce', 12.77], ['CryoWolf', 13.35], ['ByteRunner87', 14.02]],
+    maze:      [['ZenModeX', 27], ['VelvetHawk', 23], ['RapidLynx', 20], ['EchoDrift', 17], ['SolarFlare7', 15], ['IronWhisper', 13], ['DuskRaven', 11], ['BlazeCipher', 9], ['FrostVein', 7], ['NovaSprint', 6]],
+    runner:    [['CobaltEdge', 612], ['WildMantis', 548], ['SteelOrbit', 497], ['LunarKite', 452], ['EmberFalcon', 410], ['VortexJay', 371], ['ShadowByte', 335], ['PixelNinja', 301], ['NeonFox', 270], ['TurboTaco', 241]],
+    colorrush: [['GlitchRider', 38], ['MidnightAce', 33], ['CryoWolf', 29], ['ByteRunner87', 25], ['ZenModeX', 22], ['VelvetHawk', 19], ['RapidLynx', 16], ['EchoDrift', 14], ['SolarFlare7', 12], ['IronWhisper', 10]],
+    numrush:   [['DuskRaven', 14.28], ['BlazeCipher', 15.63], ['FrostVein', 16.94], ['NovaSprint', 18.21], ['CobaltEdge', 19.47], ['WildMantis', 20.68], ['SteelOrbit', 21.93], ['LunarKite', 23.15], ['EmberFalcon', 24.42], ['VortexJay', 25.71]],
+    serpent:   [['ShadowByte', 143], ['PixelNinja', 128], ['NeonFox', 114], ['TurboTaco', 102], ['GlitchRider', 91], ['MidnightAce', 81], ['CryoWolf', 72], ['ByteRunner87', 64], ['ZenModeX', 57], ['VelvetHawk', 50]]
+  };
+
   const CUG = {
     sb, user: null, profile: null, meta: GAME_META,
 
@@ -218,10 +236,13 @@
         panel.classList.toggle('open');
         if (!panel.classList.contains('open')) return;
         const list = panel.querySelector('.cug-lb-list');
-        const rows = await CUG.leaderboard(game, 10);
-        if (!rows.length) { list.innerHTML = '<div class="cug-lb-row">' + I18N.t('common.noScoresYet') + '</div>'; }
+        const realRows = await CUG.leaderboard(game, 10);
+        const fake = (FAKE_LB[game] || []).map(([u, s]) => ({ username: u, best: s }));
+        const lowerBetter = !!(GAME_META[game] && GAME_META[game].lowerBetter);
+        const merged = realRows.concat(fake).sort((a, b) => lowerBetter ? a.best - b.best : b.best - a.best).slice(0, 10);
+        if (!merged.length) { list.innerHTML = '<div class="cug-lb-row">' + I18N.t('common.noScoresYet') + '</div>'; }
         else {
-          list.innerHTML = rows.map((r, i) =>
+          list.innerHTML = merged.map((r, i) =>
             '<div class="cug-lb-row"><span class="r">' + (i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1)) + '</span>' +
             '<span class="n">' + CUG.esc(r.username) + '</span>' +
             '<span class="s">' + r.best + ' ' + GAME_META[game].unit + '</span></div>').join('');
