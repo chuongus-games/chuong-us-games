@@ -191,6 +191,7 @@ canvas.game {
   font-size: .88rem; border-bottom: 1px solid var(--line);
 }
 .cug-lb-row .r { width: 28px; text-align: center; font-weight: 800; }
+.cug-lb-row .flag { width: 20px; text-align: center; font-size: 1rem; flex-shrink: 0; }
 .cug-lb-row .n { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cug-lb-row .s { color: var(--gold); font-weight: 700; }
 .cug-lb-note { margin-top: 12px; font-size: .78rem; color: var(--muted); }

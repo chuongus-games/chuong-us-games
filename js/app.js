@@ -4,6 +4,43 @@
   const SUPABASE_KEY = 'sb_publishable_qcNXOOBcJIvf0mEki-1JnQ_00Jzb5lp';
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  /* ISO 3166-1 alpha-2 codes — flag emoji is derived from the code (no image assets needed) */
+  const COUNTRIES = [
+    ['VN','Vietnam'],['US','United States'],['GB','United Kingdom'],['CA','Canada'],['AU','Australia'],
+    ['NZ','New Zealand'],['IE','Ireland'],['DE','Germany'],['FR','France'],['ES','Spain'],['PT','Portugal'],
+    ['IT','Italy'],['NL','Netherlands'],['BE','Belgium'],['LU','Luxembourg'],['CH','Switzerland'],['AT','Austria'],
+    ['SE','Sweden'],['NO','Norway'],['DK','Denmark'],['FI','Finland'],['IS','Iceland'],['PL','Poland'],
+    ['CZ','Czechia'],['SK','Slovakia'],['HU','Hungary'],['RO','Romania'],['BG','Bulgaria'],['GR','Greece'],
+    ['HR','Croatia'],['SI','Slovenia'],['RS','Serbia'],['UA','Ukraine'],['RU','Russia'],['TR','Turkey'],
+    ['CN','China'],['JP','Japan'],['KR','South Korea'],['KP','North Korea'],['TW','Taiwan'],['HK','Hong Kong'],
+    ['MO','Macau'],['TH','Thailand'],['LA','Laos'],['KH','Cambodia'],['MM','Myanmar'],['MY','Malaysia'],
+    ['SG','Singapore'],['ID','Indonesia'],['PH','Philippines'],['BN','Brunei'],['TL','Timor-Leste'],
+    ['IN','India'],['PK','Pakistan'],['BD','Bangladesh'],['LK','Sri Lanka'],['NP','Nepal'],['BT','Bhutan'],
+    ['MV','Maldives'],['AF','Afghanistan'],['IR','Iran'],['IQ','Iraq'],['SA','Saudi Arabia'],['AE','UAE'],
+    ['QA','Qatar'],['KW','Kuwait'],['BH','Bahrain'],['OM','Oman'],['YE','Yemen'],['JO','Jordan'],
+    ['LB','Lebanon'],['SY','Syria'],['IL','Israel'],['PS','Palestine'],['EG','Egypt'],['LY','Libya'],
+    ['TN','Tunisia'],['DZ','Algeria'],['MA','Morocco'],['SD','Sudan'],['ET','Ethiopia'],['KE','Kenya'],
+    ['TZ','Tanzania'],['UG','Uganda'],['NG','Nigeria'],['GH','Ghana'],['CI',"Côte d'Ivoire"],['SN','Senegal'],
+    ['CM','Cameroon'],['ZA','South Africa'],['ZW','Zimbabwe'],['ZM','Zambia'],['MZ','Mozambique'],['AO','Angola'],
+    ['NA','Namibia'],['BW','Botswana'],['MG','Madagascar'],['MU','Mauritius'],['KZ','Kazakhstan'],['UZ','Uzbekistan'],
+    ['MN','Mongolia'],['GE','Georgia'],['AM','Armenia'],['AZ','Azerbaijan'],['BR','Brazil'],['AR','Argentina'],
+    ['MX','Mexico'],['CO','Colombia'],['CL','Chile'],['PE','Peru'],['VE','Venezuela'],['EC','Ecuador'],
+    ['BO','Bolivia'],['PY','Paraguay'],['UY','Uruguay'],['CR','Costa Rica'],['PA','Panama'],['GT','Guatemala'],
+    ['HN','Honduras'],['SV','El Salvador'],['NI','Nicaragua'],['CU','Cuba'],['DO','Dominican Republic'],
+    ['JM','Jamaica'],['TT','Trinidad and Tobago'],['HT','Haiti'],['PR','Puerto Rico']
+  ];
+  function flagEmoji(code) {
+    if (!code || code.length !== 2) return '';
+    const cc = code.toUpperCase();
+    return String.fromCodePoint(...[...cc].map(c => 127397 + c.charCodeAt(0)));
+  }
+  /* deterministic "random" flag for filler leaderboard rows — stable per username, no DB involved */
+  function fakeCountryFor(username) {
+    let h = 0;
+    for (let i = 0; i < username.length; i++) h = (h * 31 + username.charCodeAt(i)) >>> 0;
+    return COUNTRIES[h % COUNTRIES.length][0];
+  }
+
   const GAME_META = {
     flappy:  { name: 'Flappy Neon',    icon: '🐤', unit: 'pts' },
     dodge:   { name: 'Hardest Dodge',  icon: '🔵', unit: 'wins' },
@@ -45,7 +82,7 @@
   };
 
   const CUG = {
-    sb, user: null, profile: null, meta: GAME_META,
+    sb, user: null, profile: null, meta: GAME_META, countries: COUNTRIES, flagEmoji,
 
     async init() {
       const { data } = await sb.auth.getSession();
@@ -261,14 +298,15 @@
         panel.classList.toggle('open');
         if (!panel.classList.contains('open')) return;
         const list = panel.querySelector('.cug-lb-list');
-        const realRows = await CUG.leaderboard(game, 10);
-        const fake = (FAKE_LB[game] || []).map(([u, s]) => ({ username: u, best: s }));
+        const realRows = (await CUG.leaderboard(game, 10)).map(r => ({ username: r.username, best: r.best, country: r.country || null }));
+        const fake = (FAKE_LB[game] || []).map(([u, s]) => ({ username: u, best: s, country: fakeCountryFor(u) }));
         const lowerBetter = !!(GAME_META[game] && GAME_META[game].lowerBetter);
         const merged = realRows.concat(fake).sort((a, b) => lowerBetter ? a.best - b.best : b.best - a.best).slice(0, 10);
         if (!merged.length) { list.innerHTML = '<div class="cug-lb-row">' + I18N.t('common.noScoresYet') + '</div>'; }
         else {
           list.innerHTML = merged.map((r, i) =>
             '<div class="cug-lb-row"><span class="r">' + (i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1)) + '</span>' +
+            '<span class="flag">' + flagEmoji(r.country) + '</span>' +
             '<span class="n">' + CUG.esc(r.username) + '</span>' +
             '<span class="s">' + r.best + ' ' + GAME_META[game].unit + '</span></div>').join('');
         }

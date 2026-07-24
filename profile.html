@@ -42,6 +42,15 @@
     </div>
 
     <div class="panel">
+      <h2 data-i18n="profile.countryLabel">🌍 Country</h2>
+      <div class="uname-row">
+        <select id="country"></select>
+        <button class="btn-primary" id="save-country" data-i18n="profile.save">Save</button>
+      </div>
+      <p class="msg-note" id="country-msg" style="margin-top:10px" data-i18n="profile.countryNote">Shown as a flag next to your name on leaderboards.</p>
+    </div>
+
+    <div class="panel">
       <h2 data-i18n="profile.gamesPlayed">🎮 Games played</h2>
       <div id="stats" data-i18n="common.loading">Loading…</div>
     </div>
@@ -96,6 +105,19 @@ document.addEventListener('cug-ready', async () => {
     const { error } = await CUG.sb.from('profiles').update({ username: v }).eq('id', CUG.user.id);
     if (error) msg.textContent = error.code === '23505' ? I18N.t('profile.usernameTaken') : '⚠️ ' + error.message;
     else { msg.textContent = I18N.t('profile.saved'); CUG.profile.username = v; CUG.renderAuth(); }
+  };
+
+  const country = document.getElementById('country');
+  country.innerHTML = '<option value="">' + I18N.t('profile.countryPlaceholder') + '</option>' +
+    CUG.countries.map(([code, name]) => '<option value="' + code + '">' + CUG.flagEmoji(code) + ' ' + name + '</option>').join('');
+  country.value = (CUG.profile && CUG.profile.country) || '';
+  const countryMsg = document.getElementById('country-msg');
+  const countryMsgDefault = countryMsg.textContent;
+  document.getElementById('save-country').onclick = async () => {
+    const v = country.value;
+    const { error } = await CUG.sb.from('profiles').update({ country: v }).eq('id', CUG.user.id);
+    if (error) countryMsg.textContent = '⚠️ ' + error.message;
+    else { countryMsg.textContent = I18N.t('profile.saved'); CUG.profile.country = v; setTimeout(() => { countryMsg.textContent = countryMsgDefault; }, 2000); }
   };
 
   const host = document.getElementById('stats');
