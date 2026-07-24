@@ -51,7 +51,10 @@
           runner: 'Jump over spikes at ever-increasing speed. How far can you run?',
           colorrush: 'Tap only when the card matches the target color. One wrong tap or one miss ends your streak.',
           numrush: 'Tap 1 to 25 in order as fast as you can. Every wrong tap costs you a second.',
-          serpent: 'Steer a growing snake around a 20x20 grid. Every bite makes it faster — one wrong turn ends the run.'
+          serpent: 'Steer a growing snake around a 20x20 grid. Every bite makes it faster — one wrong turn ends the run.',
+          keystrike: 'Type each falling word before it hits the bottom line. Speed keeps climbing — one missed word ends it.',
+          siege: 'Weave through bullets fired at you from every direction at once. Survive one second at a time.',
+          breaker: 'Bounce the ball and clear every brick. Boards refill faster each time — miss once and it\'s over.'
         }
       },
       profile: {
@@ -153,6 +156,22 @@
           hint: 'Arrow keys / WASD, or swipe on mobile, to steer. Eat the dot to grow — speed increases every time. Hit a wall or your own tail and it\'s over.',
           seoNote: 'Neon Serpent is a free hard snake game online: steer a growing serpent around a 20x20 grid, eating dots while dodging the walls and your own ever-longer tail. The rules are the classic ones everyone knows — the speed ramp is what makes this one of the hardest snake games to play for very long.',
           tapToStart: 'Tap or press any arrow key to start', gameOver: 'Nice run! Tap to play again', bestLabel: 'BEST {n} pts'
+        },
+        keystrike: {
+          hint: 'Type the glowing word before it reaches the red line at the bottom. Wrong keys are ignored — just keep typing. Speed increases with every word.',
+          seoNote: 'Keystrike is a free hard typing game online: words fall from the top and you must type each one, letter by letter, before it crosses the bottom line. It starts slow but the fall speed and spawn rate keep climbing, making sustained accuracy at speed one of the hardest typing challenges you\'ll find in a browser.',
+          tapToStart: 'Tap here or press any key to start', mobileHint: 'On mobile, tap the lane to bring up your keyboard.',
+          gameOver: 'Nice typing! Tap to go again', bestLabel: 'BEST {n} words'
+        },
+        siege: {
+          hint: 'Move your mouse / drag your finger to weave through incoming fire from every side. Score = seconds survived.',
+          seoNote: 'Neon Siege drops you in the middle of an open arena under fire from every direction at once. It\'s a free hard survival game online with nothing to memorize — bullets are aimed at you the instant they spawn, so only continuous movement and quick reflexes keep you alive one more second.',
+          tapToStart: 'Tap to start', gameOver: 'So close! Tap to play again', bestSecLabel: 'BEST {n}s'
+        },
+        breaker: {
+          hint: 'Move your mouse / drag your finger to steer the paddle. Tap / Space to launch. Clear every brick — the board refills faster each time. Miss once and it\'s over.',
+          seoNote: 'Neon Breaker is a free hard brick-breaking game online: keep the ball alive with your paddle while clearing full boards of bricks. Every cleared board brings back a fresh set at a slightly faster ball speed, so staying alive for a long run is what makes this one of the hardest brick games you\'ll find in a browser.',
+          tapToStart: 'Tap or press Space to launch', gameOver: 'Nice run! Tap to play again', bestLabel: 'BEST {n} bricks'
         }
       }
     },
@@ -194,7 +213,10 @@
           runner: 'Nhảy qua chông với tốc độ tăng dần. Bạn chạy được bao xa?',
           colorrush: 'Chỉ chạm khi thẻ đúng màu mục tiêu. Chạm sai hoặc bỏ lỡ là mất chuỗi ngay.',
           numrush: 'Chạm số 1 đến 25 theo đúng thứ tự nhanh nhất có thể. Mỗi lần chạm sai bị cộng thêm 1 giây.',
-          serpent: 'Điều khiển con rắn lớn dần trên lưới 20x20. Mỗi lần ăn mồi tốc độ lại tăng — rẽ sai là kết thúc.'
+          serpent: 'Điều khiển con rắn lớn dần trên lưới 20x20. Mỗi lần ăn mồi tốc độ lại tăng — rẽ sai là kết thúc.',
+          keystrike: 'Gõ từng chữ đang rơi trước khi nó chạm vạch đáy. Tốc độ ngày càng tăng — bỏ lỡ một chữ là kết thúc.',
+          siege: 'Lách qua đạn bắn tới từ mọi hướng cùng lúc. Sống sót từng giây một.',
+          breaker: 'Nảy bóng phá hết từng viên gạch. Bảng gạch được làm đầy lại nhanh hơn mỗi lần — trượt một lần là hết.'
         }
       },
       profile: {
@@ -296,6 +318,22 @@
           hint: 'Dùng phím mũi tên / WASD, hoặc vuốt trên di động, để điều khiển. Ăn chấm để lớn lên — tốc độ tăng mỗi lần ăn. Chạm tường hoặc tự cắn đuôi là thua.',
           seoNote: 'Neon Serpent là trò rắn săn mồi khó, miễn phí: điều khiển con rắn lớn dần trên lưới 20x20, vừa ăn mồi vừa né tường và cái đuôi ngày càng dài của chính mình. Luật chơi kinh điển ai cũng biết — tốc độ tăng dần mới là thứ khiến đây thành một trong những trò rắn khó sống lâu nhất.',
           tapToStart: 'Chạm hoặc bấm phím mũi tên để bắt đầu', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} điểm'
+        },
+        keystrike: {
+          hint: 'Gõ chữ đang sáng trước khi nó chạm vạch đỏ ở đáy. Gõ sai không sao — cứ tiếp tục gõ. Tốc độ tăng theo mỗi chữ đã gõ xong.',
+          seoNote: 'Keystrike là trò chơi gõ chữ khó, miễn phí: chữ rơi từ trên xuống và bạn phải gõ từng ký tự trước khi nó vượt qua vạch đáy. Ban đầu chậm nhưng tốc độ rơi và tần suất xuất hiện tăng liên tục, khiến việc gõ chính xác ở tốc độ cao trở thành một trong những thử thách gõ phím khó nhất trên trình duyệt.',
+          tapToStart: 'Chạm vào đây hoặc bấm phím bất kỳ để bắt đầu', mobileHint: 'Trên di động, chạm vào khung chơi để hiện bàn phím.',
+          gameOver: 'Gõ tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} từ'
+        },
+        siege: {
+          hint: 'Di chuột / kéo ngón tay để lách qua đạn bắn tới từ mọi phía. Điểm = số giây sống sót.',
+          seoNote: 'Neon Siege đưa bạn vào giữa một đấu trường mở bị bắn phá từ mọi hướng cùng lúc. Đây là trò sinh tồn khó, miễn phí, không có gì để học thuộc — đạn nhắm vào bạn ngay khi xuất hiện, nên chỉ có di chuyển liên tục và phản xạ nhanh mới giúp bạn sống thêm một giây nữa.',
+          tapToStart: 'Chạm để bắt đầu', gameOver: 'Tiếc quá! Chạm để chơi lại', bestSecLabel: 'CAO NHẤT {n}s'
+        },
+        breaker: {
+          hint: 'Di chuột / kéo ngón tay để điều khiển thanh đỡ. Chạm / Space để phóng bóng. Phá hết gạch — bảng gạch sẽ đầy lại nhanh hơn mỗi lần. Trượt một lần là hết.',
+          seoNote: 'Neon Breaker là trò đập gạch khó, miễn phí: giữ cho bóng không rơi bằng thanh đỡ trong khi phá hết từng bảng gạch. Mỗi lần phá hết bảng, gạch mới xuất hiện với tốc độ bóng nhanh hơn một chút, khiến việc trụ được lâu dài trở thành một trong những trò đập gạch khó nhất trên trình duyệt.',
+          tapToStart: 'Chạm hoặc bấm Space để phóng bóng', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} viên gạch'
         }
       }
     },
@@ -337,7 +375,10 @@
           runner: '以不断加快的速度跳过尖刺。你能跑多远？',
           colorrush: '只有卡片颜色与目标一致时才能点击。点错或漏点都会立刻中断连击。',
           numrush: '按顺序尽快点击1到25。每次点错都会被罚1秒。',
-          serpent: '操控一条不断变长的蛇在20x20的网格上移动。每吃一口速度就更快——转错方向就结束了。'
+          serpent: '操控一条不断变长的蛇在20x20的网格上移动。每吃一口速度就更快——转错方向就结束了。',
+          keystrike: '在掉落的单词落到底线之前把它打出来。速度不断加快——漏掉一个单词就结束。',
+          siege: '在四面八方射来的子弹中不断闪避。一秒一秒地活下去。',
+          breaker: '弹球打碎所有砖块。每次清空后砖块会更快地重新填满——失误一次就结束。'
         }
       },
       profile: {
@@ -439,6 +480,22 @@
           hint: '使用方向键 / WASD，或在手机上滑动，来控制方向。吃到圆点会变长——每次都会加速。撞到墙壁或自己的尾巴就结束了。',
           seoNote: 'Neon Serpent 是一款免费的高难度贪吃蛇游戏：操控一条不断变长的蛇在20x20的网格上移动，一边吃圆点一边躲避墙壁和自己越来越长的尾巴。规则是大家都熟悉的经典玩法——不断加快的速度才是让它成为最难长时间存活的贪吃蛇游戏之一的原因。',
           tapToStart: '轻点或按任意方向键开始', gameOver: '玩得不错！轻点重新开始', bestLabel: '最佳 {n} 分'
+        },
+        keystrike: {
+          hint: '在发光的单词到达底部红线之前把它打出来。打错字没关系——继续打就好。速度会随着每个单词加快。',
+          seoNote: 'Keystrike 是一款免费的高难度打字游戏：单词从顶部落下，你必须在它越过底线之前逐字打出来。一开始很慢，但下落速度和生成频率会不断加快，让在高速下保持准确成为浏览器里最难的打字挑战之一。',
+          tapToStart: '点击这里或按任意键开始', mobileHint: '在手机上，轻点游戏区域即可唤出键盘。',
+          gameOver: '打得不错！轻点重新开始', bestLabel: '最佳 {n} 个单词'
+        },
+        siege: {
+          hint: '移动鼠标 / 拖动手指，躲避从四面八方射来的子弹。得分 = 存活秒数。',
+          seoNote: 'Neon Siege 把你放在一个开放竞技场的中央，四面八方同时受到攻击。这是一款免费的高难度生存游戏，没有任何可以记住的规律——子弹在生成的瞬间就已瞄准你，只有不断移动和快速反应才能让你再多活一秒。',
+          tapToStart: '轻点开始', gameOver: '差一点！轻点重新开始', bestSecLabel: '最佳 {n}秒'
+        },
+        breaker: {
+          hint: '移动鼠标 / 拖动手指来操控挡板。轻点 / 空格键发射球。打碎所有砖块——每次清空后砖块会更快重新填满。失误一次就结束。',
+          seoNote: 'Neon Breaker 是一款免费的高难度打砖块游戏：用挡板保住球，同时清空一整块又一块的砖块。每清空一块砖块区域，就会以稍快的球速重新填满，能不能撑住更久的时间，正是它成为浏览器里最难打砖块游戏之一的原因。',
+          tapToStart: '轻点或按空格键发射', gameOver: '玩得不错！轻点重新开始', bestLabel: '最佳 {n} 块砖'
         }
       }
     },
@@ -480,7 +537,10 @@
           runner: 'Salta sobre pinchos a una velocidad que aumenta sin parar. ¿Hasta dónde puedes llegar?',
           colorrush: 'Toca solo cuando la tarjeta coincida con el color objetivo. Un toque erróneo o un fallo termina tu racha.',
           numrush: 'Toca del 1 al 25 en orden lo más rápido posible. Cada toque erróneo te cuesta un segundo.',
-          serpent: 'Guía una serpiente que crece en una cuadrícula de 20x20. Cada bocado la hace más rápida — un giro en falso termina la partida.'
+          serpent: 'Guía una serpiente que crece en una cuadrícula de 20x20. Cada bocado la hace más rápida — un giro en falso termina la partida.',
+          keystrike: 'Escribe cada palabra que cae antes de que llegue a la línea inferior. La velocidad no deja de subir — una palabra perdida termina la partida.',
+          siege: 'Esquiva balas disparadas desde todas las direcciones a la vez. Sobrevive un segundo a la vez.',
+          breaker: 'Rebota la bola y destruye cada ladrillo. Los tableros se rellenan más rápido cada vez — un fallo y se acabó.'
         }
       },
       profile: {
@@ -582,6 +642,22 @@
           hint: 'Usa las flechas / WASD, o desliza en móvil, para dirigirte. Come el punto para crecer — la velocidad aumenta cada vez. Chocar con una pared o tu propia cola termina la partida.',
           seoNote: 'Neon Serpent es un juego gratuito de serpiente en línea, difícil: guía una serpiente que crece en una cuadrícula de 20x20, comiendo puntos mientras esquivas las paredes y tu propia cola cada vez más larga. Las reglas son las clásicas que todos conocen — el aumento de velocidad es lo que lo convierte en uno de los juegos de serpiente más difíciles de sostener por mucho tiempo.',
           tapToStart: 'Toca o pulsa cualquier flecha para empezar', gameOver: '¡Buena partida! Toca para jugar de nuevo', bestLabel: 'MEJOR {n} pts'
+        },
+        keystrike: {
+          hint: 'Escribe la palabra resaltada antes de que llegue a la línea roja inferior. Las teclas erróneas se ignoran — sigue escribiendo. La velocidad aumenta con cada palabra.',
+          seoNote: 'Keystrike es un juego gratuito de mecanografía difícil en línea: las palabras caen desde arriba y debes escribir cada una, letra por letra, antes de que cruce la línea inferior. Empieza lento, pero la velocidad de caída y la frecuencia de aparición no dejan de subir, lo que hace de la precisión sostenida a alta velocidad uno de los retos de mecanografía más difíciles que encontrarás en un navegador.',
+          tapToStart: 'Toca aquí o pulsa cualquier tecla para empezar', mobileHint: 'En móvil, toca el carril para abrir tu teclado.',
+          gameOver: '¡Buena escritura! Toca para ir de nuevo', bestLabel: 'MEJOR {n} palabras'
+        },
+        siege: {
+          hint: 'Mueve el ratón / arrastra el dedo para esquivar el fuego que llega desde todos los lados. Puntaje = segundos sobrevividos.',
+          seoNote: 'Neon Siege te coloca en medio de una arena abierta bajo fuego desde todas las direcciones a la vez. Es un juego gratuito de supervivencia difícil en línea sin ningún patrón que memorizar — las balas apuntan hacia ti en el instante en que aparecen, así que solo el movimiento continuo y los reflejos rápidos te mantienen con vida un segundo más.',
+          tapToStart: 'Toca para empezar', gameOver: '¡Tan cerca! Toca para jugar de nuevo', bestSecLabel: 'MEJOR {n}s'
+        },
+        breaker: {
+          hint: 'Mueve el ratón / arrastra el dedo para dirigir la paleta. Toca / Espacio para lanzar. Destruye cada ladrillo — el tablero se rellena más rápido cada vez. Un fallo y se acabó.',
+          seoNote: 'Neon Breaker es un juego gratuito de romper ladrillos difícil en línea: mantén la bola viva con tu paleta mientras despejas tableros completos de ladrillos. Cada tablero despejado trae uno nuevo con la bola un poco más rápida, así que aguantar una racha larga es lo que hace de este uno de los juegos de ladrillos más difíciles que encontrarás en un navegador.',
+          tapToStart: 'Toca o pulsa Espacio para lanzar', gameOver: '¡Buena partida! Toca para jugar de nuevo', bestLabel: 'MEJOR {n} ladrillos'
         }
       }
     },
@@ -623,7 +699,10 @@
           runner: 'Pule espinhos numa velocidade que só aumenta. Até onde você consegue correr?',
           colorrush: 'Toque só quando o cartão bater com a cor alvo. Um toque errado ou uma falha zera sua sequência.',
           numrush: 'Toque de 1 a 25 em ordem o mais rápido possível. Cada toque errado custa um segundo.',
-          serpent: 'Guie uma cobra que cresce numa grade de 20x20. Cada mordida deixa tudo mais rápido — uma curva errada encerra a corrida.'
+          serpent: 'Guie uma cobra que cresce numa grade de 20x20. Cada mordida deixa tudo mais rápido — uma curva errada encerra a corrida.',
+          keystrike: 'Digite cada palavra que cai antes que ela chegue na linha inferior. A velocidade só aumenta — perder uma palavra encerra a partida.',
+          siege: 'Desvie de balas disparadas de todas as direções ao mesmo tempo. Sobreviva um segundo de cada vez.',
+          breaker: 'Rebata a bola e destrua todos os tijolos. Os quadros se enchem mais rápido a cada vez — uma falha e acabou.'
         }
       },
       profile: {
@@ -725,6 +804,22 @@
           hint: 'Use as setas / WASD, ou deslize no celular, para guiar. Coma o ponto para crescer — a velocidade aumenta a cada vez. Bater na parede ou no próprio rabo encerra a partida.',
           seoNote: 'Neon Serpent é um jogo gratuito de cobrinha on-line, difícil: guie uma cobra que cresce numa grade de 20x20, comendo pontos enquanto desvia das paredes e do próprio rabo cada vez mais longo. As regras são as clássicas que todo mundo conhece — o aumento de velocidade é o que faz dele um dos jogos de cobrinha mais difíceis de sustentar por muito tempo.',
           tapToStart: 'Toque ou pressione qualquer seta para começar', gameOver: 'Boa corrida! Toque para jogar de novo', bestLabel: 'MELHOR {n} pts'
+        },
+        keystrike: {
+          hint: 'Digite a palavra em destaque antes que ela chegue na linha vermelha inferior. Teclas erradas são ignoradas — continue digitando. A velocidade aumenta a cada palavra.',
+          seoNote: 'Keystrike é um jogo gratuito de digitação difícil on-line: palavras caem do topo e você precisa digitar cada uma, letra por letra, antes que cruze a linha inferior. Começa devagar, mas a velocidade de queda e a frequência de aparição não param de subir, o que torna a precisão sustentada em alta velocidade um dos desafios de digitação mais difíceis que você vai encontrar num navegador.',
+          tapToStart: 'Toque aqui ou pressione qualquer tecla para começar', mobileHint: 'No celular, toque na pista para abrir o teclado.',
+          gameOver: 'Boa digitação! Toque para jogar de novo', bestLabel: 'MELHOR {n} palavras'
+        },
+        siege: {
+          hint: 'Mova o mouse / arraste o dedo para desviar do fogo que vem de todos os lados. Pontuação = segundos sobrevividos.',
+          seoNote: 'Neon Siege te coloca no meio de uma arena aberta sob fogo de todas as direções ao mesmo tempo. É um jogo gratuito de sobrevivência difícil on-line sem nenhum padrão para decorar — as balas miram em você no instante em que surgem, então só o movimento contínuo e reflexos rápidos te mantêm vivo por mais um segundo.',
+          tapToStart: 'Toque para começar', gameOver: 'Tão perto! Toque para jogar de novo', bestSecLabel: 'MELHOR {n}s'
+        },
+        breaker: {
+          hint: 'Mova o mouse / arraste o dedo para guiar a raquete. Toque / Espaço para lançar. Destrua todos os tijolos — o quadro se enche mais rápido a cada vez. Uma falha e acabou.',
+          seoNote: 'Neon Breaker é um jogo gratuito de quebrar tijolos difícil on-line: mantenha a bola viva com sua raquete enquanto limpa quadros inteiros de tijolos. Cada quadro limpo traz um novo conjunto com a bola um pouco mais rápida, então aguentar uma corrida longa é o que faz dele um dos jogos de tijolos mais difíceis que você vai encontrar num navegador.',
+          tapToStart: 'Toque ou pressione Espaço para lançar', gameOver: 'Boa corrida! Toque para jogar de novo', bestLabel: 'MELHOR {n} tijolos'
         }
       }
     }

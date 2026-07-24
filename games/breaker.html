@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Breaker — Hardest Free Online Brick Breaking Game</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Bounce the ball and clear every brick in Neon Breaker, a brutally hard free online brick-breaking game. The ball only gets faster — one miss past the paddle ends the run. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/breaker.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Neon Breaker — Hardest Free Online Brick Breaking Game">
+<meta property="og:description" content="Bounce the ball and clear every brick in Neon Breaker, a brutally hard free online brick-breaking game. The ball only gets faster — one miss past the paddle ends the run. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/breaker.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neon Breaker — Hardest Free Online Brick Breaking Game">
+<meta name="twitter:description" content="Bounce the ball and clear every brick in Neon Breaker, a brutally hard free online brick-breaking game. The ball only gets faster — one miss past the paddle ends the run. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Neon Breaker",
+  "url": "https://chuong.us/games/breaker.html",
+  "description": "Bounce the ball and clear every brick in Neon Breaker, a brutally hard free online brick-breaking game. The ball only gets faster — one miss past the paddle ends the run. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Neon Breaker", "item": "https://chuong.us/games/breaker.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="breaker">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
+  <h1>🧱 Neon Breaker</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="560"></canvas></div>
+<p class="hint" data-i18n="game.breaker.hint">Move your mouse / drag your finger to steer the paddle. Tap / Space to launch. Clear every brick — the board refills faster each time. Miss once and it's over.</p>
+<p class="seo-note" data-i18n="game.breaker.seoNote">Neon Breaker is a free hard brick-breaking game online: keep the ball alive with your paddle while clearing full boards of bricks. Every cleared board brings back a fresh set at a slightly faster ball speed, so staying alive for a long run is what makes this one of the hardest brick games you'll find in a browser.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="stack.html">🧱 Neon Stack</a>
+    <a href="siege.html">💥 Neon Siege</a>
+    <a href="aim.html">🎯 Aim Trainer</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_breaker_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? I18N.t('game.breaker.bestLabel', { n: best }) : '';
+showBest();
+
+const W = cv.width, H = cv.height;
+const PADDLE_W = 76, PADDLE_H = 14, PADDLE_Y = H - 34;
+const BALL_R = 7;
+const COLS = 8, ROWS = 5, BRICK_W = W / COLS, BRICK_H = 20, BRICK_TOP = 44, BRICK_GAP = 2;
+const ROW_COLORS = ['#fb7185', '#f59e0b', '#facc15', '#4ade80', '#22d3ee'];
+
+let paddleX, ball, bricks, score, cleared, state = 'ready';
+
+function freshBricks() {
+  const b = [];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) b.push({ c, r, alive: true });
+  return b;
+}
+function speedCapFor(cl) { return Math.min(7.5, 3.6 + cl * 0.15); }
+
+function resetGame() {
+  paddleX = W / 2;
+  ball = { x: W / 2, y: PADDLE_Y - BALL_R - 1, vx: 0, vy: 0 };
+  bricks = freshBricks();
+  score = 0; cleared = 0; state = 'ready';
+}
+
+function launch() {
+  const cap = speedCapFor(cleared);
+  ball.vx = 2.2; ball.vy = -3.4;
+  clampSpeed(cap);
+}
+function clampSpeed(cap) {
+  const spd = Math.hypot(ball.vx, ball.vy);
+  if (spd > cap) { ball.vx = ball.vx / spd * cap; ball.vy = ball.vy / spd * cap; }
+  const MIN_VY = 1.2;
+  if (Math.abs(ball.vy) < MIN_VY) ball.vy = ball.vy < 0 ? -MIN_VY : MIN_VY;
+}
+function brickRect(brick) { return { x: brick.c * BRICK_W, y: BRICK_TOP + brick.r * BRICK_H, w: BRICK_W - BRICK_GAP, h: BRICK_H - BRICK_GAP }; }
+function circleRectOverlap(cx, cy, r, rect) {
+  const closestX = Math.max(rect.x, Math.min(cx, rect.x + rect.w));
+  const closestY = Math.max(rect.y, Math.min(cy, rect.y + rect.h));
+  const dx = cx - closestX, dy = cy - closestY;
+  return (dx * dx + dy * dy) < r * r;
+}
+
+function endRun() {
+  if (state === 'dead') return; // guard: exactly once
+  state = 'dead';
+  if (window.CUG) CUG.submitScore('breaker', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function doTick() {
+  if (state !== 'play') return;
+  const cap = speedCapFor(cleared);
+  clampSpeed(cap);
+  ball.x += ball.vx; ball.y += ball.vy;
+
+  if (ball.x - BALL_R < 0) { ball.x = BALL_R; ball.vx = Math.abs(ball.vx); }
+  if (ball.x + BALL_R > W) { ball.x = W - BALL_R; ball.vx = -Math.abs(ball.vx); }
+  if (ball.y - BALL_R < 0) { ball.y = BALL_R; ball.vy = Math.abs(ball.vy); }
+
+  const padTop = PADDLE_Y, padBottom = PADDLE_Y + PADDLE_H;
+  if (ball.vy > 0 && ball.y + BALL_R >= padTop && ball.y + BALL_R <= padBottom + 8 &&
+      ball.x >= paddleX - PADDLE_W / 2 - BALL_R && ball.x <= paddleX + PADDLE_W / 2 + BALL_R) {
+    const offset = (ball.x - paddleX) / (PADDLE_W / 2);
+    ball.y = padTop - BALL_R;
+    ball.vy = -Math.abs(ball.vy);
+    ball.vx += offset * 1.6;
+    clampSpeed(cap);
+  }
+
+  for (const brick of bricks) {
+    if (!brick.alive) continue;
+    const rect = brickRect(brick);
+    if (circleRectOverlap(ball.x, ball.y, BALL_R, rect)) {
+      brick.alive = false;
+      score++;
+      const overlapX = Math.min(ball.x - rect.x, rect.x + rect.w - ball.x);
+      const overlapY = Math.min(ball.y - rect.y, rect.y + rect.h - ball.y);
+      if (overlapX < overlapY) ball.vx = -ball.vx; else ball.vy = -ball.vy;
+      clampSpeed(cap);
+      break;
+    }
+  }
+
+  if (bricks.every(br => !br.alive)) {
+    cleared++;
+    bricks = freshBricks();
+    clampSpeed(speedCapFor(cleared));
+  }
+
+  if (ball.y - BALL_R > H) { endRun(); return; }
+}
+
+function scalePt(clientX, clientY) {
+  const r = cv.getBoundingClientRect();
+  return { x: (clientX - r.left) * (cv.width / r.width), y: (clientY - r.top) * (cv.height / r.height) };
+}
+cv.addEventListener('pointermove', e => {
+  const p = scalePt(e.clientX, e.clientY);
+  paddleX = Math.max(PADDLE_W / 2, Math.min(W - PADDLE_W / 2, p.x));
+  if (state === 'ready') ball.x = paddleX;
+});
+function startOrRestart() {
+  if (state === 'ready') { state = 'play'; launch(); }
+  else if (state === 'dead') { resetGame(); state = 'play'; launch(); }
+}
+cv.addEventListener('pointerdown', e => {
+  const p = scalePt(e.clientX, e.clientY);
+  paddleX = Math.max(PADDLE_W / 2, Math.min(W - PADDLE_W / 2, p.x));
+  startOrRestart();
+});
+addEventListener('keydown', e => { if (e.key === ' ') { e.preventDefault(); startOrRestart(); } });
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+  for (const brick of bricks) {
+    if (!brick.alive) continue;
+    const rect = brickRect(brick);
+    ctx.fillStyle = ROW_COLORS[brick.r % ROW_COLORS.length];
+    ctx.globalAlpha = .85;
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+    ctx.globalAlpha = 1;
+  }
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 10;
+  ctx.fillRect(paddleX - PADDLE_W / 2, PADDLE_Y, PADDLE_W, PADDLE_H);
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#e8edf7'; ctx.shadowColor = '#e8edf7'; ctx.shadowBlur = 10;
+  ctx.beginPath(); ctx.arc(ball.x, ball.y, BALL_R, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 26px Segoe UI, sans-serif';
+  ctx.fillText(score + ' bricks', W / 2, 28);
+  ctx.font = '700 17px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText(I18N.t('game.breaker.tapToStart'), W / 2, H / 2 + 60);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.breaker.gameOver'), W / 2, H / 2 + 60); }
+}
+
+function step() {
+  doTick();
+  draw();
+  requestAnimationFrame(step);
+}
+resetGame();
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

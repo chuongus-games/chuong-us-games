@@ -17,7 +17,10 @@
     runner:  { name: 'Spike Runner',   icon: '🏃', unit: 'm' },
     colorrush: { name: 'Color Rush',   icon: '🎨', unit: 'streak' },
     numrush:   { name: 'Number Rush',  icon: '🔢', unit: 's', lowerBetter: true },
-    serpent:   { name: 'Neon Serpent', icon: '🐍', unit: 'pts' }
+    serpent:   { name: 'Neon Serpent', icon: '🐍', unit: 'pts' },
+    keystrike: { name: 'Keystrike',    icon: '⌨️', unit: 'words' },
+    siege:     { name: 'Neon Siege',   icon: '💥', unit: 's' },
+    breaker:   { name: 'Neon Breaker', icon: '🧱', unit: 'bricks' }
   };
 
   /* fixed filler leaderboard rows (social proof) — merged with real scores at render time,
@@ -35,7 +38,10 @@
     runner:    [['CobaltEdge', 612], ['WildMantis', 548], ['SteelOrbit', 497], ['LunarKite', 452], ['EmberFalcon', 410], ['VortexJay', 371], ['ShadowByte', 335], ['PixelNinja', 301], ['NeonFox', 270], ['TurboTaco', 241]],
     colorrush: [['GlitchRider', 38], ['MidnightAce', 33], ['CryoWolf', 29], ['ByteRunner87', 25], ['ZenModeX', 22], ['VelvetHawk', 19], ['RapidLynx', 16], ['EchoDrift', 14], ['SolarFlare7', 12], ['IronWhisper', 10]],
     numrush:   [['DuskRaven', 14.28], ['BlazeCipher', 15.63], ['FrostVein', 16.94], ['NovaSprint', 18.21], ['CobaltEdge', 19.47], ['WildMantis', 20.68], ['SteelOrbit', 21.93], ['LunarKite', 23.15], ['EmberFalcon', 24.42], ['VortexJay', 25.71]],
-    serpent:   [['ShadowByte', 143], ['PixelNinja', 128], ['NeonFox', 114], ['TurboTaco', 102], ['GlitchRider', 91], ['MidnightAce', 81], ['CryoWolf', 72], ['ByteRunner87', 64], ['ZenModeX', 57], ['VelvetHawk', 50]]
+    serpent:   [['ShadowByte', 143], ['PixelNinja', 128], ['NeonFox', 114], ['TurboTaco', 102], ['GlitchRider', 91], ['MidnightAce', 81], ['CryoWolf', 72], ['ByteRunner87', 64], ['ZenModeX', 57], ['VelvetHawk', 50]],
+    keystrike: [['RapidLynx', 132], ['EchoDrift', 118], ['SolarFlare7', 105], ['IronWhisper', 94], ['DuskRaven', 84], ['BlazeCipher', 75], ['FrostVein', 67], ['NovaSprint', 60], ['CobaltEdge', 53], ['WildMantis', 47]],
+    siege:     [['SteelOrbit', 58], ['LunarKite', 51], ['EmberFalcon', 45], ['VortexJay', 40], ['ShadowByte', 35], ['PixelNinja', 31], ['NeonFox', 27], ['TurboTaco', 24], ['GlitchRider', 21], ['MidnightAce', 18]],
+    breaker:   [['CryoWolf', 187], ['ByteRunner87', 164], ['ZenModeX', 143], ['VelvetHawk', 124], ['RapidLynx', 107], ['EchoDrift', 92], ['SolarFlare7', 79], ['IronWhisper', 67], ['DuskRaven', 56], ['BlazeCipher', 46]]
   };
 
   const CUG = {

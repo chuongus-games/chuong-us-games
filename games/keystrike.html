@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keystrike — Hardest Free Online Typing Speed Game</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<style>
+#ksWrap { width: min(440px, 92vw); text-align: center; user-select: none; }
+#ksBar { display: flex; justify-content: space-between; font-weight: 800; font-size: 1.05rem; margin-bottom: 10px; }
+#ksScore { color: var(--neon); }
+#ksLane {
+  position: relative; height: 340px; background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; overflow: hidden; box-shadow: 0 0 40px rgba(34,211,238,.08);
+}
+#ksLane::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #fb7185;
+  box-shadow: 0 0 8px #fb7185;
+}
+.ksWord {
+  position: absolute; left: 0; transform: translateX(-50%); white-space: nowrap;
+  font: 700 1.1rem 'Segoe UI', sans-serif; color: var(--muted); padding: 3px 10px;
+  border-radius: 8px; background: var(--card); border: 1px solid var(--line);
+}
+.ksWord.active { color: var(--text); border-color: var(--neon); box-shadow: 0 0 10px rgba(34,211,238,.4); }
+.ksWord .done { color: var(--neon); }
+#ksOverlay {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+  background: rgba(10,14,22,.7); font-weight: 800; padding: 20px;
+}
+#ksOverlay.hide { display: none; }
+#ksInput {
+  position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;
+}
+#ksReady { margin-top: 12px; color: var(--muted); font-size: .9rem; }
+</style>
+<meta name="description" content="Type falling words before they hit the bottom in Keystrike, a brutally hard free online typing speed game. Speed keeps ramping up — one missed word ends the run. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/keystrike.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Keystrike — Hardest Free Online Typing Speed Game">
+<meta property="og:description" content="Type falling words before they hit the bottom in Keystrike, a brutally hard free online typing speed game. Speed keeps ramping up — one missed word ends the run. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/keystrike.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Keystrike — Hardest Free Online Typing Speed Game">
+<meta name="twitter:description" content="Type falling words before they hit the bottom in Keystrike, a brutally hard free online typing speed game. Speed keeps ramping up — one missed word ends the run. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Keystrike",
+  "url": "https://chuong.us/games/keystrike.html",
+  "description": "Type falling words before they hit the bottom in Keystrike, a brutally hard free online typing speed game. Speed keeps ramping up — one missed word ends the run. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Keystrike", "item": "https://chuong.us/games/keystrike.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="keystrike">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
+  <h1>⌨️ Keystrike</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage">
+  <div id="ksWrap">
+    <div id="ksBar"><span id="ksScore">0</span><span id="ksTimer"></span></div>
+    <div id="ksLane">
+      <div id="ksOverlay">
+        <div>
+          <p id="ksOverlayMsg" data-i18n="game.keystrike.tapToStart">Tap here or press any key to start</p>
+        </div>
+      </div>
+    </div>
+    <input id="ksInput" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <p id="ksReady" data-i18n="game.keystrike.mobileHint">On mobile, tap the lane to bring up your keyboard.</p>
+  </div>
+</div>
+<p class="hint" data-i18n="game.keystrike.hint">Type the glowing word before it reaches the red line at the bottom. Wrong keys are ignored — just keep typing. Speed increases with every word.</p>
+<p class="seo-note" data-i18n="game.keystrike.seoNote">Keystrike is a free hard typing game online: words fall from the top and you must type each one, letter by letter, before it crosses the bottom line. It starts slow but the fall speed and spawn rate keep climbing, making sustained accuracy at speed one of the hardest typing challenges you'll find in a browser.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="numrush.html">🔢 Number Rush</a>
+    <a href="colorrush.html">🎨 Color Rush</a>
+    <a href="reaction.html">⚡ Reaction Test</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const WORDS = ['code','game','neon','fast','jump','wall','maze','stack','block','laser',
+  'pixel','speed','timer','dodge','storm','spike','glitch','vortex','cipher','falcon',
+  'arena','rapid','solar','frost','ember','nova','ionic','pulse','drift','quartz'];
+
+const lane = document.getElementById('ksLane'), scoreEl = document.getElementById('ksScore'),
+      timerEl = document.getElementById('ksTimer'), overlay = document.getElementById('ksOverlay'),
+      overlayMsg = document.getElementById('ksOverlayMsg'), input = document.getElementById('ksInput');
+const KEY = 'cug_keystrike_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? I18N.t('game.keystrike.bestLabel', { n: best }) : '';
+showBest();
+
+const LANE_H = lane.clientHeight || 340, BOTTOM_Y = LANE_H - 6;
+let words, score, typed, spawnAcc, t0, state = 'ready';
+
+function fallSpeedFor(s) { return Math.min(3.2, 0.9 + s * 0.05); } // px/tick @ ~60fps, capped
+function spawnIntervalFor(s) { return Math.max(650, 1600 - s * 25); } // ms, floored
+
+function resetGame() {
+  words = []; score = 0; typed = ''; spawnAcc = 0; state = 'ready';
+  scoreEl.textContent = '0';
+  lane.querySelectorAll('.ksWord').forEach(el => el.remove());
+  overlay.classList.remove('hide');
+  overlayMsg.textContent = I18N.t('game.keystrike.tapToStart');
+  overlayMsg.style.color = '';
+}
+
+function activeWord() {
+  if (!words.length) return null;
+  return words.reduce((a, b) => (a.y > b.y ? a : b));
+}
+
+function spawnWord() {
+  const w = WORDS[Math.floor(Math.random() * WORDS.length)];
+  const el = document.createElement('div');
+  el.className = 'ksWord';
+  el.style.left = (10 + Math.random() * 80) + '%';
+  lane.appendChild(el);
+  words.push({ w, y: 0, el });
+}
+
+function renderWords() {
+  const active = activeWord();
+  for (const wd of words) {
+    wd.el.style.top = wd.y + 'px';
+    const isActive = wd === active;
+    wd.el.classList.toggle('active', isActive);
+    if (isActive && typed) {
+      wd.el.innerHTML = '<span class="done">' + escHtml(typed) + '</span>' + escHtml(wd.w.slice(typed.length));
+    } else {
+      wd.el.textContent = wd.w;
+    }
+  }
+}
+function escHtml(s) { return s.replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+
+function typeChar(ch) {
+  if (state !== 'play') return;
+  const active = activeWord();
+  if (!active) return;
+  const expected = active.w[typed.length];
+  if (ch === expected) {
+    typed += ch;
+    if (typed.length === active.w.length) {
+      active.el.remove();
+      words = words.filter(w => w !== active);
+      typed = '';
+      score++;
+      scoreEl.textContent = score;
+    }
+  }
+}
+
+function endRun() {
+  if (state === 'dead') return; // guard: exactly once
+  state = 'dead';
+  if (window.CUG) CUG.submitScore('keystrike', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+  overlay.classList.remove('hide');
+  overlayMsg.style.color = '#fb7185';
+  overlayMsg.textContent = I18N.t('game.keystrike.gameOver');
+}
+
+function doTick(dtMs) {
+  if (state !== 'play') return;
+  const speed = fallSpeedFor(score) * (dtMs / 16.67);
+  for (const w of words) w.y += speed;
+  if (words.some(w => w.y >= BOTTOM_Y)) { endRun(); return; }
+  spawnAcc += dtMs;
+  const iv = spawnIntervalFor(score);
+  while (spawnAcc >= iv && state === 'play') { spawnWord(); spawnAcc -= iv; }
+}
+
+function startOrRestart() {
+  if (state === 'ready') { state = 'play'; overlay.classList.add('hide'); t0 = performance.now(); }
+  else if (state === 'dead') { resetGame(); state = 'play'; overlay.classList.add('hide'); t0 = performance.now(); }
+  input.focus();
+}
+
+lane.addEventListener('pointerdown', () => { if (state !== 'play') startOrRestart(); input.focus(); });
+addEventListener('keydown', e => {
+  if (state !== 'play') { if (e.key.length === 1 || e.key === ' ') startOrRestart(); return; }
+});
+input.addEventListener('beforeinput', e => {
+  if (state !== 'play') return;
+  const ch = (e.data || '').toLowerCase();
+  if (ch) typeChar(ch);
+});
+input.addEventListener('keydown', e => {
+  if (e.key.length === 1) { typeChar(e.key.toLowerCase()); e.preventDefault(); }
+});
+input.addEventListener('input', () => { input.value = ''; });
+
+let lastTs = 0;
+function step(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = ts - lastTs;
+  lastTs = ts;
+  doTick(dt);
+  renderWords();
+  if (state === 'play') timerEl.textContent = (((performance.now() - t0) / 1000)).toFixed(0) + 's';
+  requestAnimationFrame(step);
+}
+resetGame();
+requestAnimationFrame(step);
+</script>
+</body>
+</html>
