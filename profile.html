@@ -45,6 +45,7 @@
     <div class="panel">
       <h2 data-i18n="profile.countryLabel">🌍 Country</h2>
       <div class="uname-row">
+        <img id="country-preview" class="cug-flag" style="display:none">
         <select id="country"></select>
         <button class="btn-primary" id="save-country" data-i18n="profile.save">Save</button>
       </div>
@@ -109,9 +110,18 @@ document.addEventListener('cug-ready', async () => {
   };
 
   const country = document.getElementById('country');
+  const countryPreview = document.getElementById('country-preview');
+  // <option> can't render an <img>, so options stay plain text — the flag itself
+  // shows in the preview image next to the select instead
   country.innerHTML = '<option value="">' + I18N.t('profile.countryPlaceholder') + '</option>' +
-    CUG.countries.map(([code, name]) => '<option value="' + code + '">' + CUG.flagEmoji(code) + ' ' + name + '</option>').join('');
+    CUG.countries.map(([code, name]) => '<option value="' + code + '">' + name + '</option>').join('');
+  const refreshPreview = () => {
+    if (country.value) { countryPreview.src = CUG.flagUrl(country.value); countryPreview.style.display = ''; }
+    else { countryPreview.style.display = 'none'; }
+  };
   country.value = (CUG.profile && CUG.profile.country) || '';
+  refreshPreview();
+  country.addEventListener('change', refreshPreview);
   const countryMsg = document.getElementById('country-msg');
   const countryMsgDefault = countryMsg.textContent;
   document.getElementById('save-country').onclick = async () => {

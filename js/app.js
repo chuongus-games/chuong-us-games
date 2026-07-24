@@ -29,10 +29,15 @@
     ['HN','Honduras'],['SV','El Salvador'],['NI','Nicaragua'],['CU','Cuba'],['DO','Dominican Republic'],
     ['JM','Jamaica'],['TT','Trinidad and Tobago'],['HT','Haiti'],['PR','Puerto Rico']
   ];
+  /* real flag image (Windows/Segoe UI renders the Unicode flag emoji as plain letters,
+     not a picture, so this uses actual SVG flag assets instead) */
+  function flagUrl(code) {
+    if (!code || !/^[A-Za-z]{2}$/.test(code)) return '';
+    return 'https://cdn.jsdelivr.net/npm/flag-icons@7/flags/4x3/' + code.toLowerCase() + '.svg';
+  }
   function flagEmoji(code) {
-    if (!code || code.length !== 2) return '';
-    const cc = code.toUpperCase();
-    return String.fromCodePoint(...[...cc].map(c => 127397 + c.charCodeAt(0)));
+    const url = flagUrl(code);
+    return url ? '<img class="cug-flag" src="' + url + '" alt="' + code.toUpperCase() + '">' : '';
   }
   /* deterministic "random" flag for filler leaderboard rows — stable per username, no DB involved */
   function fakeCountryFor(username) {
@@ -82,7 +87,7 @@
   };
 
   const CUG = {
-    sb, user: null, profile: null, meta: GAME_META, countries: COUNTRIES, flagEmoji,
+    sb, user: null, profile: null, meta: GAME_META, countries: COUNTRIES, flagEmoji, flagUrl,
 
     async init() {
       const { data } = await sb.auth.getSession();
