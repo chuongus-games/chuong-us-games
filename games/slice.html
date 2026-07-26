@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Slice — Hardest Free Online Bomb-Dodging Slice Game</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💠</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Swipe to slice glowing orbs before they fall in Neon Slice, a fast free online slicing game. One touch of a bomb ends the run instantly — combos climb the faster you go. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/slice.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Neon Slice — Hardest Free Online Bomb-Dodging Slice Game">
+<meta property="og:description" content="Swipe to slice glowing orbs before they fall in Neon Slice, a fast free online slicing game. One touch of a bomb ends the run instantly — combos climb the faster you go. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/slice.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neon Slice — Hardest Free Online Bomb-Dodging Slice Game">
+<meta name="twitter:description" content="Swipe to slice glowing orbs before they fall in Neon Slice, a fast free online slicing game. One touch of a bomb ends the run instantly — combos climb the faster you go. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Neon Slice",
+  "url": "https://chuong.us/games/slice.html",
+  "description": "Swipe to slice glowing orbs before they fall in Neon Slice, a fast free online slicing game. One touch of a bomb ends the run instantly — combos climb the faster you go. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Neon Slice", "item": "https://chuong.us/games/slice.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="slice">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
+  <h1>💠 Neon Slice</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.slice.hint">Swipe / drag across the orbs to slice them. Slicing a bomb ends the run instantly.</p>
+<p class="seo-note" data-i18n="game.slice.seoNote">Neon Slice is a free fast-paced slicing game you can play online in your browser. Orbs launch from the bottom and arc through the air — swipe through them to score, but one bomb sliced by mistake ends the run, which makes staying accurate at speed one of the hardest slicing challenges you'll find online.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="avoid.html">☄️ Meteor Rain</a>
+    <a href="siege.html">💥 Neon Siege</a>
+    <a href="aim.html">🎯 Aim Trainer</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_slice_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.slice.bestLabel', { n: best });
+showBest();
+
+const W = cv.width, H = cv.height, ORB_R = 18, GRAV = 0.28;
+let orbs = [], score = 0, state = 'ready', spawnAcc = 0, spawnMs = 850, isDown = false, prevPt = null, particles = [];
+
+function scalePt(clientX, clientY) {
+  const r = cv.getBoundingClientRect();
+  return { x: (clientX - r.left) * (cv.width / r.width), y: (clientY - r.top) * (cv.height / r.height) };
+}
+
+function reset() {
+  orbs = []; score = 0; spawnAcc = 0; spawnMs = 850; particles = [];
+}
+
+function spawnOrb() {
+  const isBomb = Math.random() < Math.min(0.35, 0.12 + score * 0.006);
+  const x = 60 + Math.random() * (W - 120);
+  const vy = -(8.5 + Math.random() * 2.5);
+  orbs.push({ x, y: H + 20, vy, vx: (Math.random() - 0.5) * 1.4, bomb: isBomb, sliced: false });
+}
+
+function distToSeg(px, py, ax, ay, bx, by) {
+  const dx = bx - ax, dy = by - ay;
+  const len2 = dx * dx + dy * dy;
+  let t = len2 > 0 ? ((px - ax) * dx + (py - ay) * dy) / len2 : 0;
+  t = Math.max(0, Math.min(1, t));
+  const cx = ax + t * dx, cy = ay + t * dy;
+  return Math.hypot(px - cx, py - cy);
+}
+
+function endRun() {
+  if (state === 'dead') return;
+  state = 'dead';
+  if (window.CUG) CUG.submitScore('slice', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function trySlice(ax, ay, bx, by) {
+  if (state !== 'play') return;
+  for (const o of orbs) {
+    if (o.sliced) continue;
+    if (distToSeg(o.x, o.y, ax, ay, bx, by) <= ORB_R + 8) {
+      o.sliced = true;
+      if (o.bomb) {
+        particles.push({ x: o.x, y: o.y, r: 4, c: '#fb7185', life: 24 });
+        endRun();
+        return;
+      } else {
+        score++;
+        particles.push({ x: o.x, y: o.y, r: 4, c: '#22d3ee', life: 18 });
+      }
+    }
+  }
+}
+
+cv.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  const p = scalePt(e.clientX, e.clientY);
+  if (state !== 'play') { state = 'play'; reset(); }
+  isDown = true; prevPt = p;
+});
+cv.addEventListener('pointermove', e => {
+  if (!isDown) return;
+  const p = scalePt(e.clientX, e.clientY);
+  if (prevPt) trySlice(prevPt.x, prevPt.y, p.x, p.y);
+  prevPt = p;
+});
+addEventListener('pointerup', () => { isDown = false; prevPt = null; });
+
+function doTick(dtMs) {
+  if (state !== 'play') return;
+  spawnAcc += dtMs;
+  const interval = Math.max(420, spawnMs - score * 14);
+  if (spawnAcc >= interval) { spawnAcc = 0; spawnOrb(); }
+  for (const o of orbs) { o.vy += GRAV * (dtMs / 16.67); o.x += o.vx * (dtMs / 16.67); o.y += o.vy * (dtMs / 16.67); }
+  orbs = orbs.filter(o => o.y < H + 40 && !(o.sliced && o.bomb));
+  for (const p of particles) p.life -= dtMs / 16.67;
+  particles = particles.filter(p => p.life > 0);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+  for (const o of orbs) {
+    if (o.sliced && !o.bomb) continue;
+    ctx.fillStyle = o.bomb ? '#fb7185' : '#22d3ee';
+    ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(o.x, o.y, ORB_R, 0, 7); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#0a0e17'; ctx.font = '700 16px Segoe UI, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(o.bomb ? '💣' : '💠', o.x, o.y + 1);
+  }
+  for (const p of particles) {
+    ctx.globalAlpha = Math.max(0, p.life / 24);
+    ctx.strokeStyle = p.c; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(p.x, p.y, ORB_R + (24 - p.life), 0, 7); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.font = '800 34px Segoe UI, sans-serif';
+  ctx.fillText(score, W / 2, 46);
+  ctx.font = '700 17px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText(I18N.t('game.slice.tapToStart'), W / 2, H / 2);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.slice.gameOver'), W / 2, H / 2); }
+}
+
+let lastTs = 0;
+function step(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = ts - lastTs;
+  lastTs = ts;
+  doTick(Math.min(dt, 50));
+  draw();
+  requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

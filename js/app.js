@@ -62,7 +62,11 @@
     serpent:   { name: 'Neon Serpent', icon: '🐍', unit: 'pts' },
     keystrike: { name: 'Keystrike',    icon: '⌨️', unit: 'words' },
     siege:     { name: 'Neon Siege',   icon: '💥', unit: 's' },
-    breaker:   { name: 'Neon Breaker', icon: '🧱', unit: 'bricks' }
+    breaker:   { name: 'Neon Breaker', icon: '🧱', unit: 'bricks' },
+    slice:     { name: 'Neon Slice',   icon: '💠', unit: 'pts' },
+    gravity:   { name: 'Gravity Flip', icon: '🔃', unit: 'm' },
+    echo:      { name: 'Echo Tap',     icon: '💫', unit: 'pts' },
+    catch:     { name: 'Prism Catch',  icon: '🪣', unit: 'pts' }
   };
 
   /* fixed filler leaderboard rows (social proof) — merged with real scores at render time,
@@ -83,7 +87,11 @@
     serpent:   [['ShadowByte', 143], ['PixelNinja', 128], ['NeonFox', 114], ['TurboTaco', 102], ['GlitchRider', 91], ['MidnightAce', 81], ['CryoWolf', 72], ['ByteRunner87', 64], ['ZenModeX', 57], ['VelvetHawk', 50]],
     keystrike: [['RapidLynx', 132], ['EchoDrift', 118], ['SolarFlare7', 105], ['IronWhisper', 94], ['DuskRaven', 84], ['BlazeCipher', 75], ['FrostVein', 67], ['NovaSprint', 60], ['CobaltEdge', 53], ['WildMantis', 47]],
     siege:     [['SteelOrbit', 58], ['LunarKite', 51], ['EmberFalcon', 45], ['VortexJay', 40], ['ShadowByte', 35], ['PixelNinja', 31], ['NeonFox', 27], ['TurboTaco', 24], ['GlitchRider', 21], ['MidnightAce', 18]],
-    breaker:   [['CryoWolf', 187], ['ByteRunner87', 164], ['ZenModeX', 143], ['VelvetHawk', 124], ['RapidLynx', 107], ['EchoDrift', 92], ['SolarFlare7', 79], ['IronWhisper', 67], ['DuskRaven', 56], ['BlazeCipher', 46]]
+    breaker:   [['CryoWolf', 187], ['ByteRunner87', 164], ['ZenModeX', 143], ['VelvetHawk', 124], ['RapidLynx', 107], ['EchoDrift', 92], ['SolarFlare7', 79], ['IronWhisper', 67], ['DuskRaven', 56], ['BlazeCipher', 46]],
+    slice:     [['FrostVein', 96], ['NovaSprint', 84], ['CobaltEdge', 73], ['WildMantis', 63], ['SteelOrbit', 54], ['LunarKite', 46], ['EmberFalcon', 39], ['VortexJay', 33], ['ShadowByte', 27], ['PixelNinja', 22]],
+    gravity:   [['NeonFox', 738], ['TurboTaco', 651], ['GlitchRider', 574], ['MidnightAce', 503], ['CryoWolf', 439], ['ByteRunner87', 381], ['ZenModeX', 328], ['VelvetHawk', 280], ['RapidLynx', 236], ['EchoDrift', 197]],
+    echo:      [['SolarFlare7', 41], ['IronWhisper', 35], ['DuskRaven', 30], ['BlazeCipher', 26], ['FrostVein', 22], ['NovaSprint', 18], ['CobaltEdge', 15], ['WildMantis', 12], ['SteelOrbit', 9], ['LunarKite', 7]],
+    catch:     [['EmberFalcon', 52], ['VortexJay', 45], ['ShadowByte', 39], ['PixelNinja', 34], ['NeonFox', 29], ['TurboTaco', 25], ['GlitchRider', 21], ['MidnightAce', 18], ['CryoWolf', 15], ['ByteRunner87', 12]]
   };
 
   const CUG = {

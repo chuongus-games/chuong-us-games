@@ -55,7 +55,11 @@
           serpent: 'Steer a growing snake around a 20x20 grid. Every bite makes it faster — one wrong turn ends the run.',
           keystrike: 'Type each falling word before it hits the bottom line. Speed keeps climbing — one missed word ends it.',
           siege: 'Weave through bullets fired at you from every direction at once. Survive one second at a time.',
-          breaker: 'Bounce the ball and clear every brick. Boards refill faster each time — miss once and it\'s over.'
+          breaker: 'Bounce the ball and clear every brick. Boards refill faster each time — miss once and it\'s over.',
+          slice: 'Swipe to slice glowing orbs before they fall. One bomb sliced by mistake ends the run instantly.',
+          gravity: 'Flip gravity to switch between floor and ceiling, dodging spikes on both sides. Speed never stops climbing.',
+          echo: 'Tap the instant the shrinking ring lines up with the target. The window gets smaller every round.',
+          catch: 'Slide the bucket to catch only the target color. Catch one wrong color and the run is over.'
         }
       },
       profile: {
@@ -174,6 +178,26 @@
           hint: 'Move your mouse / drag your finger to steer the paddle. Tap / Space to launch. Clear every brick — the board refills faster each time. Miss once and it\'s over.',
           seoNote: 'Neon Breaker is a free hard brick-breaking game online: keep the ball alive with your paddle while clearing full boards of bricks. Every cleared board brings back a fresh set at a slightly faster ball speed, so staying alive for a long run is what makes this one of the hardest brick games you\'ll find in a browser.',
           tapToStart: 'Tap or press Space to launch', gameOver: 'Nice run! Tap to play again', bestLabel: 'BEST {n} bricks'
+        },
+        slice: {
+          hint: 'Swipe / drag across the orbs to slice them. Slicing a bomb ends the run instantly.',
+          seoNote: 'Neon Slice is a free fast-paced slicing game you can play online in your browser. Orbs launch from the bottom and arc through the air — swipe through them to score, but one bomb sliced by mistake ends the run, which makes staying accurate at speed one of the hardest slicing challenges you\'ll find online.',
+          tapToStart: 'Swipe to start', gameOver: 'Sliced a bomb! Swipe to play again', bestLabel: 'BEST {n}'
+        },
+        gravity: {
+          hint: 'Tap / Space to flip gravity between floor and ceiling. Dodge the spikes — speed increases forever.',
+          seoNote: 'Gravity Flip is a free hard runner game online: flip gravity to send your block sticking to the floor or the ceiling, dodging spikes on both sides as the speed keeps climbing. Simple one-button rule, brutally hard to keep alive for long — one mistimed flip and it\'s over.',
+          tapToStart: 'Tap to start', gameOver: 'Nice run! Tap to go again', bestMLabel: 'BEST {n}m'
+        },
+        echo: {
+          hint: 'Tap / click / press Space the instant the shrinking ring lines up with the dashed target ring. Too early, too late, or no tap at all ends the run.',
+          seoNote: 'Echo Tap is a free online rhythm precision game: a ring shrinks toward a fixed target, and you must tap the exact instant they align. Every successful tap speeds things up and shrinks the tolerance window, making sustained precision one of the hardest timing challenges you\'ll find in a browser.',
+          tapToStart: 'Tap to start', gameOver: 'So close! Tap to try again', bestLabel: 'BEST {n}'
+        },
+        catch: {
+          hint: 'Move your mouse / drag your finger to slide the bucket. Catch only the gems matching the TARGET swatch — catching the wrong color ends the run. Missing a good gem is fine, just try again.',
+          seoNote: 'Prism Catch is a free online color-matching game: gems of every color fall from the top and you must catch only the ones matching the current target color. Missing a good gem costs nothing, but catching a single wrong color ends the run instantly — and the target keeps changing, making sustained focus one of the hardest catching challenges around.',
+          targetLabel: 'TARGET', tapToStart: 'Tap to start', gameOver: 'Wrong color! Tap to try again', bestLabel: 'BEST {n}'
         }
       }
     },
@@ -219,7 +243,11 @@
           serpent: 'Điều khiển con rắn lớn dần trên lưới 20x20. Mỗi lần ăn mồi tốc độ lại tăng — rẽ sai là kết thúc.',
           keystrike: 'Gõ từng chữ đang rơi trước khi nó chạm vạch đáy. Tốc độ ngày càng tăng — bỏ lỡ một chữ là kết thúc.',
           siege: 'Lách qua đạn bắn tới từ mọi hướng cùng lúc. Sống sót từng giây một.',
-          breaker: 'Nảy bóng phá hết từng viên gạch. Bảng gạch được làm đầy lại nhanh hơn mỗi lần — trượt một lần là hết.'
+          breaker: 'Nảy bóng phá hết từng viên gạch. Bảng gạch được làm đầy lại nhanh hơn mỗi lần — trượt một lần là hết.',
+          slice: 'Vuốt để chém các quả cầu trước khi chúng rơi. Chém trúng một quả bom là kết thúc ngay lập tức.',
+          gravity: 'Đảo trọng lực để chuyển giữa sàn và trần, né chông ở cả hai bên. Tốc độ không ngừng tăng.',
+          echo: 'Chạm ngay khi vòng tròn thu nhỏ trùng với vòng mục tiêu. Cửa sổ thời gian càng lúc càng hẹp.',
+          catch: 'Di chuyển giỏ để chỉ hứng đúng màu mục tiêu. Hứng nhầm một màu là kết thúc ngay.'
         }
       },
       profile: {
@@ -338,6 +366,26 @@
           hint: 'Di chuột / kéo ngón tay để điều khiển thanh đỡ. Chạm / Space để phóng bóng. Phá hết gạch — bảng gạch sẽ đầy lại nhanh hơn mỗi lần. Trượt một lần là hết.',
           seoNote: 'Neon Breaker là trò đập gạch khó, miễn phí: giữ cho bóng không rơi bằng thanh đỡ trong khi phá hết từng bảng gạch. Mỗi lần phá hết bảng, gạch mới xuất hiện với tốc độ bóng nhanh hơn một chút, khiến việc trụ được lâu dài trở thành một trong những trò đập gạch khó nhất trên trình duyệt.',
           tapToStart: 'Chạm hoặc bấm Space để phóng bóng', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} viên gạch'
+        },
+        slice: {
+          hint: 'Vuốt / kéo qua các quả cầu để chém chúng. Chém trúng bom là kết thúc ngay lập tức.',
+          seoNote: 'Neon Slice là trò chém tốc độ cao, miễn phí, chơi ngay trên trình duyệt. Các quả cầu bay lên từ phía dưới theo đường vòng cung — vuốt qua để ghi điểm, nhưng chỉ cần chém nhầm một quả bom là kết thúc, khiến việc giữ độ chính xác ở tốc độ cao trở thành một trong những thử thách chém khó nhất trực tuyến.',
+          tapToStart: 'Vuốt để bắt đầu', gameOver: 'Chém trúng bom rồi! Vuốt để chơi lại', bestLabel: 'CAO NHẤT {n}'
+        },
+        gravity: {
+          hint: 'Chạm / Space để đảo trọng lực giữa sàn và trần. Né chông — tốc độ tăng liên tục.',
+          seoNote: 'Gravity Flip là trò chạy khó, miễn phí: đảo trọng lực để đưa khối vuông của bạn dính vào sàn hoặc trần, né chông ở cả hai bên khi tốc độ ngày càng tăng. Luật chơi chỉ một nút bấm nhưng cực khó để sống sót lâu — đảo sai thời điểm một lần là hết.',
+          tapToStart: 'Chạm để bắt đầu', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
+        },
+        echo: {
+          hint: 'Chạm / bấm / phím Space đúng lúc vòng tròn thu nhỏ trùng với vòng mục tiêu nét đứt. Sớm quá, trễ quá, hoặc không chạm đều kết thúc trò chơi.',
+          seoNote: 'Echo Tap là trò chơi nhịp điệu canh thời điểm chính xác, miễn phí: một vòng tròn thu nhỏ dần về phía mục tiêu cố định, bạn phải chạm đúng khoảnh khắc chúng trùng nhau. Mỗi lần thành công tốc độ lại tăng và cửa sổ dung sai thu hẹp lại, khiến việc giữ độ chính xác liên tục trở thành một trong những thử thách canh giờ khó nhất trên trình duyệt.',
+          tapToStart: 'Chạm để bắt đầu', gameOver: 'Suýt nữa! Chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
+        },
+        catch: {
+          hint: 'Di chuột / kéo ngón tay để trượt giỏ. Chỉ hứng những viên đá quý trùng màu MỤC TIÊU — hứng nhầm màu là kết thúc. Bỏ lỡ một viên đúng màu không sao, cứ tiếp tục.',
+          seoNote: 'Prism Catch là trò chơi ghép màu miễn phí: đá quý đủ màu rơi từ trên xuống và bạn chỉ được hứng những viên trùng với màu mục tiêu hiện tại. Bỏ lỡ một viên đúng màu không mất gì, nhưng chỉ cần hứng nhầm một màu là kết thúc ngay — và mục tiêu liên tục thay đổi, khiến việc giữ tập trung liên tục trở thành một trong những thử thách hứng khó nhất.',
+          targetLabel: 'MỤC TIÊU', tapToStart: 'Chạm để bắt đầu', gameOver: 'Sai màu rồi! Chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
         }
       }
     },
@@ -383,7 +431,11 @@
           serpent: '操控一条不断变长的蛇在20x20的网格上移动。每吃一口速度就更快——转错方向就结束了。',
           keystrike: '在掉落的单词落到底线之前把它打出来。速度不断加快——漏掉一个单词就结束。',
           siege: '在四面八方射来的子弹中不断闪避。一秒一秒地活下去。',
-          breaker: '弹球打碎所有砖块。每次清空后砖块会更快地重新填满——失误一次就结束。'
+          breaker: '弹球打碎所有砖块。每次清空后砖块会更快地重新填满——失误一次就结束。',
+          slice: '滑动切开发光的圆球，赶在它们落下之前。切到炸弹就立刻结束。',
+          gravity: '反转重力在地板和天花板之间切换，躲避两侧的尖刺。速度永不停止上升。',
+          echo: '在缩小的圆环与目标对齐的瞬间点击。时间窗口每一轮都会变得更小。',
+          catch: '移动桶只接住目标颜色。接到错误的颜色就会立刻结束。'
         }
       },
       profile: {
@@ -502,6 +554,26 @@
           hint: '移动鼠标 / 拖动手指来操控挡板。轻点 / 空格键发射球。打碎所有砖块——每次清空后砖块会更快重新填满。失误一次就结束。',
           seoNote: 'Neon Breaker 是一款免费的高难度打砖块游戏：用挡板保住球，同时清空一整块又一块的砖块。每清空一块砖块区域，就会以稍快的球速重新填满，能不能撑住更久的时间，正是它成为浏览器里最难打砖块游戏之一的原因。',
           tapToStart: '轻点或按空格键发射', gameOver: '玩得不错！轻点重新开始', bestLabel: '最佳 {n} 块砖'
+        },
+        slice: {
+          hint: '滑动 / 拖动划过圆球来切开它们。切到炸弹会立刻结束游戏。',
+          seoNote: 'Neon Slice 是一款免费的快节奏切割游戏，可直接在浏览器中在线畅玩。圆球从底部发射并划出抛物线——滑动划过它们即可得分，但只要切错一颗炸弹就会结束游戏，这让在高速下保持精准成为网上最难的切割挑战之一。',
+          tapToStart: '滑动开始', gameOver: '切到炸弹了！滑动重新开始', bestLabel: '最佳 {n}'
+        },
+        gravity: {
+          hint: '轻点 / 空格键在地板和天花板之间反转重力。躲避尖刺——速度永远在加快。',
+          seoNote: 'Gravity Flip 是一款免费的高难度跑酷游戏：反转重力让你的方块吸附在地板或天花板上，躲避两侧的尖刺，同时速度不断攀升。规则只有一个按钮，却很难长时间存活——反转时机错一次就结束。',
+          tapToStart: '轻点开始', gameOver: '玩得不错！轻点重新开始', bestMLabel: '最佳 {n}米'
+        },
+        echo: {
+          hint: '在缩小的圆环与虚线目标环对齐的瞬间轻点 / 点击 / 按空格键。太早、太晚或完全不点都会结束游戏。',
+          seoNote: 'Echo Tap 是一款免费的在线节奏精准游戏：一个圆环不断缩小并趋向固定目标，你必须在两者对齐的瞬间点击。每次成功都会加快节奏并缩小容差窗口，让持续保持精准成为浏览器里最难的计时挑战之一。',
+          tapToStart: '轻点开始', gameOver: '差一点！轻点重试', bestLabel: '最佳 {n}'
+        },
+        catch: {
+          hint: '移动鼠标 / 拖动手指来滑动桶子。只接住与目标色块相符的宝石——接到错误颜色会结束游戏。漏接正确颜色没关系，继续就好。',
+          seoNote: 'Prism Catch 是一款免费的在线颜色匹配游戏：各种颜色的宝石从上方落下，你只能接住与当前目标颜色相符的那些。漏接一颗正确颜色的宝石不会有任何损失，但只要接到一次错误颜色就会立刻结束游戏——而且目标颜色会不断变化，让持续保持专注成为最难的接物挑战之一。',
+          targetLabel: '目标', tapToStart: '轻点开始', gameOver: '接错颜色了！轻点重试', bestLabel: '最佳 {n}'
         }
       }
     },
@@ -547,7 +619,11 @@
           serpent: 'Guía una serpiente que crece en una cuadrícula de 20x20. Cada bocado la hace más rápida — un giro en falso termina la partida.',
           keystrike: 'Escribe cada palabra que cae antes de que llegue a la línea inferior. La velocidad no deja de subir — una palabra perdida termina la partida.',
           siege: 'Esquiva balas disparadas desde todas las direcciones a la vez. Sobrevive un segundo a la vez.',
-          breaker: 'Rebota la bola y destruye cada ladrillo. Los tableros se rellenan más rápido cada vez — un fallo y se acabó.'
+          breaker: 'Rebota la bola y destruye cada ladrillo. Los tableros se rellenan más rápido cada vez — un fallo y se acabó.',
+          slice: 'Desliza para cortar orbes brillantes antes de que caigan. Cortar una bomba por error termina la partida al instante.',
+          gravity: 'Invierte la gravedad para cambiar entre el suelo y el techo, esquivando pinchos en ambos lados. La velocidad no deja de subir.',
+          echo: 'Toca en el instante en que el anillo que se encoge se alinea con el objetivo. La ventana se hace más pequeña cada ronda.',
+          catch: 'Desliza el cubo para atrapar solo el color objetivo. Atrapar un color equivocado termina la partida.'
         }
       },
       profile: {
@@ -666,6 +742,26 @@
           hint: 'Mueve el ratón / arrastra el dedo para dirigir la paleta. Toca / Espacio para lanzar. Destruye cada ladrillo — el tablero se rellena más rápido cada vez. Un fallo y se acabó.',
           seoNote: 'Neon Breaker es un juego gratuito de romper ladrillos difícil en línea: mantén la bola viva con tu paleta mientras despejas tableros completos de ladrillos. Cada tablero despejado trae uno nuevo con la bola un poco más rápida, así que aguantar una racha larga es lo que hace de este uno de los juegos de ladrillos más difíciles que encontrarás en un navegador.',
           tapToStart: 'Toca o pulsa Espacio para lanzar', gameOver: '¡Buena partida! Toca para jugar de nuevo', bestLabel: 'MEJOR {n} ladrillos'
+        },
+        slice: {
+          hint: 'Desliza / arrastra sobre los orbes para cortarlos. Cortar una bomba termina la partida al instante.',
+          seoNote: 'Neon Slice es un juego de corte rápido y gratuito que puedes jugar en línea directamente en tu navegador. Los orbes salen disparados desde abajo trazando un arco — desliza a través de ellos para sumar puntos, pero cortar una bomba por error termina la partida, lo que hace de mantener la precisión a alta velocidad uno de los retos de corte más difíciles en línea.',
+          tapToStart: 'Desliza para empezar', gameOver: '¡Cortaste una bomba! Desliza para jugar de nuevo', bestLabel: 'MEJOR {n}'
+        },
+        gravity: {
+          hint: 'Toca / Espacio para invertir la gravedad entre el suelo y el techo. Esquiva los pinchos — la velocidad no deja de aumentar.',
+          seoNote: 'Gravity Flip es un juego de plataformas difícil y gratuito en línea: invierte la gravedad para pegar tu bloque al suelo o al techo, esquivando pinchos en ambos lados mientras la velocidad no deja de subir. Una sola regla de un botón, brutalmente difícil de sostener por mucho tiempo — un giro mal cronometrado y se acabó.',
+          tapToStart: 'Toca para empezar', gameOver: '¡Buena partida! Toca para jugar de nuevo', bestMLabel: 'MEJOR {n}m'
+        },
+        echo: {
+          hint: 'Toca / haz clic / pulsa Espacio en el instante en que el anillo que se encoge se alinee con el anillo objetivo punteado. Demasiado pronto, demasiado tarde o no tocar termina la partida.',
+          seoNote: 'Echo Tap es un juego gratuito de precisión rítmica en línea: un anillo se encoge hacia un objetivo fijo y debes tocar en el instante exacto en que se alinean. Cada acierto acelera el ritmo y reduce la ventana de tolerancia, lo que hace de la precisión sostenida uno de los retos de tiempo más difíciles que encontrarás en un navegador.',
+          tapToStart: 'Toca para empezar', gameOver: '¡Tan cerca! Toca para intentarlo de nuevo', bestLabel: 'MEJOR {n}'
+        },
+        catch: {
+          hint: 'Mueve el ratón / arrastra el dedo para deslizar el cubo. Atrapa solo las gemas que coincidan con el color OBJETIVO — atrapar el color equivocado termina la partida. Perder una gema buena no importa, sigue intentando.',
+          seoNote: 'Prism Catch es un juego gratuito de coincidencia de colores en línea: gemas de todos los colores caen desde arriba y solo debes atrapar las que coincidan con el color objetivo actual. Perder una gema buena no cuesta nada, pero atrapar un solo color equivocado termina la partida al instante — y el objetivo sigue cambiando, lo que hace de mantener la concentración uno de los retos de atrapar más difíciles que hay.',
+          targetLabel: 'OBJETIVO', tapToStart: 'Toca para empezar', gameOver: '¡Color equivocado! Toca para intentarlo de nuevo', bestLabel: 'MEJOR {n}'
         }
       }
     },
@@ -711,7 +807,11 @@
           serpent: 'Guie uma cobra que cresce numa grade de 20x20. Cada mordida deixa tudo mais rápido — uma curva errada encerra a corrida.',
           keystrike: 'Digite cada palavra que cai antes que ela chegue na linha inferior. A velocidade só aumenta — perder uma palavra encerra a partida.',
           siege: 'Desvie de balas disparadas de todas as direções ao mesmo tempo. Sobreviva um segundo de cada vez.',
-          breaker: 'Rebata a bola e destrua todos os tijolos. Os quadros se enchem mais rápido a cada vez — uma falha e acabou.'
+          breaker: 'Rebata a bola e destrua todos os tijolos. Os quadros se enchem mais rápido a cada vez — uma falha e acabou.',
+          slice: 'Deslize para cortar orbes brilhantes antes que caiam. Cortar uma bomba por engano encerra a partida na hora.',
+          gravity: 'Inverta a gravidade para trocar entre o chão e o teto, desviando de espinhos dos dois lados. A velocidade nunca para de subir.',
+          echo: 'Toque no instante em que o anel encolhendo se alinha com o alvo. A janela fica menor a cada rodada.',
+          catch: 'Deslize o balde para pegar somente a cor alvo. Pegar a cor errada encerra a partida.'
         }
       },
       profile: {
@@ -830,6 +930,26 @@
           hint: 'Mova o mouse / arraste o dedo para guiar a raquete. Toque / Espaço para lançar. Destrua todos os tijolos — o quadro se enche mais rápido a cada vez. Uma falha e acabou.',
           seoNote: 'Neon Breaker é um jogo gratuito de quebrar tijolos difícil on-line: mantenha a bola viva com sua raquete enquanto limpa quadros inteiros de tijolos. Cada quadro limpo traz um novo conjunto com a bola um pouco mais rápida, então aguentar uma corrida longa é o que faz dele um dos jogos de tijolos mais difíceis que você vai encontrar num navegador.',
           tapToStart: 'Toque ou pressione Espaço para lançar', gameOver: 'Boa corrida! Toque para jogar de novo', bestLabel: 'MELHOR {n} tijolos'
+        },
+        slice: {
+          hint: 'Deslize / arraste sobre os orbes para cortá-los. Cortar uma bomba encerra a partida na hora.',
+          seoNote: 'Neon Slice é um jogo de corte rápido e gratuito que você pode jogar on-line direto no navegador. Os orbes disparam de baixo em um arco — deslize por eles para pontuar, mas cortar uma bomba por engano encerra a partida, o que torna manter a precisão em alta velocidade um dos desafios de corte mais difíceis on-line.',
+          tapToStart: 'Deslize para começar', gameOver: 'Cortou uma bomba! Deslize para jogar de novo', bestLabel: 'MELHOR {n}'
+        },
+        gravity: {
+          hint: 'Toque / Espaço para inverter a gravidade entre o chão e o teto. Desvie dos espinhos — a velocidade nunca para de aumentar.',
+          seoNote: 'Gravity Flip é um jogo de corrida difícil e gratuito on-line: inverta a gravidade para grudar seu bloco no chão ou no teto, desviando de espinhos dos dois lados enquanto a velocidade só aumenta. Regra de um único botão, mas brutalmente difícil de manter vivo por muito tempo — uma inversão no momento errado e acabou.',
+          tapToStart: 'Toque para começar', gameOver: 'Boa corrida! Toque para jogar de novo', bestMLabel: 'MELHOR {n}m'
+        },
+        echo: {
+          hint: 'Toque / clique / pressione Espaço no instante em que o anel encolhendo se alinha com o anel alvo pontilhado. Cedo demais, tarde demais ou não tocar encerra a partida.',
+          seoNote: 'Echo Tap é um jogo gratuito de precisão rítmica on-line: um anel encolhe em direção a um alvo fixo e você precisa tocar no instante exato em que se alinham. Cada acerto acelera o ritmo e encolhe a janela de tolerância, tornando a precisão sustentada um dos desafios de tempo mais difíceis que você vai encontrar num navegador.',
+          tapToStart: 'Toque para começar', gameOver: 'Tão perto! Toque para tentar de novo', bestLabel: 'MELHOR {n}'
+        },
+        catch: {
+          hint: 'Mova o mouse / arraste o dedo para deslizar o balde. Pegue somente as gemas que combinam com a cor ALVO — pegar a cor errada encerra a partida. Perder uma gema boa não tem problema, é só continuar.',
+          seoNote: 'Prism Catch é um jogo gratuito de combinação de cores on-line: gemas de todas as cores caem do topo e você só deve pegar as que combinam com a cor alvo atual. Perder uma gema boa não custa nada, mas pegar uma única cor errada encerra a partida na hora — e o alvo continua mudando, tornando manter o foco um dos desafios de captura mais difíceis que existem.',
+          targetLabel: 'ALVO', tapToStart: 'Toque para começar', gameOver: 'Cor errada! Toque para tentar de novo', bestLabel: 'MELHOR {n}'
         }
       }
     }

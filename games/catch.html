@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prism Catch — Hardest Free Online Color-Matching Catch Game</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪣</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Move your bucket to catch only the target color in Prism Catch, a free online reflex and focus game. Catch one wrong color and it's game over. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/catch.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Prism Catch — Hardest Free Online Color-Matching Catch Game">
+<meta property="og:description" content="Move your bucket to catch only the target color in Prism Catch, a free online reflex and focus game. Catch one wrong color and it's game over. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/catch.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Prism Catch — Hardest Free Online Color-Matching Catch Game">
+<meta name="twitter:description" content="Move your bucket to catch only the target color in Prism Catch, a free online reflex and focus game. Catch one wrong color and it's game over. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Prism Catch",
+  "url": "https://chuong.us/games/catch.html",
+  "description": "Move your bucket to catch only the target color in Prism Catch, a free online reflex and focus game. Catch one wrong color and it's game over. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Prism Catch", "item": "https://chuong.us/games/catch.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="catch">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n="common.back">◂ Games</a>
+  <h1>🪣 Prism Catch</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.catch.hint">Move your mouse / drag your finger to slide the bucket. Catch only the gems matching the TARGET swatch — catching the wrong color ends the run. Missing a good gem is fine, just try again.</p>
+<p class="seo-note" data-i18n="game.catch.seoNote">Prism Catch is a free online color-matching game: gems of every color fall from the top and you must catch only the ones matching the current target color. Missing a good gem costs nothing, but catching a single wrong color ends the run instantly — and the target keeps changing, making sustained focus one of the hardest catching challenges around.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="colorrush.html">🎨 Color Rush</a>
+    <a href="avoid.html">☄️ Meteor Rain</a>
+    <a href="breaker.html">🧱 Neon Breaker</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_catch_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.catch.bestLabel', { n: best });
+showBest();
+
+const W = cv.width, H = cv.height, PALETTE = ['#fb7185', '#22d3ee', '#4ade80', '#fbbf24', '#a78bfa'];
+const BUCKET_W = 70, BUCKET_H = 16, BUCKET_Y = H - 30, GEM_R = 14;
+let bucketX, gems, score, state, target, spawnAcc, catchesSinceSwap, flashUntil, flashColor;
+
+function reset() {
+  bucketX = W / 2; gems = []; score = 0; spawnAcc = 0; catchesSinceSwap = 0; flashUntil = 0;
+  target = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+}
+reset();
+
+function newTarget() {
+  let c;
+  do { c = PALETTE[Math.floor(Math.random() * PALETTE.length)]; } while (c === target);
+  target = c;
+}
+
+function scalePt(clientX) {
+  const r = cv.getBoundingClientRect();
+  return (clientX - r.left) * (cv.width / r.width);
+}
+cv.addEventListener('pointermove', e => {
+  if (state !== 'play') return;
+  bucketX = Math.max(BUCKET_W / 2, Math.min(W - BUCKET_W / 2, scalePt(e.clientX)));
+});
+cv.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  if (state !== 'play') { reset(); state = 'play'; }
+  bucketX = Math.max(BUCKET_W / 2, Math.min(W - BUCKET_W / 2, scalePt(e.clientX)));
+});
+addEventListener('keydown', e => {
+  if (state !== 'play') return;
+  if (e.code === 'ArrowLeft') bucketX = Math.max(BUCKET_W / 2, bucketX - 24);
+  if (e.code === 'ArrowRight') bucketX = Math.min(W - BUCKET_W / 2, bucketX + 24);
+});
+
+function flash(color) { flashColor = color; flashUntil = performance.now() + 160; }
+
+function endRun() {
+  if (state === 'dead') return;
+  state = 'dead';
+  if (window.CUG) CUG.submitScore('catch', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function spawnGem() {
+  const c = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+  gems.push({ x: 30 + Math.random() * (W - 60), y: -20, c });
+}
+
+function doTick(dtMs) {
+  if (state !== 'play') return;
+  const fallSpeed = Math.min(4.6, 1.7 + score * 0.045);
+  spawnAcc += dtMs;
+  const interval = Math.max(430, 900 - score * 12);
+  if (spawnAcc >= interval) { spawnAcc = 0; spawnGem(); }
+  for (const g of gems) g.y += fallSpeed * (dtMs / 16.67);
+  const keep = [];
+  for (const g of gems) {
+    const inX = g.x > bucketX - BUCKET_W / 2 - GEM_R && g.x < bucketX + BUCKET_W / 2 + GEM_R;
+    const inY = g.y + GEM_R > BUCKET_Y && g.y - GEM_R < BUCKET_Y + BUCKET_H;
+    if (inX && inY) {
+      if (g.c === target) {
+        score++;
+        catchesSinceSwap++;
+        if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+        flash('#4ade80');
+        if (catchesSinceSwap >= 5) { catchesSinceSwap = 0; newTarget(); }
+      } else {
+        flash('#fb7185');
+        endRun();
+      }
+      continue;
+    }
+    if (g.y < H + 30) keep.push(g);
+  }
+  gems = keep;
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+
+  ctx.fillStyle = '#8b96ad'; ctx.font = '700 12px Segoe UI, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText(I18N.t('game.catch.targetLabel'), 14, 26);
+  ctx.fillStyle = target; ctx.shadowColor = target; ctx.shadowBlur = 10;
+  ctx.beginPath(); ctx.roundRect ? ctx.roundRect(14, 32, 26, 26, 6) : ctx.rect(14, 32, 26, 26); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  for (const g of gems) {
+    ctx.fillStyle = g.c; ctx.shadowColor = g.c; ctx.shadowBlur = 10;
+    ctx.beginPath(); ctx.arc(g.x, g.y, GEM_R, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+  }
+
+  ctx.fillStyle = '#e8edf7'; ctx.shadowColor = '#e8edf7'; ctx.shadowBlur = 8;
+  ctx.beginPath();
+  if (ctx.roundRect) ctx.roundRect(bucketX - BUCKET_W / 2, BUCKET_Y, BUCKET_W, BUCKET_H, 6);
+  else ctx.rect(bucketX - BUCKET_W / 2, BUCKET_Y, BUCKET_W, BUCKET_H);
+  ctx.fill(); ctx.shadowBlur = 0;
+
+  if (performance.now() < flashUntil) {
+    ctx.fillStyle = flashColor; ctx.globalAlpha = 0.1;
+    ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1;
+  }
+
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 34px Segoe UI, sans-serif';
+  ctx.fillText(score, W / 2, 60);
+  ctx.font = '700 17px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText(I18N.t('game.catch.tapToStart'), W / 2, H / 2);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.catch.gameOver'), W / 2, H / 2); }
+}
+
+let lastTs = 0;
+function step(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = ts - lastTs;
+  lastTs = ts;
+  doTick(Math.min(dt, 50));
+  draw();
+  requestAnimationFrame(step);
+}
+state = 'ready';
+requestAnimationFrame(step);
+</script>
+</body>
+</html>
