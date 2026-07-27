@@ -45,6 +45,18 @@
     for (let i = 0; i < username.length; i++) h = (h * 31 + username.charCodeAt(i)) >>> 0;
     return COUNTRIES[h % COUNTRIES.length][0];
   }
+  /* icon-only controls use inline SVG, not Unicode symbol characters — several (⏻ power,
+     originally ★/☆/✕ here too) have no glyph on some mobile system fonts and render as an
+     empty box, which is unreadable on a button with no text label */
+  const STAR_PATH = 'M12 2L14.9 8.6L22 9.3L16.5 14L18.2 21L12 17.3L5.8 21L7.5 14L2 9.3L9.1 8.6Z';
+  function starIcon(on) {
+    return on
+      ? '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="' + STAR_PATH + '"/></svg>'
+      : '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="' + STAR_PATH + '"/></svg>';
+  }
+  function closeIcon() {
+    return '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 4L20 20"/><path d="M20 4L4 20"/></svg>';
+  }
 
   const GAME_META = {
     flappy:  { name: 'Flappy Neon',    icon: '🐤', unit: 'pts' },
@@ -95,7 +107,7 @@
   };
 
   const CUG = {
-    sb, user: null, profile: null, meta: GAME_META, countries: COUNTRIES, flagEmoji, flagUrl,
+    sb, user: null, profile: null, meta: GAME_META, countries: COUNTRIES, flagEmoji, flagUrl, starIcon, closeIcon,
 
     async init() {
       const { data } = await sb.auth.getSession();
@@ -232,7 +244,7 @@
       btn.className = 'cug-btn cug-fav-btn';
       const refresh = () => {
         const on = CUG.isFavorite(game);
-        btn.textContent = on ? '★' : '☆';
+        btn.innerHTML = CUG.starIcon(on);
         btn.classList.toggle('on', on);
         btn.title = I18N.t(on ? 'common.unpin' : 'common.pin');
       };
@@ -300,8 +312,8 @@
       top.insertBefore(btn, document.getElementById('cug-auth'));
       const panel = document.createElement('div');
       panel.className = 'cug-lb-panel';
-      panel.innerHTML = '<button class="cug-lb-close" title="' + I18N.t('common.close') + '">✕</button>' +
-        '<h2>' + I18N.t('common.top10', { game: GAME_META[game].name }) + '</h2><div class="cug-lb-list">' + I18N.t('common.loading') + '</div><p class="cug-lb-note"></p>';
+      panel.innerHTML = '<button class="cug-lb-close" title="' + I18N.t('common.close') + '">' + closeIcon() + '</button>' +
+        '<h2>' + I18N.t('common.top10', { game: GAME_META[game] ? GAME_META[game].name : game }) + '</h2><div class="cug-lb-list">' + I18N.t('common.loading') + '</div><p class="cug-lb-note"></p>';
       document.body.appendChild(panel);
       const close = () => panel.classList.remove('open');
       panel.querySelector('.cug-lb-close').onclick = close;
@@ -323,7 +335,7 @@
             '<div class="cug-lb-row"><span class="r">' + (i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1)) + '</span>' +
             '<span class="flag">' + flagEmoji(r.country) + '</span>' +
             '<span class="n">' + CUG.esc(r.username) + '</span>' +
-            '<span class="s">' + r.best + ' ' + GAME_META[game].unit + '</span></div>').join('');
+            '<span class="s">' + r.best + ' ' + (GAME_META[game] ? GAME_META[game].unit : '') + '</span></div>').join('');
         }
         panel.querySelector('.cug-lb-note').textContent =
           CUG.user ? I18N.t('common.scoreSavedAuto') : I18N.t('common.signInToBoard');

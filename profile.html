@@ -78,7 +78,7 @@ function renderFavorites() {
       '<span class="fav-icon">' + m.icon + '</span>' +
       '<span class="fav-name">' + CUG.esc(m.name) + '</span>' +
       '<span class="fav-play">' + I18N.t('common.play') + '</span>' +
-      '<button class="fav-unpin" type="button" data-id="' + id + '" title="' + I18N.t('common.unpin') + '">✕</button>' +
+      '<button class="fav-unpin" type="button" data-id="' + id + '" title="' + I18N.t('common.unpin') + '">' + CUG.closeIcon() + '</button>' +
       '</a>';
   }).join('');
   list.querySelectorAll('.fav-unpin').forEach(btn => {

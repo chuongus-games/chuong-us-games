@@ -164,7 +164,7 @@ canvas.game {
   padding: 7px 14px; border-radius: 10px; transition: border-color .15s, color .15s;
 }
 .cug-btn:hover { border-color: var(--neon); color: var(--neon); }
-.cug-fav-btn { font-size: 1rem; line-height: 1; padding: 7px 12px; }
+.cug-fav-btn { display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; padding: 7px 12px; }
 .cug-fav-btn.on { color: var(--gold); border-color: var(--gold); }
 .cug-fav-btn.on:hover { color: var(--gold); border-color: var(--gold); }
 .cug-out { display: inline-flex; align-items: center; justify-content: center; padding: 7px 10px; }
@@ -182,8 +182,9 @@ canvas.game {
 .cug-lb-panel.open { transform: translateX(0); box-shadow: -12px 0 40px rgba(0,0,0,.5); }
 .cug-lb-panel h2 { font-size: 1rem; margin-bottom: 14px; padding-right: 26px; }
 .cug-lb-close {
-  position: absolute; top: 14px; right: 14px; width: 28px; height: 28px; line-height: 26px;
-  text-align: center; padding: 0; font-size: 1rem; color: var(--muted);
+  position: absolute; top: 14px; right: 14px; width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; font-size: 1rem; color: var(--muted);
   background: transparent; border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
 }
 .cug-lb-close:hover { color: var(--neon); border-color: var(--neon); }
@@ -278,6 +279,7 @@ canvas.game {
 .fav-unpin {
   background: transparent; border: 1px solid var(--line); color: var(--muted); border-radius: 8px;
   width: 28px; height: 28px; cursor: pointer; font-size: .85rem; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
 }
 .fav-unpin:hover { color: var(--danger); border-color: var(--danger); }
 

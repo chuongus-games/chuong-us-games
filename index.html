@@ -396,7 +396,7 @@ document.addEventListener('cug-ready', async () => {
     pin.type = 'button';
     const refreshPin = () => {
       const on = CUG.isFavorite(id);
-      pin.textContent = on ? '★' : '☆';
+      pin.innerHTML = CUG.starIcon(on);
       pin.classList.toggle('on', on);
       pin.title = I18N.t(on ? 'common.unpin' : 'common.pin');
     };
