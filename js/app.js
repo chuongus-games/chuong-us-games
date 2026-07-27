@@ -177,7 +177,9 @@
         const name = CUG.profile ? CUG.profile.username : I18N.t('common.player');
         host.innerHTML =
           '<a class="cug-user" href="' + CUG.rel('profile.html') + '">👤 ' + CUG.esc(name) + '</a>' +
-          '<button class="cug-btn cug-out" title="' + I18N.t('common.signOutTitle') + '">⏻</button>';
+          '<button class="cug-btn cug-out" title="' + I18N.t('common.signOutTitle') + '">' +
+          '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v9"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>' +
+          '</button>';
         host.querySelector('.cug-out').onclick = CUG.signOut;
       } else {
         host.innerHTML = '';

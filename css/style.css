@@ -167,6 +167,7 @@ canvas.game {
 .cug-fav-btn { font-size: 1rem; line-height: 1; padding: 7px 12px; }
 .cug-fav-btn.on { color: var(--gold); border-color: var(--gold); }
 .cug-fav-btn.on:hover { color: var(--gold); border-color: var(--gold); }
+.cug-out { display: inline-flex; align-items: center; justify-content: center; padding: 7px 10px; }
 .cug-google { background: linear-gradient(90deg, var(--neon), var(--neon2)); color: #06121a; border: 0; }
 .cug-google:hover { color: #06121a; box-shadow: 0 0 16px rgba(34,211,238,.4); }
 .cug-user { font-weight: 700; font-size: .85rem; color: var(--neon); padding: 6px 10px;
