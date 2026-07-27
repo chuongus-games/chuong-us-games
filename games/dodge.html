@@ -100,7 +100,11 @@ addEventListener('pointerup', () => touch = null);
 
 let t = 0, deaths = 0, wins = 0, flash = 0;
 const balls = [];
-for (let i = 0; i < 14; i++) balls.push({ cx: 320, cy: 220, r: 40 + i * 13, a: i * 0.9, sp: (i % 2 ? 1 : -1) * (0.02 + i * 0.0022) });
+for (let i = 0; i < 14; i++) balls.push({ cx: 320, cy: 220, r: 40 + i * 13, a: i * 0.9, base: 0.02 + i * 0.0022, dir: (i % 2 ? 1 : -1) });
+// Angular speed ramps with wins in this session (not reset on death), capped so a safe gap always
+// remains between neighboring rings for the START -> GOAL path to stay possible.
+const SPIN_MULT_CAP = 1.8, SPIN_MULT_RATE = 0.035;
+function spinMultFor(w) { return Math.min(SPIN_MULT_CAP, 1 + w * SPIN_MULT_RATE); }
 
 function resetPlayer() { P.x = 60; P.y = 220; }
 function step() {
@@ -112,8 +116,9 @@ function step() {
   P.x = Math.max(10, Math.min(cv.width - 10 - P.s, P.x));
   P.y = Math.max(10, Math.min(cv.height - 10 - P.s, P.y));
 
+  const spinMult = spinMultFor(wins);
   for (const b of balls) {
-    b.a += b.sp;
+    b.a += b.dir * b.base * spinMult;
     b.x = b.cx + Math.cos(b.a) * b.r;
     b.y = b.cy + Math.sin(b.a) * b.r * 0.82;
     const dx = b.x - (P.x + P.s / 2), dy = b.y - (P.y + P.s / 2);

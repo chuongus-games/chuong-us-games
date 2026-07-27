@@ -84,7 +84,13 @@ const bestEl = document.getElementById('best');
 const showBest = () => bestEl.textContent = I18N.t('game.flappy.bestLabel', { n: best });
 showBest();
 
-const G = 0.45, FLAP = -7.6, GAP = 138, PW = 62, SPEED = 2.6;
+const G = 0.45, FLAP = -7.6, PW = 62;
+// Difficulty ramps with current score, capped/floored so the game stays winnable at high scores.
+const GAP_BASE = 138, GAP_FLOOR = 104, GAP_RATE = 0.5;
+const SPEED_BASE = 2.6, SPEED_CAP = 4.4, SPEED_RATE = 0.018;
+const HIT_R = 11; // collision radius smaller than the 14px drawn bird, biased in the player's favor
+function gapFor(s) { return Math.max(GAP_FLOOR, GAP_BASE - s * GAP_RATE); }
+function speedFor(s) { return Math.min(SPEED_CAP, SPEED_BASE + s * SPEED_RATE); }
 let bird, pipes, score, state, t;
 function reset() {
   bird = { y: 300, vy: 0 };
@@ -92,11 +98,12 @@ function reset() {
 }
 let lastTop = 230;
 function spawnPipe() {
-  const min = 60, max = cv.height - GAP - 120;
+  const gap = gapFor(score);
+  const min = 60, max = cv.height - gap - 120;
   const lo = Math.max(min, lastTop - 150), hi = Math.min(max, lastTop + 150);
   const top = lo + Math.random() * (hi - lo);
   lastTop = top;
-  pipes.push({ x: cv.width, top, passed: false });
+  pipes.push({ x: cv.width, top, gap, passed: false });
 }
 function flap() {
   if (state === 'ready') { state = 'play'; t = 0; lastTop = 230; spawnPipe(); }
@@ -111,11 +118,12 @@ function step() {
   if (state === 'play') {
     bird.vy += G; bird.y += bird.vy;
     if (t % 95 === 0) spawnPipe();
+    const speed = speedFor(score);
     for (const p of pipes) {
-      p.x -= SPEED;
+      p.x -= speed;
       if (!p.passed && p.x + PW < 90) { p.passed = true; score++; }
-      if (90 + 14 > p.x && 90 - 14 < p.x + PW &&
-          (bird.y - 14 < p.top || bird.y + 14 > p.top + GAP)) die();
+      if (90 + HIT_R > p.x && 90 - HIT_R < p.x + PW &&
+          (bird.y - HIT_R < p.top || bird.y + HIT_R > p.top + p.gap)) die();
     }
     pipes = pipes.filter(p => p.x > -PW);
     if (bird.y > cv.height - 14 || bird.y < -40) die();
@@ -135,7 +143,7 @@ function draw() {
     ctx.fillStyle = '#22d3ee';
     ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 12;
     ctx.fillRect(p.x, 0, PW, p.top);
-    ctx.fillRect(p.x, p.top + GAP, PW, cv.height - p.top - GAP);
+    ctx.fillRect(p.x, p.top + p.gap, PW, cv.height - p.top - p.gap);
     ctx.shadowBlur = 0;
   }
   ctx.fillStyle = '#fbbf24';
