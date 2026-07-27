@@ -230,6 +230,7 @@ canvas.game {
 
 /* ---------- profile / admin ---------- */
 .panel-page { max-width: 760px; margin: 0 auto; padding: 30px 20px 60px; }
+.profile-back { display: inline-block; margin-bottom: 16px; }
 .panel-page h1 { font-size: 1.5rem; margin-bottom: 6px; }
 .panel-page .sub { color: var(--muted); margin-bottom: 24px; font-size: .9rem; }
 .panel {
