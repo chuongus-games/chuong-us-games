@@ -16,8 +16,8 @@
   transition: opacity .12s, transform .1s; border: 2px solid transparent;
 }
 .pad.lit { opacity: 1; transform: scale(1.04); box-shadow: 0 0 34px currentColor; }
-#p0 { background: #22d3ee; color: #22d3ee; } #p1 { background: #a78bfa; color: #a78bfa; }
-#p2 { background: #fbbf24; color: #fbbf24; } #p3 { background: #fb7185; color: #fb7185; }
+.pad { transition: opacity .12s, transform .1s, background-color .25s, color .25s; }
+.pad.shuffling { opacity: .12; }
 #status { font-size: 1.15rem; font-weight: 700; min-height: 1.6em; }
 #lvl { color: var(--muted); margin-top: 6px; }
 #start {
@@ -91,7 +91,7 @@
     <button id="start" data-i18n="game.memory.start">START</button>
   </div>
 </div>
-<p class="hint" data-i18n="game.memory.hint">The sequence grows every round and plays FASTER each time. One wrong note ends the round.</p>
+<p class="hint" data-i18n="game.memory.hint">Watch the sequence, then the 4 pads SHUFFLE to new positions — repeat it by color, not by spot. The sequence grows every round and plays FASTER each time. One wrong color ends the round.</p>
 <p class="seo-note" data-i18n="game.memory.seoNote">Neon Memory is a free hard memory game online: watch a color sequence, then repeat it back. Every round adds one more step, so a single slip ends the run — a tough test for anyone who thinks their memory game skills are solid.</p>
 <nav class="related" aria-label="More hard games">
   <span data-i18n="common.moreHardGames">More hard games:</span>
@@ -115,25 +115,65 @@ showBest();
 
 const AC = window.AudioContext ? new AudioContext() : null;
 const freqs = [330, 415, 494, 587];
-function beep(i, dur) {
+const colorHex = ['#22d3ee', '#a78bfa', '#fbbf24', '#fb7185'];
+function beep(colorIdx, dur) {
   if (!AC) return;
   const o = AC.createOscillator(), g = AC.createGain();
-  o.frequency.value = freqs[i]; o.type = 'sine';
+  o.frequency.value = freqs[colorIdx]; o.type = 'sine';
   g.gain.setValueAtTime(.18, AC.currentTime);
   g.gain.exponentialRampToValueAtTime(.001, AC.currentTime + dur / 1000);
   o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime + dur / 1000);
 }
 let seq = [], pos = 0, mode = 'idle';
+// layout[posIndex] = colorIndex currently displayed at that on-screen pad.
+// Positions on screen never move — only which COLOR sits at which position changes,
+// so players must recognize the color itself rather than remembering a fixed spot
+// (unlike the fixed-position "press this spot" memory mechanic of Simon-style games).
+let layout = [0, 1, 2, 3];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-function lit(i, dur) {
-  pads[i].classList.add('lit'); beep(i, dur);
-  setTimeout(() => pads[i].classList.remove('lit'), dur);
+
+function applyLayout() {
+  for (let posIdx = 0; posIdx < 4; posIdx++) {
+    const colorIdx = layout[posIdx];
+    pads[posIdx].style.background = colorHex[colorIdx];
+    pads[posIdx].style.color = colorHex[colorIdx];
+    pads[posIdx].dataset.color = colorIdx;
+  }
+}
+applyLayout();
+
+// Fisher-Yates shuffle of the color->position layout.
+function shuffleLayout() {
+  const arr = layout.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  layout = arr;
+}
+
+function posOfColor(colorIdx) { return layout.indexOf(colorIdx); }
+
+function lit(colorIdx, dur) {
+  const posIdx = posOfColor(colorIdx);
+  pads[posIdx].classList.add('lit'); beep(colorIdx, dur);
+  setTimeout(() => pads[posIdx].classList.remove('lit'), dur);
 }
 async function playSeq() {
   mode = 'show'; status.textContent = I18N.t('game.memory.watch');
   const dur = Math.max(140, 420 - seq.length * 22);
   await sleep(600);
   for (const i of seq) { lit(i, dur); await sleep(dur + Math.max(80, 180 - seq.length * 10)); }
+  // Between "watch" and "your turn" — shuffle which position each color sits at.
+  // Input stays locked (mode stays out of 'input') until the new layout has been
+  // visible for a fixed pause, so nobody is asked to react before they can see it.
+  mode = 'shuffle';
+  pads.forEach(p => p.classList.add('shuffling'));
+  await sleep(220);
+  shuffleLayout();
+  applyLayout();
+  pads.forEach(p => p.classList.remove('shuffling'));
+  await sleep(450); // grace period to see the new layout before input is accepted
   mode = 'input'; pos = 0; status.textContent = I18N.t('game.memory.yourTurn');
 }
 function nextRound() {
@@ -141,10 +181,11 @@ function nextRound() {
   lvlEl.textContent = I18N.t('game.memory.round', { n: seq.length });
   playSeq();
 }
-pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
+pads.forEach((p, posIdx) => p.addEventListener('pointerdown', () => {
   if (mode !== 'input') return;
-  lit(i, 200);
-  if (i !== seq[pos]) {
+  const clickedColor = layout[posIdx];
+  lit(clickedColor, 200);
+  if (clickedColor !== seq[pos]) {
     mode = 'idle';
     status.textContent = I18N.t('game.memory.almost', { n: seq.length - 1 });
     if (window.CUG) CUG.submitScore('memory', seq.length - 1);
@@ -157,7 +198,7 @@ pads.forEach((p, i) => p.addEventListener('pointerdown', () => {
 }));
 startBtn.addEventListener('click', () => {
   if (AC && AC.state === 'suspended') AC.resume();
-  seq = []; startBtn.style.display = 'none'; nextRound();
+  seq = []; layout = [0, 1, 2, 3]; applyLayout(); startBtn.style.display = 'none'; nextRound();
 });
 </script>
 </body>

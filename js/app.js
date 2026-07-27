@@ -74,7 +74,7 @@
     serpent:   { name: 'Neon Serpent', icon: '🐍', unit: 'pts' },
     keystrike: { name: 'Keystrike',    icon: '⌨️', unit: 'words' },
     siege:     { name: 'Neon Siege',   icon: '💥', unit: 's' },
-    breaker:   { name: 'Neon Breaker', icon: '🧱', unit: 'bricks' },
+    breaker:   { name: 'Neon Breaker', icon: '🏓', unit: 'bricks' },
     slice:     { name: 'Neon Slice',   icon: '💠', unit: 'pts' },
     gravity:   { name: 'Gravity Flip', icon: '🔃', unit: 'm' },
     echo:      { name: 'Echo Tap',     icon: '💫', unit: 'pts' },

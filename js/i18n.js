@@ -94,8 +94,8 @@
       },
       game: {
         flappy: {
-          hint: 'Tap / click / press Space to fly. Pass a gap to score 1 point.',
-          seoNote: 'Flappy Neon is a hard flappy-style tap game you can play free online, right in your browser. The rule is simple — tap to fly through the gap — but scoring past 10 makes this one of the hardest flappy-style games around.',
+          hint: 'Tap / click / press Space to fly. The gap drifts up and down as each pipe approaches — time your flight to where it will be, not where it is now. Pass a gap to score 1 point.',
+          seoNote: 'Flappy Neon is a hard tap-to-fly game you can play free online, right in your browser. Unlike a static gap, each pipe\'s opening drifts up and down as it approaches, so you have to predict where it will be, not just react to where it is now — scoring past 10 makes this one of the hardest tap-and-fly games around.',
           tapToStart: 'Tap to start', gameOver: 'Nice try! Tap to play again', bestLabel: 'BEST {n}'
         },
         dodge: {
@@ -122,8 +122,8 @@
           fail: '<b>{s}s</b> — Off by {ms}ms — try again!', winStreak: '🔥 Win streak: {n}', bestStreakLabel: 'BEST STREAK {n}'
         },
         memory: {
-          hint: 'The sequence grows every round and plays FASTER each time. One wrong note ends the round.',
-          seoNote: 'Neon Memory is a free hard memory game online: watch a color sequence, then repeat it back. Every round adds one more step, so a single slip ends the run — a tough test for anyone who thinks their memory game skills are solid.',
+          hint: 'Watch the sequence, then the 4 pads swap positions before your turn — remember each step by COLOR, not by where it was. The sequence grows every round and plays FASTER each time. One wrong note ends the round.',
+          seoNote: 'Neon Memory is a free hard memory game online: watch a color sequence, then repeat it back — but the pads shuffle to new positions before you answer, so spatial muscle memory won\'t save you, only true color recall will. Every round adds one more step, so a single slip ends the run.',
           initialStatus: 'Memorize the sequence — then repeat it in order', watch: '👀 Watch closely…',
           yourTurn: '🎮 Your turn!', almost: 'Almost! You reached round {n}', perfect: '✅ Perfect!',
           round: 'Round {n}', start: 'START', playAgain: 'PLAY AGAIN', bestLabel: 'BEST {n}'
@@ -193,8 +193,8 @@
           tapToStart: 'Tap or press Space to launch', gameOver: 'Nice run! Tap to play again', bestLabel: 'BEST {n} bricks'
         },
         slice: {
-          hint: 'Swipe / drag across the orbs to slice them. Slicing a bomb ends the run instantly.',
-          seoNote: 'Neon Slice is a free fast-paced slicing game you can play online in your browser. Orbs launch from the bottom and arc through the air — swipe through them to score, but one bomb sliced by mistake ends the run, which makes staying accurate at speed one of the hardest slicing challenges you\'ll find online.',
+          hint: 'Swipe across the orbs in the direction their arrow points to slice them — wrong direction just misses, no penalty. Slicing a bomb in ANY direction ends the run instantly.',
+          seoNote: 'Neon Slice is a free fast-paced slicing game you can play online in your browser. Orbs launch from the bottom and arc through the air, each marked with a required slice direction — swipe the right way to score, while one bomb sliced in any direction ends the run instantly, making precise directional aim at speed one of the hardest slicing challenges online.',
           tapToStart: 'Swipe to start', gameOver: 'Sliced a bomb! Swipe to play again', bestLabel: 'BEST {n}'
         },
         gravity: {
@@ -333,8 +333,8 @@
       },
       game: {
         flappy: {
-          hint: 'Chạm / bấm / phím Space để bay. Qua một khe hở được 1 điểm.',
-          seoNote: 'Flappy Neon là trò chơi kiểu flappy khó, chơi miễn phí ngay trên trình duyệt. Luật rất đơn giản — chạm để bay qua khe hở — nhưng vượt qua điểm 10 khiến đây trở thành một trong những trò flappy khó nhất.',
+          hint: 'Chạm / bấm / phím Space để bay. Khe hở trôi lên xuống khi ống tới gần — hãy canh đúng vị trí khe SẼ Ở, không phải vị trí hiện tại. Qua một khe hở được 1 điểm.',
+          seoNote: 'Flappy Neon là trò chơi kiểu chạm-để-bay khó, chơi miễn phí ngay trên trình duyệt. Khác với khe hở đứng yên thông thường, khe hở của mỗi ống trôi lên xuống khi tới gần, buộc bạn phải dự đoán vị trí khe sẽ ở chứ không chỉ phản xạ theo vị trí hiện tại — vượt qua điểm 10 khiến đây trở thành một trong những trò chạm-bay khó nhất.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Cố lên! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         dodge: {
@@ -361,8 +361,8 @@
           fail: '<b>{s}s</b> — Lệch {ms}ms — thử lại nào!', winStreak: '🔥 Chuỗi thắng: {n}', bestStreakLabel: 'CHUỖI CAO NHẤT {n}'
         },
         memory: {
-          hint: 'Chuỗi màu dài thêm mỗi vòng và chạy NHANH hơn mỗi lần. Bấm sai một nốt là kết thúc vòng chơi.',
-          seoNote: 'Neon Memory là trò chơi trí nhớ khó, miễn phí: xem chuỗi màu rồi lặp lại. Mỗi vòng thêm một bước, chỉ cần sai một lần là kết thúc — thử thách khó cho bất kỳ ai tự tin về trí nhớ của mình.',
+          hint: 'Xem chuỗi màu, rồi 4 ô sẽ đổi chỗ trước khi tới lượt bạn — phải nhớ theo MÀU SẮC, không phải vị trí. Chuỗi dài thêm mỗi vòng và chạy NHANH hơn mỗi lần. Bấm sai một nốt là kết thúc vòng chơi.',
+          seoNote: 'Neon Memory là trò chơi trí nhớ khó, miễn phí: xem chuỗi màu rồi lặp lại — nhưng các ô sẽ xáo trộn vị trí trước khi bạn trả lời, nên trí nhớ vận động theo vị trí không giúp được gì, chỉ có khả năng nhớ đúng màu mới có ích. Mỗi vòng thêm một bước, chỉ cần sai một lần là kết thúc.',
           initialStatus: 'Ghi nhớ chuỗi màu — rồi lặp lại đúng thứ tự', watch: '👀 Chú ý quan sát…',
           yourTurn: '🎮 Đến lượt bạn!', almost: 'Suýt nữa! Bạn đạt tới vòng {n}', perfect: '✅ Hoàn hảo!',
           round: 'Vòng {n}', start: 'BẮT ĐẦU', playAgain: 'CHƠI LẠI', bestLabel: 'CAO NHẤT {n}'
@@ -432,8 +432,8 @@
           tapToStart: 'Chạm hoặc bấm Space để phóng bóng', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} viên gạch'
         },
         slice: {
-          hint: 'Vuốt / kéo qua các quả cầu để chém chúng. Chém trúng bom là kết thúc ngay lập tức.',
-          seoNote: 'Neon Slice là trò chém tốc độ cao, miễn phí, chơi ngay trên trình duyệt. Các quả cầu bay lên từ phía dưới theo đường vòng cung — vuốt qua để ghi điểm, nhưng chỉ cần chém nhầm một quả bom là kết thúc, khiến việc giữ độ chính xác ở tốc độ cao trở thành một trong những thử thách chém khó nhất trực tuyến.',
+          hint: 'Vuốt đúng hướng mũi tên chỉ trên mỗi quả cầu để chém trúng — sai hướng chỉ tính trượt, không bị phạt. Chém trúng bom theo BẤT KỲ hướng nào đều kết thúc ngay lập tức.',
+          seoNote: 'Neon Slice là trò chém tốc độ cao, miễn phí, chơi ngay trên trình duyệt. Các quả cầu bay lên từ phía dưới theo đường vòng cung, mỗi quả đều có mũi tên chỉ hướng chém bắt buộc — vuốt đúng hướng để ghi điểm, trong khi chỉ cần chém nhầm một quả bom (ở bất kỳ hướng nào) là kết thúc ngay, khiến việc nhắm hướng chính xác ở tốc độ cao trở thành một trong những thử thách chém khó nhất trực tuyến.',
           tapToStart: 'Vuốt để bắt đầu', gameOver: 'Chém trúng bom rồi! Vuốt để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         gravity: {
@@ -572,8 +572,8 @@
       },
       game: {
         flappy: {
-          hint: '轻点 / 点击 / 按空格键起飞。飞过一个缝隙得1分。',
-          seoNote: 'Flappy Neon 是一款高难度的 flappy 风格游戏，可在浏览器中免费在线畅玩。规则很简单——轻点即可飞过缝隙——但要突破10分，这就成了最难的 flappy 类游戏之一。',
+          hint: '轻点 / 点击 / 按空格键起飞。缝隙会随着管道靠近而上下漂移——要预判它将出现的位置，而不是当前位置。飞过一个缝隙得1分。',
+          seoNote: 'Flappy Neon 是一款高难度的轻点飞行游戏，可在浏览器中免费在线畅玩。与固定缝隙不同，每根管道的缺口会在靠近时上下漂移，你必须预判它将出现的位置，而不只是对当前位置做出反应——突破10分就成了最难的轻点飞行类游戏之一。',
           tapToStart: '轻点开始', gameOver: '再接再厉！轻点重新开始', bestLabel: '最佳 {n}'
         },
         dodge: {
@@ -600,8 +600,8 @@
           fail: '<b>{s}秒</b> — 误差 {ms}ms — 再试一次！', winStreak: '🔥 连胜：{n}', bestStreakLabel: '最佳连胜 {n}'
         },
         memory: {
-          hint: '序列每轮都会变长，播放速度也会越来越快。按错一个就会结束本轮。',
-          seoNote: 'Neon Memory 是一款免费的高难度记忆游戏：观察颜色序列，然后重复出来。每轮都会多一步，只要失误一次就会结束——对任何自信记忆力不错的人来说都是严峻考验。',
+          hint: '观察序列后，4个面板会在轮到你之前交换位置——必须按颜色记忆，而不是按位置记忆。序列每轮都会变长，播放速度也会越来越快。按错一个就会结束本轮。',
+          seoNote: 'Neon Memory 是一款免费的高难度记忆游戏：观察颜色序列，然后重复出来——但面板会在你作答前重新洗牌位置，因此空间肌肉记忆帮不上忙，只有真正记住颜色才有用。每轮都会多一步，只要失误一次就会结束。',
           initialStatus: '记住颜色序列——然后按顺序重复', watch: '👀 请仔细观察…',
           yourTurn: '🎮 轮到你了！', almost: '差一点！你到达了第{n}轮', perfect: '✅ 完美！',
           round: '第{n}轮', start: '开始', playAgain: '再玩一次', bestLabel: '最佳 {n}'
@@ -671,8 +671,8 @@
           tapToStart: '轻点或按空格键发射', gameOver: '玩得不错！轻点重新开始', bestLabel: '最佳 {n} 块砖'
         },
         slice: {
-          hint: '滑动 / 拖动划过圆球来切开它们。切到炸弹会立刻结束游戏。',
-          seoNote: 'Neon Slice 是一款免费的快节奏切割游戏，可直接在浏览器中在线畅玩。圆球从底部发射并划出抛物线——滑动划过它们即可得分，但只要切错一颗炸弹就会结束游戏，这让在高速下保持精准成为网上最难的切割挑战之一。',
+          hint: '按照圆球上箭头指示的方向滑动才能切中——方向错误只算未命中，不扣分。以任何方向切到炸弹都会立刻结束游戏。',
+          seoNote: 'Neon Slice 是一款免费的快节奏切割游戏，可直接在浏览器中在线畅玩。圆球从底部发射并划出抛物线，每颗都标有必须遵循的切割方向——按正确方向滑动才能得分，而以任何方向切到炸弹都会立刻结束游戏，这让在高速下保持精准的方向判断成为网上最难的切割挑战之一。',
           tapToStart: '滑动开始', gameOver: '切到炸弹了！滑动重新开始', bestLabel: '最佳 {n}'
         },
         gravity: {
@@ -811,8 +811,8 @@
       },
       game: {
         flappy: {
-          hint: 'Toca / haz clic / pulsa Espacio para volar. Pasa un hueco para sumar 1 punto.',
-          seoNote: 'Flappy Neon es un juego difícil estilo flappy que puedes jugar gratis en línea, directamente en tu navegador. La regla es simple — toca para volar por el hueco — pero superar los 10 puntos lo convierte en uno de los juegos flappy más difíciles.',
+          hint: 'Toca / haz clic / pulsa Espacio para volar. El hueco se desplaza hacia arriba y abajo a medida que se acerca cada tubo — calcula dónde estará, no dónde está ahora. Pasa un hueco para sumar 1 punto.',
+          seoNote: 'Flappy Neon es un juego difícil de tocar-para-volar que puedes jugar gratis en línea, directamente en tu navegador. A diferencia de un hueco fijo, la abertura de cada tubo se desplaza hacia arriba y abajo al acercarse, obligándote a predecir dónde estará en vez de solo reaccionar a dónde está ahora — superar los 10 puntos lo convierte en uno de los juegos de volar más difíciles.',
           tapToStart: 'Toca para empezar', gameOver: '¡Buen intento! Toca para jugar de nuevo', bestLabel: 'MEJOR {n}'
         },
         dodge: {
@@ -839,8 +839,8 @@
           fail: '<b>{s}s</b> — Diferencia de {ms}ms — ¡inténtalo de nuevo!', winStreak: '🔥 Racha de victorias: {n}', bestStreakLabel: 'MEJOR RACHA {n}'
         },
         memory: {
-          hint: 'La secuencia crece cada ronda y se reproduce MÁS RÁPIDO cada vez. Una nota equivocada termina la ronda.',
-          seoNote: 'Neon Memory es un juego de memoria gratuito y difícil en línea: observa una secuencia de colores y luego repítela. Cada ronda añade un paso más, así que un solo error termina la partida — una prueba dura para quien crea que su memoria es sólida.',
+          hint: 'Observa la secuencia; luego los 4 paneles intercambian posiciones antes de tu turno — recuerda cada paso por COLOR, no por posición. La secuencia crece cada ronda y se reproduce MÁS RÁPIDO cada vez. Una nota equivocada termina la ronda.',
+          seoNote: 'Neon Memory es un juego de memoria gratuito y difícil en línea: observa una secuencia de colores y luego repítela — pero los paneles se barajan a nuevas posiciones antes de que respondas, así que la memoria muscular espacial no te servirá, solo el recuerdo real del color. Cada ronda añade un paso más, así que un solo error termina la partida.',
           initialStatus: 'Memoriza la secuencia — luego repítela en orden', watch: '👀 Observa con atención…',
           yourTurn: '🎮 ¡Tu turno!', almost: '¡Casi! Llegaste a la ronda {n}', perfect: '✅ ¡Perfecto!',
           round: 'Ronda {n}', start: 'INICIAR', playAgain: 'JUGAR DE NUEVO', bestLabel: 'MEJOR {n}'
@@ -910,8 +910,8 @@
           tapToStart: 'Toca o pulsa Espacio para lanzar', gameOver: '¡Buena partida! Toca para jugar de nuevo', bestLabel: 'MEJOR {n} ladrillos'
         },
         slice: {
-          hint: 'Desliza / arrastra sobre los orbes para cortarlos. Cortar una bomba termina la partida al instante.',
-          seoNote: 'Neon Slice es un juego de corte rápido y gratuito que puedes jugar en línea directamente en tu navegador. Los orbes salen disparados desde abajo trazando un arco — desliza a través de ellos para sumar puntos, pero cortar una bomba por error termina la partida, lo que hace de mantener la precisión a alta velocidad uno de los retos de corte más difíciles en línea.',
+          hint: 'Desliza en la dirección que indica la flecha de cada orbe para cortarlo — la dirección equivocada solo cuenta como fallo, sin penalización. Cortar una bomba en CUALQUIER dirección termina la partida al instante.',
+          seoNote: 'Neon Slice es un juego de corte rápido y gratuito que puedes jugar en línea directamente en tu navegador. Los orbes salen disparados desde abajo trazando un arco, cada uno marcado con una dirección de corte obligatoria — desliza en la dirección correcta para sumar puntos, mientras que cortar una bomba en cualquier dirección termina la partida al instante, lo que hace de la puntería direccional precisa a alta velocidad uno de los retos de corte más difíciles en línea.',
           tapToStart: 'Desliza para empezar', gameOver: '¡Cortaste una bomba! Desliza para jugar de nuevo', bestLabel: 'MEJOR {n}'
         },
         gravity: {
@@ -1050,8 +1050,8 @@
       },
       game: {
         flappy: {
-          hint: 'Toque / clique / pressione Espaço para voar. Passe por um vão para marcar 1 ponto.',
-          seoNote: 'Flappy Neon é um jogo difícil estilo flappy que você pode jogar de graça on-line, direto no navegador. A regra é simples — toque para voar pelo vão — mas ultrapassar 10 pontos faz dele um dos jogos flappy mais difíceis que existem.',
+          hint: 'Toque / clique / pressione Espaço para voar. O vão se desloca para cima e para baixo conforme cada cano se aproxima — calcule onde ele vai estar, não onde está agora. Passe por um vão para marcar 1 ponto.',
+          seoNote: 'Flappy Neon é um jogo difícil de tocar-para-voar que você pode jogar de graça on-line, direto no navegador. Diferente de um vão fixo, a abertura de cada cano se desloca para cima e para baixo ao se aproximar, obrigando você a prever onde ela vai estar em vez de só reagir a onde está agora — ultrapassar 10 pontos faz dele um dos jogos de voar mais difíceis que existem.',
           tapToStart: 'Toque para começar', gameOver: 'Boa tentativa! Toque para jogar de novo', bestLabel: 'MELHOR {n}'
         },
         dodge: {
@@ -1078,8 +1078,8 @@
           fail: '<b>{s}s</b> — Diferença de {ms}ms — tente de novo!', winStreak: '🔥 Sequência de vitórias: {n}', bestStreakLabel: 'MELHOR SEQUÊNCIA {n}'
         },
         memory: {
-          hint: 'A sequência cresce a cada rodada e fica MAIS RÁPIDA a cada vez. Uma nota errada encerra a rodada.',
-          seoNote: 'Neon Memory é um jogo de memória gratuito e difícil on-line: observe uma sequência de cores e depois repita. Cada rodada acrescenta mais um passo, então um único erro encerra a partida — um teste difícil para quem confia na própria memória.',
+          hint: 'Observe a sequência; depois os 4 painéis trocam de posição antes da sua vez — memorize cada passo pela COR, não pela posição. A sequência cresce a cada rodada e fica MAIS RÁPIDA a cada vez. Uma nota errada encerra a rodada.',
+          seoNote: 'Neon Memory é um jogo de memória gratuito e difícil on-line: observe uma sequência de cores e depois repita — mas os painéis embaralham para novas posições antes de você responder, então a memória muscular espacial não ajuda, só a memória real de cor. Cada rodada acrescenta mais um passo, então um único erro encerra a partida.',
           initialStatus: 'Memorize a sequência — depois repita na ordem', watch: '👀 Observe com atenção…',
           yourTurn: '🎮 Sua vez!', almost: 'Quase! Você chegou até a rodada {n}', perfect: '✅ Perfeito!',
           round: 'Rodada {n}', start: 'INICIAR', playAgain: 'JOGAR DE NOVO', bestLabel: 'MELHOR {n}'
@@ -1149,8 +1149,8 @@
           tapToStart: 'Toque ou pressione Espaço para lançar', gameOver: 'Boa corrida! Toque para jogar de novo', bestLabel: 'MELHOR {n} tijolos'
         },
         slice: {
-          hint: 'Deslize / arraste sobre os orbes para cortá-los. Cortar uma bomba encerra a partida na hora.',
-          seoNote: 'Neon Slice é um jogo de corte rápido e gratuito que você pode jogar on-line direto no navegador. Os orbes disparam de baixo em um arco — deslize por eles para pontuar, mas cortar uma bomba por engano encerra a partida, o que torna manter a precisão em alta velocidade um dos desafios de corte mais difíceis on-line.',
+          hint: 'Deslize na direção que a seta de cada orbe indica para cortá-lo — direção errada só conta como erro, sem penalidade. Cortar uma bomba em QUALQUER direção encerra a partida na hora.',
+          seoNote: 'Neon Slice é um jogo de corte rápido e gratuito que você pode jogar on-line direto no navegador. Os orbes disparam de baixo em um arco, cada um marcado com uma direção de corte obrigatória — deslize na direção certa para pontuar, enquanto cortar uma bomba em qualquer direção encerra a partida na hora, tornando a mira direcional precisa em alta velocidade um dos desafios de corte mais difíceis on-line.',
           tapToStart: 'Deslize para começar', gameOver: 'Cortou uma bomba! Deslize para jogar de novo', bestLabel: 'MELHOR {n}'
         },
         gravity: {
