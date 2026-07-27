@@ -64,7 +64,15 @@
           slice: 'Swipe to slice glowing orbs before they fall. One bomb sliced by mistake ends the run instantly.',
           gravity: 'Flip gravity to switch between floor and ceiling, dodging spikes on both sides. Speed never stops climbing.',
           echo: 'Tap the instant the shrinking ring lines up with the target. The window gets smaller every round.',
-          catch: 'Slide the bucket to catch only the target color. Catch one wrong color and the run is over.'
+          catch: 'Slide the bucket to catch only the target color. Catch one wrong color and the run is over.',
+          voidjumper: 'Charge, aim, and leap between crumbling platforms while the void scrolls up faster every second.',
+          laneswitch: 'Slide between 3 lanes to dodge oncoming blocks. Speed never stops climbing — sometimes only one lane stays open.',
+          tiltbalance: 'Tilt a shrinking platform to keep the ball rolling — dodge holes, don\'t fall off the edge.',
+          flashgrid: 'Tap the blue cell before it fades — never touch the red trap, or it\'s game over instantly.',
+          grappleswing: 'Hold to fire a grappling hook, swing like a pendulum, and let go at the top of the arc to fly to the next anchor.',
+          eyetrick: 'Tap the true ink color, not the word — the classic Stroop-effect trap with a shrinking timer.',
+          focuslock: 'Track one glowing dot as it blends into an identical swarm and bounces around — lose sight of it and it\'s game over.',
+          trajectory: 'Pull back like a slingshot and release to arc a shot at a distant ring — wind makes every shot harder to call.'
         }
       },
       profile: {
@@ -203,6 +211,49 @@
           hint: 'Move your mouse / drag your finger to slide the bucket. Catch only the gems matching the TARGET swatch — catching the wrong color ends the run. Missing a good gem is fine, just try again.',
           seoNote: 'Prism Catch is a free online color-matching game: gems of every color fall from the top and you must catch only the ones matching the current target color. Missing a good gem costs nothing, but catching a single wrong color ends the run instantly — and the target keeps changing, making sustained focus one of the hardest catching challenges around.',
           targetLabel: 'TARGET', tapToStart: 'Tap to start', gameOver: 'Wrong color! Tap to try again', bestLabel: 'BEST {n}'
+        },
+        voidjumper: {
+          hint: 'Press and hold to charge a jump — drag left/right while charging to aim, release to leap. The void scrolls up forever, faster and faster.',
+          seoNote: 'Void Jumper is a free hard vertical platformer online. Charge your jump, aim between tiny floating platforms — some crumble the instant you land, some drift sideways — while the screen auto-scrolls upward at increasing speed. Fall behind or miss a platform and it\'s over. How high can you climb?',
+          tapToStart: 'Tap to start', gameOver: 'Fell into the void! Tap to try again', bestMLabel: 'BEST {n}m'
+        },
+        laneswitch: {
+          hint: 'Arrow keys / A-D (or tap left/right on the road) to switch lanes. Dodge the blocks — speed climbs forever and sometimes only one lane stays open.',
+          seoNote: 'Lane Switch is a free hard online reflex game across 3 lanes: blocks slide toward you and you must slide between left, middle and right to survive. There\'s always exactly one safe lane, but as speed keeps climbing, spotting it and reacting in time becomes one of the hardest dodge challenges you\'ll find in a browser.',
+          tapToStart: 'Tap or press ←/→ to start', gameOver: 'So close! Tap to play again', bestMLabel: 'BEST {n}m'
+        },
+        tiltbalance: {
+          hint: 'Move your mouse / drag your finger left-right (or use arrow keys) to tilt the platform and roll the ball. Don\'t let it fall off the ends or drop through a hole. The platform shrinks and holes appear as you survive longer.',
+          seoNote: 'Tilt Balance is a free hard online physics game: tilt a narrow platform by moving your mouse to keep a neon ball rolling safely on top. The platform slowly shrinks from both ends and random holes open up over time, forcing constant, precise micro-adjustments. Score is the number of seconds you keep the ball alive, and staying in control for a long run is what makes this one of the hardest balance games in a browser.',
+          tapToStart: 'Tap / click to start', gameOver: 'Game over — tap to retry', bestSecLabel: 'BEST {n}s'
+        },
+        flashgrid: {
+          hint: 'Tap the glowing BLUE cell before it fades out. Never tap the RED trap cell — that\'s instant game over. Missing a blue cell costs a life; you have 3.',
+          seoNote: 'Flash Grid is a free online reflex grid game: a random cell flashes blue and you must tap it before it fades, while occasional red trap cells must never be touched. The lit window shrinks and traps appear more often as your score climbs, making split-second color recognition and restraint the key to a high score in this brutally hard reaction test.',
+          bestLabel: 'BEST {n}', scoreLabel: 'Score: {n}', tapToStartTitle: 'Tap to start', tapToStartBody: 'Tap the blue cell before it fades. Never tap red.',
+          gameOverTitle: 'Game Over', finalScoreLabel: 'Score: {n}', tapToRestart: 'Tap to play again'
+        },
+        grappleswing: {
+          hint: 'Hold to fire the hook and swing like a pendulum. Let go at the top of the arc to fly to the next anchor — time it right or fall.',
+          seoNote: 'Grapple Swing is a free hard physics game online: hold to grapple onto anchor points ahead, build momentum swinging like a pendulum, then release at exactly the right instant to sail forward and catch the next hook. Anchors get trickier to reach as you go. Miss the timing and gravity takes you down. Simple one-button rule, punishing precision.',
+          tapToStart: 'Hold to start swinging', gameOver: 'Fell! Tap to try again', bestLabel: 'BEST {n}'
+        },
+        eyetrick: {
+          hint: 'A color word appears painted in a different ink color. Tap the button matching the INK COLOR, not what the word says — the time window shrinks as your score climbs. Wrong tap or timeout costs a life. 3 lives total.',
+          seoNote: 'Eye Trick is a free online reflex game built on the Stroop effect, a famous cognitive-science phenomenon where reading a color word interferes with naming the ink color it\'s printed in. Tap only the true ink color while the clock shrinks with every correct answer, and occasional matching trials test whether you\'re actually looking or just reading on autopilot.',
+          tapToStart: 'Tap to start — tap the INK COLOR, not the word!', gameOver: 'Game over — tap to try again', bestLabel: 'BEST {n}'
+        },
+        focuslock: {
+          hint: 'Watch the yellow dot, then track it as every dot mixes together. When they stop, tap the one you tracked. Wrong tap costs a life — you have 3.',
+          seoNote: 'Focus Lock is a free online attention game built on multiple object tracking, a classic cognitive-science test of sustained visual attention. One dot flashes briefly, then blends back into an identical swarm that drifts and bounces for several seconds. Losing your target for even a moment ends the streak, making this one of the hardest focus games you can play in a browser — no download required.',
+          tapToStart: 'Tap to start', roundLabel: 'Round {n}', revealMsg: 'Watch the yellow dot!', trackMsg: 'Track it!', chooseMsg: 'Tap the dot you tracked',
+          gameOver: 'Game Over', finalLine: 'You reached round {n} — Tap to play again', bestLabel: 'BEST {n}'
+        },
+        trajectory: {
+          hint: 'Drag back from the launch point like a slingshot, then release to fire. Farther drag = more power. Hit the neon ring to score — 3 misses and it\'s over.',
+          seoNote: 'Trajectory is a free online artillery aim game built around real parabolic physics: pull back to set angle and power, then release to launch a glowing shot at a distant ring. Distance, target size, wind and vertical drift all ramp up with your score, making sustained accuracy one of the hardest aiming challenges you\'ll find in a browser.',
+          scoreLabel: 'Score: {n}', distanceLabel: 'DIST {n}m', windLabel: 'WIND {dir} {n}', tapToStart: 'Drag back from the anchor to aim — release to fire',
+          gameOver: 'Game Over — tap to try again', bestLabel: 'BEST {n}'
         }
       }
     },
@@ -252,7 +303,15 @@
           slice: 'Vuốt để chém các quả cầu trước khi chúng rơi. Chém trúng một quả bom là kết thúc ngay lập tức.',
           gravity: 'Đảo trọng lực để chuyển giữa sàn và trần, né chông ở cả hai bên. Tốc độ không ngừng tăng.',
           echo: 'Chạm ngay khi vòng tròn thu nhỏ trùng với vòng mục tiêu. Cửa sổ thời gian càng lúc càng hẹp.',
-          catch: 'Di chuyển giỏ để chỉ hứng đúng màu mục tiêu. Hứng nhầm một màu là kết thúc ngay.'
+          catch: 'Di chuyển giỏ để chỉ hứng đúng màu mục tiêu. Hứng nhầm một màu là kết thúc ngay.',
+          voidjumper: 'Tích lực nhảy, ngắm hướng và bật nhảy giữa các bệ đang sập trong khi vực thẳm cuộn lên ngày càng nhanh.',
+          laneswitch: 'Trượt giữa 3 làn đường để né chướng ngại vật. Tốc độ không ngừng tăng — đôi khi chỉ còn đúng 1 làn trống.',
+          tiltbalance: 'Nghiêng bục đang ngắn dần để giữ bóng lăn an toàn — né lỗ hổng, đừng để rơi khỏi mép.',
+          flashgrid: 'Chạm ô xanh trước khi nó tắt — đừng bao giờ chạm ô bẫy đỏ, nếu không sẽ thua ngay lập tức.',
+          grappleswing: 'Giữ để bắn móc câu, đu như con lắc, và thả ra ở đỉnh quỹ đạo để bay tới điểm neo tiếp theo.',
+          eyetrick: 'Chạm đúng màu mực thực tế, không phải nghĩa của từ — bẫy hiệu ứng Stroop kinh điển với đồng hồ đếm ngược ngắn dần.',
+          focuslock: 'Theo dõi 1 chấm sáng khi nó hòa lẫn vào đàn chấm giống hệt đang di chuyển — mất dấu là thua.',
+          trajectory: 'Kéo lùi như ná thun rồi thả ra để bắn cung tới vòng tròn xa — gió khiến mỗi phát bắn khó đoán hơn.'
         }
       },
       profile: {
@@ -391,6 +450,49 @@
           hint: 'Di chuột / kéo ngón tay để trượt giỏ. Chỉ hứng những viên đá quý trùng màu MỤC TIÊU — hứng nhầm màu là kết thúc. Bỏ lỡ một viên đúng màu không sao, cứ tiếp tục.',
           seoNote: 'Prism Catch là trò chơi ghép màu miễn phí: đá quý đủ màu rơi từ trên xuống và bạn chỉ được hứng những viên trùng với màu mục tiêu hiện tại. Bỏ lỡ một viên đúng màu không mất gì, nhưng chỉ cần hứng nhầm một màu là kết thúc ngay — và mục tiêu liên tục thay đổi, khiến việc giữ tập trung liên tục trở thành một trong những thử thách hứng khó nhất.',
           targetLabel: 'MỤC TIÊU', tapToStart: 'Chạm để bắt đầu', gameOver: 'Sai màu rồi! Chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
+        },
+        voidjumper: {
+          hint: 'Nhấn giữ để tích lực nhảy — kéo trái/phải khi đang giữ để ngắm hướng, thả ra để bật nhảy. Vực thẳm cuộn lên mãi mãi, ngày càng nhanh.',
+          seoNote: 'Void Jumper là game platformer leo cao miễn phí cực khó: tích lực nhảy, ngắm hướng giữa những bệ nhỏ trôi nổi — vài bệ sập ngay khi vừa đáp, vài bệ trôi ngang — trong khi màn hình tự cuộn lên với tốc độ tăng dần. Rớt lại phía sau hoặc trượt bệ là kết thúc. Bạn leo được bao cao?',
+          tapToStart: 'Chạm để bắt đầu', gameOver: 'Rơi xuống vực! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
+        },
+        laneswitch: {
+          hint: 'Phím mũi tên / A-D (hoặc chạm trái/phải trên đường) để đổi làn. Né chướng ngại vật — tốc độ tăng mãi và đôi khi chỉ còn đúng 1 làn trống.',
+          seoNote: 'Lane Switch là game phản xạ 3 làn đường miễn phí cực khó: chướng ngại vật lao về phía bạn và bạn phải trượt giữa làn trái, giữa, phải để sống sót. Luôn có đúng 1 làn an toàn, nhưng khi tốc độ không ngừng tăng, việc nhận ra và phản ứng kịp trở thành một trong những thử thách né tránh khó nhất trên trình duyệt.',
+          tapToStart: 'Chạm hoặc nhấn ←/→ để bắt đầu', gameOver: 'Suýt nữa thôi! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
+        },
+        tiltbalance: {
+          hint: 'Di chuột / kéo ngón tay sang trái-phải (hoặc dùng phím mũi tên) để nghiêng bục và lăn bóng. Đừng để bóng rơi khỏi hai đầu hoặc lọt qua lỗ hổng. Bục sẽ ngắn dần và xuất hiện lỗ hổng khi bạn sống sót lâu hơn.',
+          seoNote: 'Tilt Balance là game vật lý cân bằng miễn phí cực khó: nghiêng một bục hẹp bằng cách di chuột để giữ quả bóng neon lăn an toàn trên đó. Bục dần ngắn lại từ hai đầu và các lỗ hổng ngẫu nhiên xuất hiện theo thời gian, buộc bạn phải điều chỉnh liên tục và chính xác. Điểm số là số giây giữ bóng sống sót — đây là một trong những game giữ thăng bằng khó nhất trên trình duyệt.',
+          tapToStart: 'Chạm / click để bắt đầu', gameOver: 'Kết thúc rồi — chạm để thử lại', bestSecLabel: 'CAO NHẤT {n}s'
+        },
+        flashgrid: {
+          hint: 'Chạm vào ô XANH đang sáng trước khi nó tắt. Tuyệt đối không chạm ô bẫy MÀU ĐỎ — thua ngay lập tức. Bỏ lỡ ô xanh sẽ mất 1 mạng; bạn có 3 mạng.',
+          seoNote: 'Flash Grid là game lưới phản xạ miễn phí trực tuyến: một ô ngẫu nhiên sáng màu xanh và bạn phải chạm vào nó trước khi tắt, trong khi thỉnh thoảng xuất hiện ô bẫy màu đỏ tuyệt đối không được chạm. Thời gian sáng ngắn dần và bẫy xuất hiện nhiều hơn khi điểm số tăng, khiến việc nhận diện màu tức thì và sự kiềm chế trở thành chìa khóa để đạt điểm cao trong bài test phản xạ cực khó này.',
+          bestLabel: 'CAO NHẤT {n}', scoreLabel: 'Điểm: {n}', tapToStartTitle: 'Chạm để bắt đầu', tapToStartBody: 'Chạm ô xanh trước khi nó tắt. Không chạm ô đỏ.',
+          gameOverTitle: 'Kết thúc', finalScoreLabel: 'Điểm: {n}', tapToRestart: 'Chạm để chơi lại'
+        },
+        grappleswing: {
+          hint: 'Giữ để móc vào điểm neo tiếp theo và đu như con lắc. Thả ra ở đỉnh quỹ đạo để bay về phía trước — canh đúng thời điểm hoặc rơi xuống.',
+          seoNote: 'Grapple Swing là game vật lý miễn phí cực khó: giữ nút để móc vào các điểm neo phía trước, tích lũy đà đu như con lắc, rồi thả đúng thời điểm để bay tới móc tiếp theo. Các điểm neo ngày càng khó với tới. Sai thời điểm là trọng lực sẽ kéo bạn xuống. Luật chỉ 1 nút bấm, nhưng đòi hỏi độ chính xác khắc nghiệt.',
+          tapToStart: 'Giữ để bắt đầu đu', gameOver: 'Rơi rồi! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
+        },
+        eyetrick: {
+          hint: 'Một từ tên màu xuất hiện được tô bằng màu mực khác. Chạm vào nút đúng MÀU MỰC, không phải nghĩa của từ — thời gian giới hạn ngắn dần khi điểm tăng. Chạm sai hoặc hết giờ mất 1 mạng. Tổng 3 mạng.',
+          seoNote: 'Eye Trick là game phản xạ miễn phí dựa trên hiệu ứng Stroop, một hiện tượng nổi tiếng trong khoa học nhận thức khi việc đọc từ tên màu gây nhiễu với việc gọi tên màu mực thực tế. Chỉ chạm đúng màu mực trong khi đồng hồ ngắn dần sau mỗi câu đúng, và thỉnh thoảng có câu trùng khớp để kiểm tra bạn có thực sự quan sát hay chỉ đọc theo quán tính.',
+          tapToStart: 'Chạm để bắt đầu — chạm MÀU MỰC, không phải từ!', gameOver: 'Kết thúc — chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
+        },
+        focuslock: {
+          hint: 'Quan sát chấm màu vàng, rồi theo dõi nó khi tất cả các chấm trộn lẫn vào nhau. Khi chúng dừng lại, chạm vào chấm bạn đã theo dõi. Chạm sai mất 1 mạng — bạn có 3 mạng.',
+          seoNote: 'Focus Lock là game tập trung miễn phí dựa trên kỹ thuật theo dõi nhiều vật thể (multiple object tracking), một bài test kinh điển trong khoa học nhận thức về sự chú ý thị giác bền vững. Một chấm chớp sáng trong chốc lát rồi hòa lẫn vào đàn chấm giống hệt đang trôi dạt và va chạm trong vài giây. Chỉ cần mất dấu mục tiêu 1 khoảnh khắc là kết thúc chuỗi điểm, khiến đây trở thành một trong những game tập trung khó nhất có thể chơi trên trình duyệt — không cần tải về.',
+          tapToStart: 'Chạm để bắt đầu', roundLabel: 'Vòng {n}', revealMsg: 'Quan sát chấm vàng!', trackMsg: 'Theo dõi nó!', chooseMsg: 'Chạm vào chấm bạn đã theo dõi',
+          gameOver: 'Kết thúc', finalLine: 'Bạn đạt vòng {n} — Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
+        },
+        trajectory: {
+          hint: 'Kéo ngược từ điểm bắn như ná thun, rồi thả ra để bắn. Kéo càng xa lực càng mạnh. Bắn trúng vòng tròn neon để ghi điểm — trượt 3 lần là thua.',
+          seoNote: 'Trajectory là game bắn pháo miễn phí dựa trên vật lý parabol thực thụ: kéo lùi để chỉnh góc và lực, rồi thả ra để bắn viên đạn phát sáng tới vòng tròn mục tiêu ở xa. Khoảng cách, kích thước mục tiêu, gió và độ trôi dọc đều tăng dần theo điểm số, khiến việc duy trì độ chính xác trở thành một trong những thử thách ngắm bắn khó nhất trên trình duyệt.',
+          scoreLabel: 'Điểm: {n}', distanceLabel: 'KHOẢNG CÁCH {n}m', windLabel: 'GIÓ {dir} {n}', tapToStart: 'Kéo lùi từ điểm neo để ngắm — thả ra để bắn',
+          gameOver: 'Kết thúc — chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
         }
       }
     },
@@ -440,7 +542,15 @@
           slice: '滑动切开发光的圆球，赶在它们落下之前。切到炸弹就立刻结束。',
           gravity: '反转重力在地板和天花板之间切换，躲避两侧的尖刺。速度永不停止上升。',
           echo: '在缩小的圆环与目标对齐的瞬间点击。时间窗口每一轮都会变得更小。',
-          catch: '移动桶只接住目标颜色。接到错误的颜色就会立刻结束。'
+          catch: '移动桶只接住目标颜色。接到错误的颜色就会立刻结束。',
+          voidjumper: '蓄力、瞄准，在虚空不断加速向上滚动时跃向逐渐崩塌的平台。',
+          laneswitch: '在三条车道间切换以躲避迎面而来的障碍物。速度永不停止提升——有时只剩一条车道安全。',
+          tiltbalance: '倾斜逐渐变短的平台让球保持滚动——躲避空洞，别掉出边缘。',
+          flashgrid: '在蓝色格子熄灭前点击它——绝不要碰红色陷阱，否则立刻结束游戏。',
+          grappleswing: '按住发射钩爪，像钟摆一样摆动，在弧顶松开飞向下一个锚点。',
+          eyetrick: '点击真正的墨水颜色，而不是文字含义——经典斯特鲁普效应陷阱，时间窗口不断缩短。',
+          focuslock: '追踪一个发光的点，看它融入一群一模一样的点中漂移碰撞——失去目标就game over。',
+          trajectory: '像弹弓一样向后拉再松开，将箭射向远处的光环——风力让每一箭都更难预判。'
         }
       },
       profile: {
@@ -579,6 +689,49 @@
           hint: '移动鼠标 / 拖动手指来滑动桶子。只接住与目标色块相符的宝石——接到错误颜色会结束游戏。漏接正确颜色没关系，继续就好。',
           seoNote: 'Prism Catch 是一款免费的在线颜色匹配游戏：各种颜色的宝石从上方落下，你只能接住与当前目标颜色相符的那些。漏接一颗正确颜色的宝石不会有任何损失，但只要接到一次错误颜色就会立刻结束游戏——而且目标颜色会不断变化，让持续保持专注成为最难的接物挑战之一。',
           targetLabel: '目标', tapToStart: '轻点开始', gameOver: '接错颜色了！轻点重试', bestLabel: '最佳 {n}'
+        },
+        voidjumper: {
+          hint: '按住蓄力跳跃——蓄力时左右拖动来瞄准方向，松开即可跃起。虚空不断向上滚动，且越来越快。',
+          seoNote: 'Void Jumper 是一款免费的高难度垂直跳跃游戏：蓄力跳跃，瞄准漂浮的小平台——有些落地即碎，有些左右移动——同时屏幕不断加速向上滚动。掉队或跳空即失败。你能爬多高？',
+          tapToStart: '点击开始', gameOver: '坠入虚空！点击重试', bestMLabel: '最高 {n}m'
+        },
+        laneswitch: {
+          hint: '方向键 / A-D（或在道路上点击左右）切换车道。躲避障碍物——速度不断提升，有时只剩一条安全车道。',
+          seoNote: 'Lane Switch 是一款免费的高难度三车道反应游戏：障碍物向你滑来，你必须在左、中、右车道间切换以生存。始终有且只有一条安全车道，但随着速度不断提升，及时发现并做出反应成为浏览器中最难的躲避挑战之一。',
+          tapToStart: '点击或按 ←/→ 开始', gameOver: '差一点！点击重试', bestMLabel: '最高 {n}m'
+        },
+        tiltbalance: {
+          hint: '左右移动鼠标/拖动手指（或使用方向键）倾斜平台并滚动小球。别让球从两端掉落或掉进空洞。平台会随着存活时间变短并出现空洞。',
+          seoNote: 'Tilt Balance 是一款免费的高难度物理平衡游戏：通过移动鼠标倾斜一块狭窄的平台，让霓虹小球安全滚动。平台会从两端逐渐变短，随机空洞也会随时间出现，需要持续而精确的微调。得分为存活的秒数——这是浏览器中最难的平衡游戏之一。',
+          tapToStart: '点击开始', gameOver: '游戏结束——点击重试', bestSecLabel: '最高 {n}s'
+        },
+        flashgrid: {
+          hint: '在蓝色格子熄灭前点击它。绝对不要点击红色陷阱格——那会立即结束游戏。错过蓝色格子会失去一条命，你共有3条命。',
+          seoNote: 'Flash Grid 是一款免费的在线反应格子游戏：随机格子闪烁蓝光，你必须在它熄灭前点击，同时偶尔出现的红色陷阱格绝对不能触碰。随着分数提升，点亮时间变短、陷阱出现更频繁，瞬间的颜色识别与自我克制是在这个极难的反应测试中拿高分的关键。',
+          bestLabel: '最高 {n}', scoreLabel: '得分：{n}', tapToStartTitle: '点击开始', tapToStartBody: '在蓝色格子熄灭前点击它。不要点击红色。',
+          gameOverTitle: '游戏结束', finalScoreLabel: '得分：{n}', tapToRestart: '点击重新开始'
+        },
+        grappleswing: {
+          hint: '按住勾住下一个锚点并像钟摆一样摆动。在弧顶松开以向前飞——时机对了才能成功，否则就会坠落。',
+          seoNote: 'Grapple Swing 是一款免费的高难度物理游戏：按住勾住前方的锚点，通过摆动积累动量，然后在恰当的时刻松开飞向前方抓住下一个钩点。锚点会越来越难以到达。时机不对，重力就会把你拽下去。规则只有一个按钮，却需要极致的精准。',
+          tapToStart: '按住开始摆动', gameOver: '坠落了！点击重试', bestLabel: '最高 {n}'
+        },
+        eyetrick: {
+          hint: '一个颜色单词会以不同的墨水颜色显示。点击与墨水颜色相符的按钮，而不是单词的含义——时间窗口会随着分数提升而缩短。点错或超时都会失去一条命。共3条命。',
+          seoNote: 'Eye Trick 是一款基于斯特鲁普效应（Stroop effect）的免费在线反应游戏，这是认知科学中一个著名现象：阅读颜色单词会干扰对实际墨水颜色的判断。只需点击真正的墨水颜色，时钟会随每次答对而缩短，偶尔出现的一致题目则用来测试你是真的在观察，还是只是习惯性地阅读文字。',
+          tapToStart: '点击开始——点击墨水颜色，不是文字！', gameOver: '游戏结束——点击重试', bestLabel: '最高 {n}'
+        },
+        focuslock: {
+          hint: '观察黄色的点，然后在所有点混合在一起时追踪它。当它们停下来时，点击你追踪的那个点。点错会失去一条命——你有3条命。',
+          seoNote: 'Focus Lock 是一款基于多目标追踪（multiple object tracking）的免费在线专注力游戏，这是认知科学中测试持续视觉注意力的经典方法。一个点短暂闪烁后融入一群完全相同、漂移碰撞数秒的点群中。哪怕只是片刻失去目标都会结束你的连击，是浏览器中最难的专注力游戏之一——无需下载。',
+          tapToStart: '点击开始', roundLabel: '第 {n} 轮', revealMsg: '看好黄色的点！', trackMsg: '追踪它！', chooseMsg: '点击你追踪的点',
+          gameOver: '游戏结束', finalLine: '你到达了第 {n} 轮——点击重新开始', bestLabel: '最高 {n}'
+        },
+        trajectory: {
+          hint: '像弹弓一样从发射点向后拖动，然后松开发射。拖得越远力量越大。击中霓虹光环得分——失误3次即结束。',
+          seoNote: 'Trajectory 是一款基于真实抛物线物理的免费在线炮击瞄准游戏：向后拖动来设定角度和力量，然后松开射出发光的弹丸击中远处的光环目标。距离、目标大小、风力和垂直漂移都会随分数提升，让保持精准成为浏览器中最难的瞄准挑战之一。',
+          scoreLabel: '得分：{n}', distanceLabel: '距离 {n}m', windLabel: '风 {dir} {n}', tapToStart: '从锚点向后拖动瞄准——松开发射',
+          gameOver: '游戏结束——点击重试', bestLabel: '最高 {n}'
         }
       }
     },
@@ -628,7 +781,15 @@
           slice: 'Desliza para cortar orbes brillantes antes de que caigan. Cortar una bomba por error termina la partida al instante.',
           gravity: 'Invierte la gravedad para cambiar entre el suelo y el techo, esquivando pinchos en ambos lados. La velocidad no deja de subir.',
           echo: 'Toca en el instante en que el anillo que se encoge se alinea con el objetivo. La ventana se hace más pequeña cada ronda.',
-          catch: 'Desliza el cubo para atrapar solo el color objetivo. Atrapar un color equivocado termina la partida.'
+          catch: 'Desliza el cubo para atrapar solo el color objetivo. Atrapar un color equivocado termina la partida.',
+          voidjumper: 'Carga, apunta y salta entre plataformas que se desmoronan mientras el vacío sube cada vez más rápido.',
+          laneswitch: 'Desliza entre 3 carriles para esquivar los bloques que se acercan. La velocidad nunca deja de subir — a veces solo queda un carril libre.',
+          tiltbalance: 'Inclina una plataforma que se acorta para mantener la bola rodando — esquiva los agujeros, no caigas por el borde.',
+          flashgrid: 'Toca la celda azul antes de que se apague — nunca toques la trampa roja, o pierdes al instante.',
+          grappleswing: 'Mantén presionado para lanzar un gancho, balancéate como un péndulo y suelta en la cima del arco para volar al siguiente anclaje.',
+          eyetrick: 'Toca el color de tinta real, no la palabra — la clásica trampa del efecto Stroop con un temporizador que se acorta.',
+          focuslock: 'Sigue un punto brillante mientras se mezcla en un enjambre idéntico que se mueve — piérdelo de vista y es el fin.',
+          trajectory: 'Tira hacia atrás como una honda y suelta para lanzar un disparo en arco a un anillo lejano — el viento hace que cada tiro sea más difícil de calcular.'
         }
       },
       profile: {
@@ -767,6 +928,49 @@
           hint: 'Mueve el ratón / arrastra el dedo para deslizar el cubo. Atrapa solo las gemas que coincidan con el color OBJETIVO — atrapar el color equivocado termina la partida. Perder una gema buena no importa, sigue intentando.',
           seoNote: 'Prism Catch es un juego gratuito de coincidencia de colores en línea: gemas de todos los colores caen desde arriba y solo debes atrapar las que coincidan con el color objetivo actual. Perder una gema buena no cuesta nada, pero atrapar un solo color equivocado termina la partida al instante — y el objetivo sigue cambiando, lo que hace de mantener la concentración uno de los retos de atrapar más difíciles que hay.',
           targetLabel: 'OBJETIVO', tapToStart: 'Toca para empezar', gameOver: '¡Color equivocado! Toca para intentarlo de nuevo', bestLabel: 'MEJOR {n}'
+        },
+        voidjumper: {
+          hint: 'Mantén presionado para cargar un salto — arrastra izquierda/derecha mientras cargas para apuntar, suelta para saltar. El vacío se desplaza hacia arriba sin parar, cada vez más rápido.',
+          seoNote: 'Void Jumper es un plataformero vertical gratuito y muy difícil: carga tu salto, apunta entre pequeñas plataformas flotantes — algunas se desmoronan al aterrizar, otras se mueven de lado — mientras la pantalla se desplaza hacia arriba a velocidad creciente. Quedarte atrás o fallar una plataforma termina la partida. ¿Qué tan alto puedes llegar?',
+          tapToStart: 'Toca para empezar', gameOver: '¡Caíste al vacío! Toca para reintentar', bestMLabel: 'MEJOR {n}m'
+        },
+        laneswitch: {
+          hint: 'Flechas / A-D (o toca izquierda/derecha en la carretera) para cambiar de carril. Esquiva los bloques — la velocidad sube sin parar y a veces solo queda un carril libre.',
+          seoNote: 'Lane Switch es un juego de reflejos gratuito y muy difícil con 3 carriles: los bloques se deslizan hacia ti y debes moverte entre el carril izquierdo, central y derecho para sobrevivir. Siempre hay exactamente un carril seguro, pero con la velocidad en constante aumento, detectarlo y reaccionar a tiempo se vuelve uno de los retos de esquiva más difíciles del navegador.',
+          tapToStart: 'Toca o presiona ←/→ para empezar', gameOver: '¡Tan cerca! Toca para reintentar', bestMLabel: 'MEJOR {n}m'
+        },
+        tiltbalance: {
+          hint: 'Mueve el mouse / arrastra el dedo izquierda-derecha (o usa las flechas) para inclinar la plataforma y rodar la bola. No dejes que caiga por los extremos ni por un agujero. La plataforma se acorta y aparecen agujeros mientras sobrevives más tiempo.',
+          seoNote: 'Tilt Balance es un juego físico de equilibrio gratuito y muy difícil: inclina una plataforma estrecha moviendo el mouse para mantener una bola de neón rodando sobre ella. La plataforma se acorta poco a poco desde ambos extremos y aparecen agujeros aleatorios con el tiempo, exigiendo ajustes constantes y precisos. La puntuación son los segundos que mantienes la bola con vida — uno de los juegos de equilibrio más difíciles del navegador.',
+          tapToStart: 'Toca / haz clic para empezar', gameOver: 'Fin de la partida — toca para reintentar', bestSecLabel: 'MEJOR {n}s'
+        },
+        flashgrid: {
+          hint: 'Toca la celda AZUL brillante antes de que se apague. Nunca toques la celda trampa ROJA — eso termina la partida al instante. Perder una celda azul cuesta una vida; tienes 3.',
+          seoNote: 'Flash Grid es un juego gratuito de reflejos en cuadrícula: una celda aleatoria se ilumina en azul y debes tocarla antes de que se apague, mientras que ocasionales celdas trampa rojas nunca deben tocarse. La ventana de tiempo se acorta y las trampas aparecen más seguido conforme sube tu puntuación, haciendo que el reconocimiento instantáneo de color y el autocontrol sean la clave para una puntuación alta en esta brutal prueba de reflejos.',
+          bestLabel: 'MEJOR {n}', scoreLabel: 'Puntos: {n}', tapToStartTitle: 'Toca para empezar', tapToStartBody: 'Toca la celda azul antes de que se apague. Nunca toques la roja.',
+          gameOverTitle: 'Fin de la partida', finalScoreLabel: 'Puntos: {n}', tapToRestart: 'Toca para jugar de nuevo'
+        },
+        grappleswing: {
+          hint: 'Mantén presionado para engancharte al siguiente punto de anclaje y balancearte como un péndulo. Suelta en la cima del arco para volar hacia adelante — cronométralo bien o caerás.',
+          seoNote: 'Grapple Swing es un juego físico gratuito y muy difícil: mantén presionado para engancharte a puntos de anclaje por delante, gana impulso balanceándote como un péndulo, y suelta justo en el instante preciso para volar hacia adelante y atrapar el siguiente gancho. Los anclajes se vuelven más difíciles de alcanzar. Fallar el momento y la gravedad te hará caer. Una sola regla de un botón, pero con una precisión implacable.',
+          tapToStart: 'Mantén presionado para empezar a balancearte', gameOver: '¡Caíste! Toca para reintentar', bestLabel: 'MEJOR {n}'
+        },
+        eyetrick: {
+          hint: 'Aparece una palabra de color pintada con una tinta de color diferente. Toca el botón que coincida con el COLOR DE LA TINTA, no con lo que dice la palabra — la ventana de tiempo se acorta conforme sube tu puntuación. Un toque equivocado o quedarte sin tiempo cuesta una vida. 3 vidas en total.',
+          seoNote: 'Eye Trick es un juego de reflejos gratuito basado en el efecto Stroop, un famoso fenómeno de la ciencia cognitiva en el que leer una palabra de color interfiere con nombrar el color de tinta en que está impresa. Toca solo el color de tinta real mientras el reloj se acorta con cada respuesta correcta, y pruebas ocasionales coincidentes comprueban si realmente estás mirando o solo leyendo en piloto automático.',
+          tapToStart: 'Toca para empezar — ¡toca el COLOR DE TINTA, no la palabra!', gameOver: 'Fin de la partida — toca para reintentar', bestLabel: 'MEJOR {n}'
+        },
+        focuslock: {
+          hint: 'Observa el punto amarillo, luego síguelo mientras todos los puntos se mezclan. Cuando se detengan, toca el que seguiste. Un toque equivocado cuesta una vida — tienes 3.',
+          seoNote: 'Focus Lock es un juego de atención gratuito basado en el seguimiento de múltiples objetos, una prueba clásica de la ciencia cognitiva sobre la atención visual sostenida. Un punto destella brevemente y luego se mezcla en un enjambre idéntico que se desplaza y rebota durante varios segundos. Perder de vista tu objetivo un instante termina la racha, lo que lo convierte en uno de los juegos de concentración más difíciles que encontrarás en un navegador — sin descargas.',
+          tapToStart: 'Toca para empezar', roundLabel: 'Ronda {n}', revealMsg: '¡Observa el punto amarillo!', trackMsg: '¡Síguelo!', chooseMsg: 'Toca el punto que seguiste',
+          gameOver: 'Fin de la partida', finalLine: 'Llegaste a la ronda {n} — Toca para jugar de nuevo', bestLabel: 'MEJOR {n}'
+        },
+        trajectory: {
+          hint: 'Arrastra hacia atrás desde el punto de lanzamiento como una honda, luego suelta para disparar. Más distancia de arrastre = más potencia. Acierta en el anillo de neón para sumar puntos — 3 fallos y se acaba.',
+          seoNote: 'Trajectory es un juego gratuito de puntería tipo artillería basado en física parabólica real: arrastra hacia atrás para fijar el ángulo y la potencia, luego suelta para lanzar un proyectil brillante hacia un anillo distante. La distancia, el tamaño del objetivo, el viento y la deriva vertical aumentan con tu puntuación, haciendo que mantener la precisión sea uno de los retos de puntería más difíciles que encontrarás en un navegador.',
+          scoreLabel: 'Puntos: {n}', distanceLabel: 'DIST {n}m', windLabel: 'VIENTO {dir} {n}', tapToStart: 'Arrastra hacia atrás desde el ancla para apuntar — suelta para disparar',
+          gameOver: 'Fin de la partida — toca para reintentar', bestLabel: 'MEJOR {n}'
         }
       }
     },
@@ -816,7 +1020,15 @@
           slice: 'Deslize para cortar orbes brilhantes antes que caiam. Cortar uma bomba por engano encerra a partida na hora.',
           gravity: 'Inverta a gravidade para trocar entre o chão e o teto, desviando de espinhos dos dois lados. A velocidade nunca para de subir.',
           echo: 'Toque no instante em que o anel encolhendo se alinha com o alvo. A janela fica menor a cada rodada.',
-          catch: 'Deslize o balde para pegar somente a cor alvo. Pegar a cor errada encerra a partida.'
+          catch: 'Deslize o balde para pegar somente a cor alvo. Pegar a cor errada encerra a partida.',
+          voidjumper: 'Carregue, mire e salte entre plataformas que desmoronam enquanto o vazio sobe cada vez mais rápido.',
+          laneswitch: 'Deslize entre 3 faixas para desviar dos blocos que se aproximam. A velocidade nunca para de subir — às vezes só resta uma faixa livre.',
+          tiltbalance: 'Incline uma plataforma que encolhe para manter a bola rolando — desvie dos buracos, não caia pela borda.',
+          flashgrid: 'Toque na célula azul antes que ela apague — nunca toque na armadilha vermelha, ou é game over instantâneo.',
+          grappleswing: 'Segure para lançar um gancho, balance como um pêndulo e solte no topo do arco para voar até a próxima âncora.',
+          eyetrick: 'Toque na cor real da tinta, não na palavra — a clássica armadilha do efeito Stroop com um cronômetro que encolhe.',
+          focuslock: 'Acompanhe um ponto brilhante enquanto ele se mistura em um enxame idêntico em movimento — perdê-lo de vista é o fim.',
+          trajectory: 'Puxe para trás como um estilingue e solte para lançar um tiro em arco a um anel distante — o vento torna cada tiro mais difícil de calcular.'
         }
       },
       profile: {
@@ -955,6 +1167,49 @@
           hint: 'Mova o mouse / arraste o dedo para deslizar o balde. Pegue somente as gemas que combinam com a cor ALVO — pegar a cor errada encerra a partida. Perder uma gema boa não tem problema, é só continuar.',
           seoNote: 'Prism Catch é um jogo gratuito de combinação de cores on-line: gemas de todas as cores caem do topo e você só deve pegar as que combinam com a cor alvo atual. Perder uma gema boa não custa nada, mas pegar uma única cor errada encerra a partida na hora — e o alvo continua mudando, tornando manter o foco um dos desafios de captura mais difíceis que existem.',
           targetLabel: 'ALVO', tapToStart: 'Toque para começar', gameOver: 'Cor errada! Toque para tentar de novo', bestLabel: 'MELHOR {n}'
+        },
+        voidjumper: {
+          hint: 'Segure para carregar um pulo — arraste para a esquerda/direita enquanto carrega para mirar, solte para saltar. O vazio rola para cima sem parar, cada vez mais rápido.',
+          seoNote: 'Void Jumper é um jogo de plataforma vertical gratuito e muito difícil: carregue seu pulo, mire entre pequenas plataformas flutuantes — algumas desmoronam assim que você pousa, outras se movem de lado — enquanto a tela rola para cima em velocidade crescente. Ficar para trás ou errar uma plataforma encerra a partida. Até onde você consegue subir?',
+          tapToStart: 'Toque para começar', gameOver: 'Caiu no vazio! Toque para tentar de novo', bestMLabel: 'MELHOR {n}m'
+        },
+        laneswitch: {
+          hint: 'Setas / A-D (ou toque esquerda/direita na estrada) para trocar de faixa. Desvie dos blocos — a velocidade sobe sem parar e às vezes só resta uma faixa livre.',
+          seoNote: 'Lane Switch é um jogo de reflexos gratuito e muito difícil com 3 faixas: blocos deslizam em sua direção e você precisa alternar entre a faixa esquerda, central e direita para sobreviver. Sempre há exatamente uma faixa segura, mas com a velocidade sempre em alta, identificá-la e reagir a tempo se torna um dos desafios de desvio mais difíceis do navegador.',
+          tapToStart: 'Toque ou pressione ←/→ para começar', gameOver: 'Tão perto! Toque para tentar de novo', bestMLabel: 'MELHOR {n}m'
+        },
+        tiltbalance: {
+          hint: 'Mova o mouse / arraste o dedo para a esquerda-direita (ou use as setas) para inclinar a plataforma e rolar a bola. Não deixe cair pelas pontas nem por um buraco. A plataforma encolhe e buracos aparecem conforme você sobrevive mais tempo.',
+          seoNote: 'Tilt Balance é um jogo físico de equilíbrio gratuito e muito difícil: incline uma plataforma estreita movendo o mouse para manter uma bola neon rolando sobre ela. A plataforma encolhe aos poucos pelas duas pontas e buracos aleatórios aparecem com o tempo, exigindo ajustes constantes e precisos. A pontuação é o número de segundos que você mantém a bola viva — um dos jogos de equilíbrio mais difíceis do navegador.',
+          tapToStart: 'Toque / clique para começar', gameOver: 'Fim de jogo — toque para tentar de novo', bestSecLabel: 'MELHOR {n}s'
+        },
+        flashgrid: {
+          hint: 'Toque na célula AZUL brilhante antes que ela apague. Nunca toque na célula armadilha VERMELHA — isso encerra o jogo instantaneamente. Perder uma célula azul custa uma vida; você tem 3.',
+          seoNote: 'Flash Grid é um jogo gratuito de reflexos em grade: uma célula aleatória acende em azul e você deve tocá-la antes que apague, enquanto células armadilha vermelhas ocasionais nunca devem ser tocadas. A janela de tempo encolhe e as armadilhas aparecem com mais frequência conforme sua pontuação sobe, tornando o reconhecimento instantâneo de cor e o autocontrole a chave para uma pontuação alta neste teste de reflexos brutalmente difícil.',
+          bestLabel: 'MELHOR {n}', scoreLabel: 'Pontos: {n}', tapToStartTitle: 'Toque para começar', tapToStartBody: 'Toque na célula azul antes que ela apague. Nunca toque na vermelha.',
+          gameOverTitle: 'Fim de jogo', finalScoreLabel: 'Pontos: {n}', tapToRestart: 'Toque para jogar de novo'
+        },
+        grappleswing: {
+          hint: 'Segure para se prender ao próximo ponto de ancoragem e balançar como um pêndulo. Solte no topo do arco para voar para frente — acerte o tempo ou caia.',
+          seoNote: 'Grapple Swing é um jogo físico gratuito e muito difícil: segure para se prender a pontos de ancoragem à frente, ganhe impulso balançando como um pêndulo, e solte no instante exato para voar para frente e agarrar o próximo gancho. Os pontos de ancoragem ficam cada vez mais difíceis de alcançar. Errar o momento e a gravidade vai te derrubar. Uma única regra de botão, mas com precisão implacável.',
+          tapToStart: 'Segure para começar a balançar', gameOver: 'Caiu! Toque para tentar de novo', bestLabel: 'MELHOR {n}'
+        },
+        eyetrick: {
+          hint: 'Uma palavra de cor aparece pintada com uma cor de tinta diferente. Toque no botão que corresponde à COR DA TINTA, não ao que a palavra diz — a janela de tempo encolhe conforme sua pontuação sobe. Um toque errado ou tempo esgotado custa uma vida. 3 vidas no total.',
+          seoNote: 'Eye Trick é um jogo de reflexos gratuito baseado no efeito Stroop, um famoso fenômeno da ciência cognitiva em que ler uma palavra de cor interfere em nomear a cor da tinta em que está impressa. Toque apenas na cor real da tinta enquanto o relógio encolhe a cada acerto, e testes ocasionais coincidentes verificam se você está realmente observando ou apenas lendo no piloto automático.',
+          tapToStart: 'Toque para começar — toque na COR DA TINTA, não na palavra!', gameOver: 'Fim de jogo — toque para tentar de novo', bestLabel: 'MELHOR {n}'
+        },
+        focuslock: {
+          hint: 'Observe o ponto amarelo, depois acompanhe-o enquanto todos os pontos se misturam. Quando pararem, toque no que você acompanhou. Um toque errado custa uma vida — você tem 3.',
+          seoNote: 'Focus Lock é um jogo de atenção gratuito baseado em rastreamento de múltiplos objetos, um teste clássico da ciência cognitiva sobre atenção visual sustentada. Um ponto pisca brevemente e depois se mistura em um enxame idêntico que flutua e colide por vários segundos. Perder de vista o alvo por um instante encerra a sequência, tornando este um dos jogos de foco mais difíceis que você encontrará em um navegador — sem download.',
+          tapToStart: 'Toque para começar', roundLabel: 'Rodada {n}', revealMsg: 'Observe o ponto amarelo!', trackMsg: 'Acompanhe-o!', chooseMsg: 'Toque no ponto que você acompanhou',
+          gameOver: 'Fim de jogo', finalLine: 'Você chegou à rodada {n} — Toque para jogar de novo', bestLabel: 'MELHOR {n}'
+        },
+        trajectory: {
+          hint: 'Arraste para trás a partir do ponto de lançamento como um estilingue, depois solte para disparar. Quanto mais arrastar, mais força. Acerte o anel neon para pontuar — 3 erros e acabou.',
+          seoNote: 'Trajectory é um jogo gratuito de mira estilo artilharia baseado em física parabólica real: arraste para trás para definir ângulo e força, depois solte para lançar um projétil brilhante em direção a um anel distante. Distância, tamanho do alvo, vento e deriva vertical aumentam com sua pontuação, tornando manter a precisão um dos desafios de mira mais difíceis que você encontrará em um navegador.',
+          scoreLabel: 'Pontos: {n}', distanceLabel: 'DIST {n}m', windLabel: 'VENTO {dir} {n}', tapToStart: 'Arraste para trás a partir da âncora para mirar — solte para disparar',
+          gameOver: 'Fim de jogo — toque para tentar de novo', bestLabel: 'MELHOR {n}'
         }
       }
     }

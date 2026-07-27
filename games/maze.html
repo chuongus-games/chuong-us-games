@@ -149,7 +149,7 @@ let armed = false, wins = 0, deaths = 0, msg, armedAt = 0;
 function setMsgKey(k) { msg = I18N.t(k); }
 setMsgKey('game.maze.moveIntoStart');
 function inRect(p, r) { return p.x >= r.x && p.x <= r.x + r.w && p.y >= r.y && p.y <= r.y + r.h; }
-function inPath(p) { return segs.some(r => inRect(p, { x: r[0], y: r[1], w: r[2], h: r[3] })) || inRect(p, START) || inRect(p, GOAL); }
+function inPath(p) { return effectiveSegs().some(r => inRect(p, { x: r[0], y: r[1], w: r[2], h: r[3] })) || inRect(p, START) || inRect(p, GOAL); }
 function pos(e) {
   const rc = cv.getBoundingClientRect();
   return { x: (e.clientX - rc.left) * cv.width / rc.width, y: (e.clientY - rc.top) * cv.height / rc.height };
@@ -158,6 +158,35 @@ function pos(e) {
 // keeps getting harder even though the corridor layout never changes
 const BASE_TIME_MS = 7000, TIME_STEP_MS = 350, MIN_TIME_MS = 3000;
 const timeLimitFor = w => Math.max(MIN_TIME_MS, BASE_TIME_MS - w * TIME_STEP_MS);
+
+// corridor also narrows a little with each win, on top of the tighter clock, so the
+// safe path itself gets harder to trace instead of difficulty coming only from time
+// pressure. Shrink is symmetric around the original centerline (the path shape/
+// waypoints never move), and floors well above cursor size so it's always passable.
+const CORRIDOR_STEP = 0.9;   // px narrower per win
+const MIN_CORRIDOR_W = 18;   // px floor — chosen well above typical pointer hitbox size
+                              // so the corridor is always wide enough to trace through
+const corridorWidthFor = w => Math.max(MIN_CORRIDOR_W, W - w * CORRIDOR_STEP);
+
+// shrink a [x,y,w,h] corridor rect toward its own centerline to the current corridor
+// width; START/GOAL boxes are untouched (only the connecting corridor narrows)
+function shrinkSeg(r, cw) {
+  const [x, y, w, h] = r;
+  if (w === W && h !== W) { // vertical segment: W is the x-thickness
+    const dx = (W - cw) / 2;
+    return [x + dx, y, cw, h];
+  }
+  if (h === W && w !== W) { // horizontal segment: W is the y-thickness
+    const dy = (W - cw) / 2;
+    return [x, y + dy, w, cw];
+  }
+  return r; // fallback, shouldn't happen given current path data
+}
+function effectiveSegs() {
+  const cw = corridorWidthFor(wins);
+  return segs.map(r => shrinkSeg(r, cw));
+}
+
 function handle(p) {
   if (!armed) { if (inRect(p, START)) { armed = true; armedAt = performance.now(); setMsgKey('game.maze.headToGoal'); } return; }
   if (!inPath(p)) { armed = false; deaths++; setMsgKey('game.maze.wallTouched'); return; }
@@ -177,7 +206,7 @@ function draw() {
   ctx.clearRect(0, 0, cv.width, cv.height);
   ctx.fillStyle = '#2b3a63'; ctx.fillRect(0, 0, cv.width, cv.height); // walls (light = death)
   ctx.fillStyle = '#0a0e17';
-  for (const r of segs) ctx.fillRect(r[0], r[1], r[2], r[3]);
+  for (const r of effectiveSegs()) ctx.fillRect(r[0], r[1], r[2], r[3]);
 
   if (armed) {
     const limit = timeLimitFor(wins);

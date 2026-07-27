@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Lock — Hardest Multiple Object Tracking Game Online Free</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Track one glowing dot hidden among a swarm of identical look-alikes as they bounce and mix together. Lose sight of it and you lose a life — a brutally hard focus game, free online.">
+<link rel="canonical" href="https://chuong.us/games/focuslock.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Focus Lock — Hardest Multiple Object Tracking Game Online Free">
+<meta property="og:description" content="Track one glowing dot hidden among a swarm of identical look-alikes as they bounce and mix together. Lose sight of it and you lose a life — a brutally hard focus game, free online.">
+<meta property="og:url" content="https://chuong.us/games/focuslock.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Focus Lock — Hardest Multiple Object Tracking Game Online Free">
+<meta name="twitter:description" content="Track one glowing dot hidden among a swarm of identical look-alikes as they bounce and mix together. Lose sight of it and you lose a life — a brutally hard focus game, free online.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Focus Lock",
+  "url": "https://chuong.us/games/focuslock.html",
+  "description": "Track one glowing dot hidden among a swarm of identical look-alikes as they bounce and mix together. Lose sight of it and you lose a life — a brutally hard focus game, free online.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Chuong US Games",
+      "item": "https://chuong.us/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Focus Lock",
+      "item": "https://chuong.us/games/focuslock.html"
+    }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="focuslock">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n-html="common.back">Games</a>
+  <h1>🔍 Focus Lock</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.focuslock.hint">Watch the yellow dot, then track it as every dot mixes together. When they stop, tap the one you tracked. Wrong tap costs a life — you have 3.</p>
+<p class="seo-note" data-i18n="game.focuslock.seoNote">Focus Lock is a free online attention game built on multiple object tracking, a classic cognitive-science test of sustained visual attention. One dot flashes briefly, then blends back into an identical swarm that drifts and bounces for several seconds. Losing your target for even a moment ends the streak, making this one of the hardest focus games you can play in a browser — no download required.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="memory.html">🧠 Neon Memory</a>
+    <a href="aim.html">🎯 Aim Trainer</a>
+    <a href="reaction.html">⚡ Reaction Test</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_focuslock_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.focuslock.bestLabel', { n: best });
+showBest();
+
+/* ---------- physics constants (verified headlessly — see focuslock_sim.js) ---------- */
+const W = cv.width, H = cv.height;
+const R_PHYS = 15;   // collision radius used for movement/separation
+const DRAW_R = 10;   // visual dot radius
+const HIT_R = 14;    // tap hitbox radius, bigger than the visual dot (player-friendly bias)
+const REVEAL_MS = 1700;
+const SETTLE_MS = 380;
+const RESULT_MS = 900;
+const MAX_LIVES = 3;
+
+function dotCountForScore(score) { return Math.min(14, 6 + Math.floor(score / 2)); }
+function mixTimeForScore(score) { return 3 + Math.min(score, 12) * 0.12; } // seconds, rises gently
+function speedForScore(score) { return 65 + Math.min(score, 10) * 3; }     // px/s, rises gently
+
+function rand(a, b) { return a + Math.random() * (b - a); }
+
+function makeDots(n) {
+  const dots = [];
+  let guard = 0;
+  while (dots.length < n && guard < 20000) {
+    guard++;
+    const x = rand(R_PHYS + 4, W - R_PHYS - 4);
+    const y = rand(R_PHYS + 4, H - R_PHYS - 4);
+    let ok = true;
+    for (const d of dots) if (Math.hypot(d.x - x, d.y - y) < R_PHYS * 2 + 2) { ok = false; break; }
+    if (ok) dots.push({ x, y, vx: 0, vy: 0 });
+  }
+  return dots;
+}
+
+function stepPhysics(dots, dt, renormSpeed) {
+  for (const d of dots) {
+    d.x += d.vx * dt;
+    d.y += d.vy * dt;
+    if (d.x < R_PHYS) { d.x = R_PHYS; d.vx = Math.abs(d.vx); }
+    if (d.x > W - R_PHYS) { d.x = W - R_PHYS; d.vx = -Math.abs(d.vx); }
+    if (d.y < R_PHYS) { d.y = R_PHYS; d.vy = Math.abs(d.vy); }
+    if (d.y > H - R_PHYS) { d.y = H - R_PHYS; d.vy = -Math.abs(d.vy); }
+  }
+  for (let i = 0; i < dots.length; i++) {
+    for (let j = i + 1; j < dots.length; j++) {
+      const a = dots[i], b = dots[j];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.hypot(dx, dy);
+      const minDist = R_PHYS * 2;
+      if (dist > 0 && dist < minDist) {
+        const nx = dx / dist, ny = dy / dist;
+        const overlap = minDist - dist;
+        a.x -= nx * overlap / 2; a.y -= ny * overlap / 2;
+        b.x += nx * overlap / 2; b.y += ny * overlap / 2;
+        const v1n = a.vx * nx + a.vy * ny, v2n = b.vx * nx + b.vy * ny;
+        const diff = v1n - v2n;
+        a.vx -= diff * nx; a.vy -= diff * ny;
+        b.vx += diff * nx; b.vy += diff * ny;
+      } else if (dist === 0) {
+        a.x -= 0.5; b.x += 0.5;
+      }
+    }
+  }
+  // Dots move at one constant, uniform speed per round by design — elastic collisions only
+  // change direction, never speed. Re-normalizing removes any numerical drift from resolving
+  // several near-simultaneous contacts in one substep, so motion can never "explode".
+  if (renormSpeed) {
+    for (const d of dots) {
+      const m = Math.hypot(d.vx, d.vy);
+      if (m > 1e-6) { d.vx = d.vx / m * renormSpeed; d.vy = d.vy / m * renormSpeed; }
+    }
+  }
+}
+
+/* ---------- game state ---------- */
+let state = 'ready';   // ready | reveal | mix | settle | result | gameover
+let dots = [], targetIndex = -1, score = 0, lives = MAX_LIVES;
+let phaseStart = 0, mixSeconds = 0, curSpeed = 0, roundDecided = false, ended = true;
+let resultKind = '', tappedIndex = -1;
+
+function initRound() {
+  const n = dotCountForScore(score);
+  curSpeed = speedForScore(score);
+  mixSeconds = mixTimeForScore(score);
+  dots = makeDots(n);
+  targetIndex = Math.floor(Math.random() * n);
+  roundDecided = false;
+  state = 'reveal';
+  phaseStart = performance.now();
+}
+
+function startMixing() {
+  for (const d of dots) {
+    const ang = rand(0, Math.PI * 2);
+    d.vx = Math.cos(ang) * curSpeed; d.vy = Math.sin(ang) * curSpeed;
+  }
+  state = 'mix';
+  phaseStart = performance.now();
+}
+
+function startSettle() {
+  state = 'settle';
+  phaseStart = performance.now();
+}
+
+function startGame() {
+  score = 0; lives = MAX_LIVES; ended = false;
+  initRound();
+}
+
+function decide(hitIndex) {
+  if (roundDecided) return; // one decision per round (checklist #5)
+  roundDecided = true;
+  tappedIndex = hitIndex;
+  if (hitIndex === targetIndex) {
+    resultKind = 'correct';
+    score++;
+  } else {
+    resultKind = 'wrong';
+    lives--;
+  }
+  state = 'result';
+  phaseStart = performance.now();
+}
+
+function endRun() {
+  if (ended) return; // guard: submit only once per game
+  ended = true;
+  if (window.CUG) CUG.submitScore('focuslock', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function pos(e) {
+  const rc = cv.getBoundingClientRect();
+  return { x: (e.clientX - rc.left) * cv.width / rc.width, y: (e.clientY - rc.top) * cv.height / rc.height };
+}
+
+cv.addEventListener('pointerdown', e => {
+  const p = pos(e);
+  if (state === 'ready' || state === 'gameover') { startGame(); return; }
+  if (state !== 'choose') return; // input locked while reveal/mix/settle/result (checklist #4)
+  let best2 = Infinity, bestI = -1;
+  for (let i = 0; i < dots.length; i++) {
+    const dd = Math.hypot(dots[i].x - p.x, dots[i].y - p.y);
+    if (dd <= HIT_R && dd < best2) { best2 = dd; bestI = i; }
+  }
+  if (bestI === -1) return; // missed every dot — doesn't consume the round, tap again
+  decide(bestI);
+});
+
+let lastT = performance.now();
+function frame(now) {
+  let dt = (now - lastT) / 1000;
+  lastT = now;
+  if (dt > 0.05) dt = 0.05; // clamp so a stalled tab can't cause a huge jump/teleport
+
+  if (state === 'reveal') {
+    if (now - phaseStart >= REVEAL_MS) startMixing();
+  } else if (state === 'mix') {
+    const sub = 4, sdt = dt / sub;
+    for (let s = 0; s < sub; s++) stepPhysics(dots, sdt, curSpeed);
+    if (now - phaseStart >= mixSeconds * 1000) startSettle();
+  } else if (state === 'settle') {
+    const t = Math.min(1, (now - phaseStart) / SETTLE_MS);
+    const decay = 1 - t;
+    for (const d of dots) { d.vx *= decay; d.vy *= decay; }
+    const sub = 4, sdt = dt / sub;
+    for (let s = 0; s < sub; s++) stepPhysics(dots, sdt, 0);
+    if (t >= 1) {
+      for (const d of dots) { d.vx = 0; d.vy = 0; }
+      state = 'choose';
+    }
+  } else if (state === 'result') {
+    if (now - phaseStart >= RESULT_MS) {
+      if (lives <= 0) { state = 'gameover'; endRun(); }
+      else initRound();
+    }
+  }
+
+  draw();
+  requestAnimationFrame(frame);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+
+  if (state === 'ready') {
+    ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+    ctx.font = '700 22px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.focuslock.tapToStart'), W / 2, H / 2);
+    return;
+  }
+
+  // dots
+  for (let i = 0; i < dots.length; i++) {
+    const d = dots[i];
+    let color = '#22d3ee', glow = 'rgba(34,211,238,.55)';
+    if (state === 'reveal' && i === targetIndex) { color = '#fbbf24'; glow = 'rgba(251,191,36,.85)'; }
+    if (state === 'result') {
+      if (resultKind === 'correct' && i === targetIndex) { color = '#34d399'; glow = 'rgba(52,211,153,.9)'; }
+      else if (resultKind === 'wrong' && i === targetIndex) { color = '#fbbf24'; glow = 'rgba(251,191,36,.9)'; }
+      else if (resultKind === 'wrong' && i === tappedIndex) { color = '#fb7185'; glow = 'rgba(251,113,133,.9)'; }
+    }
+    ctx.save();
+    ctx.shadowColor = glow; ctx.shadowBlur = 16;
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(d.x, d.y, DRAW_R, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  // HUD
+  ctx.textAlign = 'left'; ctx.font = '700 15px Segoe UI, sans-serif'; ctx.fillStyle = '#8b96ad';
+  ctx.fillText(I18N.t('game.focuslock.roundLabel', { n: score }), 12, 22);
+  ctx.textAlign = 'right'; ctx.fillStyle = '#fb7185';
+  const hearts = '❤'.repeat(Math.max(0, lives)) + '♡'.repeat(Math.max(0, MAX_LIVES - lives));
+  ctx.fillText(hearts, W - 12, 22);
+
+  ctx.textAlign = 'center';
+  if (state === 'reveal') {
+    ctx.fillStyle = '#fbbf24'; ctx.font = '700 16px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.focuslock.revealMsg'), W / 2, H - 14);
+  } else if (state === 'mix') {
+    ctx.fillStyle = '#8b96ad'; ctx.font = '700 16px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.focuslock.trackMsg'), W / 2, H - 14);
+  } else if (state === 'settle' || state === 'choose') {
+    ctx.fillStyle = '#e8edf7'; ctx.font = '700 16px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.focuslock.chooseMsg'), W / 2, H - 14);
+  } else if (state === 'result') {
+    ctx.fillStyle = resultKind === 'correct' ? '#34d399' : '#fb7185';
+    ctx.font = '800 20px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t(resultKind === 'correct' ? 'game.focuslock.correctMsg' : 'game.focuslock.wrongMsg'), W / 2, H / 2);
+  } else if (state === 'gameover') {
+    ctx.fillStyle = '#e8edf7'; ctx.font = '800 30px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.focuslock.gameOver'), W / 2, H / 2 - 24);
+    ctx.font = '700 17px Segoe UI, sans-serif'; ctx.fillStyle = '#8b96ad';
+    ctx.fillText(I18N.t('game.focuslock.finalLine', { n: score }), W / 2, H / 2 + 12);
+  }
+}
+
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

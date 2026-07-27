@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eye Trick — Hardest Stroop Effect Color-Word Reflex Game Online Free</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👁️</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Tap the INK COLOR, not the word, in Eye Trick — a free online Stroop effect reflex game. Your brain wants to read the word; the shrinking timer punishes it. 3 lives, free, no signup.">
+<link rel="canonical" href="https://chuong.us/games/eyetrick.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Eye Trick — Hardest Stroop Effect Color-Word Reflex Game Online Free">
+<meta property="og:description" content="Tap the INK COLOR, not the word, in Eye Trick — a free online Stroop effect reflex game. Your brain wants to read the word; the shrinking timer punishes it. 3 lives, free, no signup.">
+<meta property="og:url" content="https://chuong.us/games/eyetrick.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Eye Trick — Hardest Stroop Effect Color-Word Reflex Game Online Free">
+<meta name="twitter:description" content="Tap the INK COLOR, not the word, in Eye Trick — a free online Stroop effect reflex game. Your brain wants to read the word; the shrinking timer punishes it. 3 lives, free, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Eye Trick",
+  "url": "https://chuong.us/games/eyetrick.html",
+  "description": "Tap the INK COLOR, not the word, in Eye Trick — a free online Stroop effect reflex game. Your brain wants to read the word; the shrinking timer punishes it. 3 lives, free, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Eye Trick", "item": "https://chuong.us/games/eyetrick.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="eyetrick">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n-html="common.back">Games</a>
+  <h1>👁️ Eye Trick</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.eyetrick.hint">A color word appears painted in a different ink color. Tap the button matching the INK COLOR, not what the word says — the time window shrinks as your score climbs. Wrong tap or timeout costs a life. 3 lives total.</p>
+<p class="seo-note" data-i18n="game.eyetrick.seoNote">Eye Trick is a free online reflex game built on the Stroop effect, a famous cognitive-science phenomenon where reading a color word interferes with naming the ink color it's printed in. Tap only the true ink color while the clock shrinks with every correct answer, and occasional matching trials test whether you're actually looking or just reading on autopilot.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="colorrush.html">🎨 Color Rush</a>
+    <a href="numrush.html">🔢 Number Rush</a>
+    <a href="flashgrid.html">⚡ Flash Grid</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_eyetrick_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.eyetrick.bestLabel', { n: best });
+showBest();
+
+const W = cv.width, H = cv.height;
+
+// ---- Stroop palette: 4 classic, maximally-distinguishable colors ----
+// Verified via node headless simulation: minimum pairwise RGB distance
+// among these 4 is ~144 (red vs yellow), well above the ~100 safety floor.
+const COLORS = [
+  { key: 'red',    hex: '#ef4444', word: 'RED' },
+  { key: 'blue',   hex: '#3b82f6', word: 'BLUE' },
+  { key: 'green',  hex: '#22c55e', word: 'GREEN' },
+  { key: 'yellow', hex: '#facc15', word: 'YELLOW' },
+];
+
+// ---- difficulty curve: smooth linear decay, hard floor above human reaction threshold ----
+const START_MS = 1800, STEP_MS = 40, MIN_MS = 700;
+const timeLimitForScore = s => Math.max(MIN_MS, START_MS - STEP_MS * s);
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ---- 2x2 button grid layout (drawn size vs. hit-test size differ: hitbox is padded larger,
+// per project rule #1 -- "hitbox thien vi nguoi choi" -- generous, forgiving touch targets) ----
+const BTN_W = 210, BTN_H = 70, GAP = 20, MARGIN = 20;
+const SLOTS = [
+  { x: MARGIN,               y: 290 },
+  { x: MARGIN + BTN_W + GAP, y: 290 },
+  { x: MARGIN,               y: 290 + BTN_H + GAP },
+  { x: MARGIN + BTN_W + GAP, y: 290 + BTN_H + GAP },
+];
+const HIT_PAD = 10; // hitbox extends 10px beyond the drawn button on every side
+
+function toXY(clientX, clientY) {
+  const r = cv.getBoundingClientRect();
+  return { x: (clientX - r.left) * (W / r.width), y: (clientY - r.top) * (H / r.height) };
+}
+function hitSlot(x, y) {
+  for (let i = 0; i < SLOTS.length; i++) {
+    const s = SLOTS[i];
+    if (x >= s.x - HIT_PAD && x <= s.x + BTN_W + HIT_PAD && y >= s.y - HIT_PAD && y <= s.y + BTN_H + HIT_PAD) return i;
+  }
+  return -1;
+}
+
+let state = 'ready'; // ready | show | resolved | dead
+let lives = 3, score = 0;
+let wordIdx = 0, inkIdx = 0, order = [0, 1, 2, 3];
+let roundStart = 0, timeLimit = START_MS;
+let flashKind = null, flashUntil = 0, pendingOver = false, ended = false;
+
+function newRound() {
+  wordIdx = Math.floor(Math.random() * COLORS.length);
+  inkIdx = Math.floor(Math.random() * COLORS.length);
+  order = shuffle([0, 1, 2, 3]); // shuffled button positions -- the correct ink color is always among them
+  timeLimit = timeLimitForScore(score);
+  roundStart = performance.now();
+  flashKind = null;
+  state = 'show';
+}
+
+function startGame() {
+  lives = 3; score = 0; ended = false; pendingOver = false;
+  newRound();
+}
+
+// Each round can only be resolved once: a tap or a timeout flips state away from
+// 'show' immediately, so any further tap during the same round is ignored (debounce).
+function resolve(tapIdx) {
+  if (state !== 'show') return;
+  state = 'resolved';
+  const now = performance.now();
+  const chosen = tapIdx >= 0 ? order[tapIdx] : -1;
+  const correct = chosen === inkIdx;
+  if (correct) {
+    score++;
+    if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+    flashKind = 'correct'; flashUntil = now + 180;
+  } else {
+    lives--;
+    if (lives <= 0) { pendingOver = true; flashKind = 'wrong'; flashUntil = now + 550; }
+    else { flashKind = 'wrong'; flashUntil = now + 450; }
+  }
+}
+
+// Game-over submission guarded so it can only ever fire once per run.
+function endRun() {
+  if (ended) return;
+  ended = true;
+  if (window.CUG) CUG.submitScore('eyetrick', score);
+}
+
+cv.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  if (state === 'ready' || state === 'dead') { startGame(); return; }
+  if (state === 'show') {
+    const { x, y } = toXY(e.clientX, e.clientY);
+    const idx = hitSlot(x, y);
+    if (idx >= 0) resolve(idx);
+  }
+  // state === 'resolved' -> input locked, no taps counted (prevents accidental double-scoring)
+});
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+
+  // lives (hearts)
+  ctx.textAlign = 'left'; ctx.font = '700 22px Segoe UI, sans-serif';
+  let heartsStr = '';
+  for (let i = 0; i < 3; i++) heartsStr += i < lives ? '❤️' : '🖤';
+  ctx.fillText(heartsStr, 16, 40);
+
+  // score
+  ctx.textAlign = 'right'; ctx.fillStyle = '#e8edf7';
+  ctx.font = '800 26px Segoe UI, sans-serif';
+  ctx.fillText(String(score), W - 16, 42);
+
+  if (state === 'ready') {
+    ctx.textAlign = 'center'; ctx.fillStyle = '#e8edf7';
+    ctx.font = '800 24px Segoe UI, sans-serif';
+    wrapText(I18N.t('game.eyetrick.tapToStart'), W / 2, H / 2, 380, 30);
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(step);
+    return;
+  }
+
+  if (state === 'dead') {
+    ctx.textAlign = 'center'; ctx.fillStyle = '#fb7185';
+    ctx.font = '800 26px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.eyetrick.gameOver'), W / 2, H / 2 - 10);
+    ctx.fillStyle = '#e8edf7'; ctx.font = '700 16px Segoe UI, sans-serif';
+    ctx.fillText(String(score), W / 2, H / 2 + 22);
+    requestAnimationFrame(step);
+    return;
+  }
+
+  // the Stroop word itself
+  const ink = COLORS[inkIdx];
+  ctx.textAlign = 'center';
+  ctx.font = '800 54px Segoe UI, sans-serif';
+  ctx.fillStyle = ink.hex; ctx.shadowColor = ink.hex; ctx.shadowBlur = 18;
+  ctx.fillText(COLORS[wordIdx].word, W / 2, 170);
+  ctx.shadowBlur = 0;
+
+  // countdown bar
+  if (state === 'show') {
+    const elapsed = performance.now() - roundStart;
+    const frac = Math.max(0, 1 - elapsed / timeLimit);
+    ctx.fillStyle = 'rgba(255,255,255,.12)'; ctx.fillRect(60, 210, 360, 8);
+    ctx.fillStyle = frac < 0.3 ? '#fb7185' : '#4ade80';
+    ctx.fillRect(60, 210, 360 * frac, 8);
+  }
+
+  // 4 buttons in shuffled positions
+  for (let i = 0; i < SLOTS.length; i++) {
+    const s = SLOTS[i];
+    const c = COLORS[order[i]];
+    ctx.fillStyle = c.hex; ctx.shadowColor = c.hex; ctx.shadowBlur = 12;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(s.x, s.y, BTN_W, BTN_H, 12);
+    else ctx.rect(s.x, s.y, BTN_W, BTN_H);
+    ctx.fill(); ctx.shadowBlur = 0;
+  }
+
+  // flash overlay for correct/wrong feedback
+  if (flashKind && performance.now() < flashUntil) {
+    ctx.fillStyle = flashKind === 'correct' ? '#4ade80' : '#fb7185';
+    ctx.globalAlpha = 0.12; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1;
+  }
+
+  requestAnimationFrame(step);
+}
+
+function wrapText(text, cx, cy, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '', lines = [];
+  for (const w of words) {
+    const test = line ? line + ' ' + w : w;
+    if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
+    else line = test;
+  }
+  lines.push(line);
+  const startY = cy - ((lines.length - 1) * lineHeight) / 2;
+  lines.forEach((l, i) => ctx.fillText(l, cx, startY + i * lineHeight));
+}
+
+function step(ts) {
+  if (state === 'show' && ts - roundStart >= timeLimit) resolve(-1);
+  if (state === 'resolved' && performance.now() >= flashUntil) {
+    if (pendingOver) { endRun(); state = 'dead'; }
+    else newRound();
+  }
+  draw();
+}
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

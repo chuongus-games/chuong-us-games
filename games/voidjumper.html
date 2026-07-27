@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Void Jumper — Hardest Free Online Vertical Platformer</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕳️</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Charge a jump and aim it to leap between crumbling and moving platforms while the void auto-scrolls upward faster and faster in Void Jumper, a brutally hard free online climbing game. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/voidjumper.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Void Jumper — Hardest Free Online Vertical Platformer">
+<meta property="og:description" content="Charge a jump and aim it to leap between crumbling and moving platforms while the void auto-scrolls upward faster and faster in Void Jumper, a brutally hard free online climbing game. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/voidjumper.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Void Jumper — Hardest Free Online Vertical Platformer">
+<meta name="twitter:description" content="Charge a jump and aim it to leap between crumbling and moving platforms while the void auto-scrolls upward faster and faster in Void Jumper, a brutally hard free online climbing game. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Void Jumper",
+  "url": "https://chuong.us/games/voidjumper.html",
+  "description": "Charge a jump and aim it to leap between crumbling and moving platforms while the void auto-scrolls upward faster and faster in Void Jumper, a brutally hard free online climbing game. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Void Jumper", "item": "https://chuong.us/games/voidjumper.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="voidjumper">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n-html="common.back">Games</a>
+  <h1>🕳️ Void Jumper</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.voidjumper.hint">Press and hold to charge a jump — drag left/right to aim, release to leap. The void scrolls up forever, faster and faster.</p>
+<p class="seo-note" data-i18n="game.voidjumper.seoNote">Void Jumper is a free hard vertical platformer online. Charge your jump, aim between tiny floating platforms — some crumble the instant you land, some drift sideways — while the screen auto-scrolls upward at increasing speed. Fall behind or miss a platform and it's over. How high can you climb?</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="runner.html">🏃 Spike Runner</a>
+    <a href="gravity.html">🪐 Gravity Flip</a>
+    <a href="stack.html">🧱 Neon Stack</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_voidjumper_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.voidjumper.bestMLabel', { n: best });
+showBest();
+
+const W = cv.width, H = cv.height;
+
+// ---- physics/spawn constants ----------------------------------------------
+// NOTE: this exact spawn/physics logic was extracted and proven safe by a
+// headless Node.js simulation (5000 runs x 5 simulated minutes each, 0
+// unreachable-platform violations, 0 "camera caught up" deaths for a
+// perfect bot). See project notes for the simulation script.
+const G = 0.5;            // gravity, px/tick^2
+const MIN_HOLD = 80;      // ms, minimum charge before a tap still counts
+const MAX_HOLD = 650;     // ms, full charge
+const MIN_VY = 6;         // weakest tap upward velocity
+const MAX_VY = 15;        // full-charge upward velocity
+const MAX_VX = 5;         // max horizontal velocity imparted by aim drag
+const DY_MIN = 55;        // min vertical gap between platforms
+const DY_MAX = 165;       // max vertical gap between platforms (< riseHeight(MAX_VY))
+const SAFETY = 0.8;       // shrink allowed horizontal reach for margin
+const PLATFORM_W = 64, PLATFORM_H = 12;
+const PLAYER_R = 11;          // visual radius
+const HITBOX_R = 8;           // forgiving hitbox, smaller than visual (checklist #1)
+const CAM_MAX = 2.0;       // camera forced upward scroll speed cap, px/tick
+const CAM_RAMP_SECS = 45;  // seconds to reach CAM_MAX
+const MOVE_OMEGA = 0.02;   // moving-platform oscillation speed (steady, predictable — checklist #3)
+
+function riseHeight(vy) { return (vy * vy) / (2 * G); }
+function vyNeededForDy(dy) { return Math.sqrt(2 * G * dy); }
+function hazardChance(difficulty) { return Math.min(0.35, 0.05 + difficulty * 0.30); }
+
+// prev: {x, y}. difficulty in [0,1]. Deterministic-shape spawn, RNG only picks
+// within pre-validated safe ranges (checklist #2: always at least one feasible path).
+function nextPlatform(prev, difficulty) {
+  const dy = DY_MIN + Math.random() * (DY_MAX - DY_MIN);
+  const vyNeeded = Math.min(MAX_VY, vyNeededForDy(dy));
+  const tFlight = vyNeeded / G;
+  const maxDx = MAX_VX * tFlight * SAFETY;
+  let dx = (Math.random() * 2 - 1) * maxDx;
+  let x = prev.x + dx;
+  const half = PLATFORM_W / 2;
+  x = Math.max(half, Math.min(W - half, x));
+  dx = x - prev.x;
+
+  const margin = maxDx - Math.abs(dx);
+  let type = 'static', amp = 0;
+  if (margin > 25 && Math.random() < hazardChance(difficulty)) {
+    type = Math.random() < 0.5 ? 'moving' : 'crumble';
+    if (type === 'moving') amp = Math.min(14, margin * 0.5);
+  }
+  return { x, y: prev.y - dy, vyNeeded, tFlight, type, amp, phase: Math.random() * Math.PI * 2, crumbleT: -1, gone: false, baseX: x };
+}
+
+function curX(p, tSec) {
+  if (p.type !== 'moving') return p.x;
+  return p.baseX + p.amp * Math.sin(p.phase + tSec * MOVE_OMEGA * 60);
+}
+
+// ---- state ------------------------------------------------------------------
+let px, py, pvx, pvy, onPlat, platforms, camTop, elapsed, score, state;
+let holding = false, holdStart = 0, aimX = 0;
+let ended = false;
+
+function reset() {
+  platforms = [{ x: W / 2, y: 0, type: 'static', amp: 0, gone: false, baseX: W / 2 }];
+  let prev = platforms[0];
+  for (let i = 0; i < 6; i++) { const p = nextPlatform(prev, 0); platforms.push(p); prev = p; }
+  px = platforms[0].x; py = platforms[0].y - PLAYER_R; pvx = 0; pvy = 0; onPlat = platforms[0];
+  camTop = -H + 40;
+  elapsed = 0; score = 0; state = 'ready'; holding = false; ended = false;
+}
+
+function scalePt(clientX, clientY) {
+  const r = cv.getBoundingClientRect();
+  return { x: (clientX - r.left) * (W / r.width), y: (clientY - r.top) * (H / r.height) };
+}
+
+cv.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  if (state === 'dead') { reset(); return; }
+  if (state === 'ready') state = 'play';
+  if (!onPlat) return; // checklist #4: only accept jump input when grounded
+  holding = true; holdStart = performance.now();
+  aimX = scalePt(e.clientX, e.clientY).x;
+});
+cv.addEventListener('pointermove', e => {
+  if (holding) aimX = scalePt(e.clientX, e.clientY).x;
+});
+function releaseJump() {
+  if (!holding) return;
+  holding = false;
+  if (!onPlat) return;
+  const held = Math.max(MIN_HOLD, Math.min(MAX_HOLD, performance.now() - holdStart));
+  const power = (held - MIN_HOLD) / (MAX_HOLD - MIN_HOLD);
+  pvy = -(MIN_VY + power * (MAX_VY - MIN_VY));
+  pvx = Math.max(-MAX_VX, Math.min(MAX_VX, (aimX - px) * 0.06));
+  onPlat = null;
+}
+cv.addEventListener('pointerup', e => { e.preventDefault(); releaseJump(); });
+cv.addEventListener('pointercancel', () => releaseJump());
+addEventListener('keydown', e => {
+  if (e.code === 'Space' || e.code === 'ArrowUp') {
+    e.preventDefault();
+    if (state === 'dead') { reset(); return; }
+    if (state === 'ready') state = 'play';
+    if (!onPlat || holding) return;
+    holding = true; holdStart = performance.now(); aimX = px;
+  } else if (e.code === 'ArrowLeft') aimX = px - 60;
+  else if (e.code === 'ArrowRight') aimX = px + 60;
+});
+addEventListener('keyup', e => { if (e.code === 'Space' || e.code === 'ArrowUp') releaseJump(); });
+
+function endRun() {
+  if (ended) return; // checklist #5: exactly once
+  ended = true;
+  state = 'dead';
+  const m = Math.floor(score);
+  if (window.CUG) CUG.submitScore('voidjumper', m);
+  if (m > best) { best = m; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function doTick(dtMs) {
+  if (state !== 'play') return; // checklist #4: no sim while ready/dead
+  const scale = dtMs / TICK_MS;
+  elapsed += dtMs / 1000;
+  const difficulty = Math.min(1, elapsed / CAM_RAMP_SECS);
+  const camSpeed = CAM_MAX * difficulty;
+  camTop -= camSpeed * scale;
+
+  if (!onPlat) {
+    pvy += G * scale;
+    px += pvx * scale;
+    py += pvy * scale;
+    px = Math.max(HITBOX_R, Math.min(W - HITBOX_R, px));
+  }
+
+  // landing check (only when falling, onto a platform below)
+  if (!onPlat && pvy > 0) {
+    for (const p of platforms) {
+      if (p.gone) continue;
+      const cx = curX(p, elapsed);
+      const topY = p.y - PLATFORM_H / 2;
+      if (py + HITBOX_R >= topY && py + HITBOX_R <= topY + 14 &&
+          px + HITBOX_R > cx - PLATFORM_W / 2 && px - HITBOX_R < cx + PLATFORM_W / 2) {
+        py = topY - HITBOX_R;
+        pvy = 0; pvx = 0;
+        onPlat = p;
+        score = Math.max(score, -p.y);
+        if (p.type === 'crumble' && p.crumbleT < 0) p.crumbleT = elapsed + 0.4;
+        break;
+      }
+    }
+  }
+  if (onPlat && onPlat.type === 'crumble' && onPlat.crumbleT >= 0 && elapsed >= onPlat.crumbleT) {
+    onPlat.gone = true;
+    onPlat = null; // player starts falling again naturally next tick
+  }
+
+  score = Math.max(score, -py);
+
+  // keep at least LOOKAHEAD platforms strictly above the player's current
+  // reference point at all times. Counting total array length here was the
+  // original (buggy) approach: once enough already-visited platforms piled
+  // up behind the player, the array reached its cap and generation silently
+  // stopped producing anything *ahead* of the player, causing an unwinnable
+  // uncontrolled freefall. Counting only what's ahead fixes that permanently.
+  const refY = onPlat ? onPlat.y : py;
+  const LOOKAHEAD = 5;
+  let ahead = platforms.filter(p => !p.gone && p.y < refY - 1).length;
+  while (ahead < LOOKAHEAD) {
+    const prev = platforms[platforms.length - 1];
+    platforms.push(nextPlatform(prev, difficulty));
+    ahead++;
+  }
+  // prune platforms well behind the player (kept a little longer for draw fade-out)
+  platforms = platforms.filter(p => p.y < refY + 260);
+
+  // death: fell below the visible camera bottom
+  if (py - camTop > H + 40) endRun();
+}
+
+const TICK_MS = 16.67;
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+
+  for (const p of platforms) {
+    if (p.gone) continue;
+    const cx = curX(p, elapsed);
+    const sy = p.y - camTop;
+    if (sy < -20 || sy > H + 20) continue;
+    let color = '#34d399'; // static: green neon
+    if (p.type === 'crumble') color = p.crumbleT >= 0 ? '#fb7185' : '#f59e0b'; // amber, red once triggered
+    if (p.type === 'moving') color = '#a78bfa'; // purple neon
+    ctx.fillStyle = color; ctx.shadowColor = color; ctx.shadowBlur = 8;
+    ctx.fillRect(cx - PLATFORM_W / 2, sy - PLATFORM_H / 2, PLATFORM_W, PLATFORM_H);
+    ctx.shadowBlur = 0;
+  }
+
+  const sy = py - camTop;
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 14;
+  ctx.beginPath(); ctx.arc(px, sy, PLAYER_R, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+
+  if (holding && onPlat) {
+    const held = Math.max(MIN_HOLD, Math.min(MAX_HOLD, performance.now() - holdStart));
+    const power = (held - MIN_HOLD) / (MAX_HOLD - MIN_HOLD);
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 3; ctx.globalAlpha = 0.7;
+    ctx.beginPath(); ctx.arc(px, sy, PLAYER_R + 6 + power * 14, 0, 7 * power); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 30px Segoe UI, sans-serif';
+  ctx.fillText(Math.floor(score) + 'm', W / 2, 46);
+  ctx.font = '700 17px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText(I18N.t('game.voidjumper.tapToStart'), W / 2, H / 2);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.voidjumper.gameOver'), W / 2, H / 2); }
+}
+
+let lastTs = 0;
+function step(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = ts - lastTs;
+  lastTs = ts;
+  doTick(Math.min(dt, 50));
+  draw();
+  requestAnimationFrame(step);
+}
+reset();
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

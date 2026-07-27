@@ -116,7 +116,18 @@ const showBest = () => bestEl.textContent = best ? I18N.t('game.numrush.bestLabe
 showBest();
 
 const TOTAL = 25;
-let state = 'ready', t0 = 0, next = 1, miss = 0, finalT = 0, cells = [];
+// Miss penalty scales up as the player progresses through the grid: missing on an
+// early target (low `next`) costs the base penalty, missing on a late target costs
+// more. Capped at BASE_PENALTY + MAX_EXTRA_PENALTY (=2.2x base at n=25) so it never
+// gets punishingly unfair.
+const BASE_PENALTY = 1;      // seconds, penalty when next === 1 (unchanged from before)
+const MAX_EXTRA_PENALTY = 1.2; // seconds, extra penalty added by the time next === TOTAL
+let state = 'ready', t0 = 0, next = 1, miss = 0, totalPenalty = 0, finalT = 0, cells = [];
+
+function missPenaltyFor(n) {
+  const progress = (n - 1) / (TOTAL - 1); // 0 at n=1, 1 at n=TOTAL
+  return BASE_PENALTY + progress * MAX_EXTRA_PENALTY;
+}
 
 function shuffledNumbers() {
   const arr = Array.from({ length: TOTAL }, (_, i) => i + 1);
@@ -146,7 +157,7 @@ function updateFindLabel() {
 
 function resetGame() {
   state = 'ready';
-  next = 1; miss = 0;
+  next = 1; miss = 0; totalPenalty = 0;
   buildGrid();
   updateFindLabel();
   readyEl.style.display = '';
@@ -156,11 +167,13 @@ function resetGame() {
 
 function finish() {
   state = 'done';
-  finalT = (performance.now() - t0) / 1000 + miss;
+  // Same unit/meaning as before (total seconds, lower is better): elapsed time plus
+  // the sum of all miss penalties. Only how each miss's penalty is computed changed.
+  finalT = (performance.now() - t0) / 1000 + totalPenalty;
   if (window.CUG) CUG.submitScore('numrush', +finalT.toFixed(2));
   if (!best || finalT < best) { best = finalT; localStorage.setItem(KEY, best); showBest(); }
   resultEl.querySelector('.big').textContent = finalT.toFixed(2) + 's';
-  resultEl.querySelector('.sub').textContent = I18N.t('game.numrush.missPenalty', { miss });
+  resultEl.querySelector('.sub').textContent = I18N.t('game.numrush.missPenalty', { miss: totalPenalty.toFixed(2) });
   resultEl.style.display = 'block';
 }
 
@@ -173,6 +186,7 @@ function onCellTap(n, el) {
     if (next > TOTAL) { finish(); return; }
   } else if (!el.classList.contains('done')) {
     miss++;
+    totalPenalty += missPenaltyFor(next);
     el.classList.add('wrong');
     setTimeout(() => el.classList.remove('wrong'), 200);
   }

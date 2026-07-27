@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lane Switch — Hardest Free 3-Lane Dodge Game Online</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛣️</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Switch between 3 lanes to dodge oncoming blocks in Lane Switch, a brutally hard free online reflex game. Speed climbs forever and sometimes only one lane stays open. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/laneswitch.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Lane Switch — Hardest Free 3-Lane Dodge Game Online">
+<meta property="og:description" content="Switch between 3 lanes to dodge oncoming blocks in Lane Switch, a brutally hard free online reflex game. Speed climbs forever and sometimes only one lane stays open. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/laneswitch.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lane Switch — Hardest Free 3-Lane Dodge Game Online">
+<meta name="twitter:description" content="Switch between 3 lanes to dodge oncoming blocks in Lane Switch, a brutally hard free online reflex game. Speed climbs forever and sometimes only one lane stays open. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Lane Switch",
+  "url": "https://chuong.us/games/laneswitch.html",
+  "description": "Switch between 3 lanes to dodge oncoming blocks in Lane Switch, a brutally hard free online reflex game. Speed climbs forever and sometimes only one lane stays open. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Lane Switch", "item": "https://chuong.us/games/laneswitch.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="laneswitch">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n-html="common.back">Games</a>
+  <h1>🛣️ Lane Switch</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.laneswitch.hint">Arrow keys / A-D (or tap left/right on the road) to switch lanes. Dodge the blocks — speed climbs forever and sometimes only one lane stays open.</p>
+<p class="seo-note" data-i18n="game.laneswitch.seoNote">Lane Switch is a free hard online reflex game across 3 lanes: blocks slide toward you and you must slide between left, middle and right to survive. There's always exactly one safe lane, but as speed keeps climbing, spotting it and reacting in time becomes one of the hardest dodge challenges you'll find in a browser.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="dodge.html">🔵 Hardest Dodge</a>
+    <a href="avoid.html">☄️ Meteor Rain</a>
+    <a href="runner.html">🏃 Spike Runner</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_laneswitch_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.laneswitch.bestMLabel', { n: best });
+showBest();
+
+/* ---- core tunables (mirrored 1:1 in the headless bot verification script) ---- */
+const W = cv.width, H = cv.height;               // 480 x 480
+const LANES = 3;
+const LANE_W = W / LANES;                         // 160
+const SPAWN_Y = -60;
+const PLAYER_ROW_Y = 400;                         // fixed collision band anchor
+const TRAVEL_DIST = PLAYER_ROW_Y - SPAWN_Y;        // 460 px spawn -> player row
+
+const SPEED_MIN = 260;      // px/s at t=0
+const SPEED_MAX = 900;      // px/s cap -> min travel time 460/900 = 511ms, always > reaction+switch budget
+const SPEED_RAMP_TIME = 45; // seconds to reach max speed
+
+const GAP_START = 900;      // ms between obstacle rows at t=0
+const GAP_MIN = 460;        // ms floor (kept above the 350-400ms minimum reaction threshold)
+const GAP_RAMP_TIME = 40;
+
+const TWO_BLOCK_PROB_START = 0.12; // chance a row blocks 2 lanes (harder) instead of 1
+const TWO_BLOCK_PROB_MAX = 0.6;
+const BLOCK_PROB_RAMP = 50;
+
+const LANE_MOVE_SPEED = 1400; // px/s player tween speed between lane centers
+
+function speedFor(t) { const p = Math.min(1, t / SPEED_RAMP_TIME); return SPEED_MIN + (SPEED_MAX - SPEED_MIN) * p; }
+function gapTimeFor(t) { const p = Math.min(1, t / GAP_RAMP_TIME); return GAP_START + (GAP_MIN - GAP_START) * p; }
+function twoBlockProbFor(t) { const p = Math.min(1, t / BLOCK_PROB_RAMP); return TWO_BLOCK_PROB_START + (TWO_BLOCK_PROB_MAX - TWO_BLOCK_PROB_START) * p; }
+function spawnRow(t) {
+  const blockTwo = Math.random() < twoBlockProbFor(t);
+  const lanes = [0, 1, 2];
+  for (let i = lanes.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [lanes[i], lanes[j]] = [lanes[j], lanes[i]]; }
+  const blockedCount = blockTwo ? 2 : 1;
+  return { blocked: lanes.slice(0, blockedCount), free: lanes.slice(blockedCount) };
+}
+function laneCenterX(i) { return i * LANE_W + LANE_W / 2; }
+
+/* ---- state ---- */
+let state = 'ready'; // ready | play | dead
+let t0 = 0, secs = 0, distance = 0, score = 0;
+let playerLane = 1, targetLane = 1, playerX = laneCenterX(1);
+let spawnAccMs = 0, nextGapMs = gapTimeFor(0);
+let obstacles = []; // {lane, y, blockedSet}
+let dead = false; // guard for endRun()
+
+const PLAYER_W = 96, PLAYER_H = 46;
+const HIT_MARGIN_X = 12, HIT_MARGIN_Y = 6; // forgiving hitbox: player hit-rect smaller than visual
+const OBST_H = 54, OBST_GAP = 14; // visual gap between lane obstacles
+
+function resetGame() {
+  state = 'ready'; secs = 0; distance = 0; score = 0;
+  playerLane = 1; targetLane = 1; playerX = laneCenterX(1);
+  spawnAccMs = 0; nextGapMs = gapTimeFor(0);
+  obstacles = []; dead = false;
+}
+resetGame();
+
+function startGame() {
+  if (state === 'play') return;
+  resetGame();
+  state = 'play';
+  t0 = performance.now();
+}
+
+function endRun() {
+  if (dead) return; // guard: exactly once
+  dead = true;
+  state = 'dead';
+  if (window.CUG) CUG.submitScore('laneswitch', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function setTarget(lane) {
+  if (state !== 'play') return; // locked during ready/dead
+  targetLane = Math.max(0, Math.min(LANES - 1, lane));
+}
+function moveLeft() { if (state === 'ready') { startGame(); return; } setTarget(targetLane - 1); }
+function moveRight() { if (state === 'ready') { startGame(); return; } setTarget(targetLane + 1); }
+
+addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  if (k === 'arrowleft' || k === 'a') { e.preventDefault(); if (state === 'dead') startGame(); else moveLeft(); }
+  else if (k === 'arrowright' || k === 'd') { e.preventDefault(); if (state === 'dead') startGame(); else moveRight(); }
+  else if (k === ' ' || k === 'enter') { if (state !== 'play') startGame(); }
+});
+cv.addEventListener('pointerdown', e => {
+  if (state === 'ready' || state === 'dead') { startGame(); return; }
+  const r = cv.getBoundingClientRect();
+  const x = (e.clientX - r.left) * (W / r.width);
+  if (x < W / 2) moveLeft(); else moveRight();
+});
+
+/* ---- simulation step ---- */
+function doTick(dtMs) {
+  if (state !== 'play') return;
+  secs = (performance.now() - t0) / 1000;
+  const spd = speedFor(secs);
+  distance += spd * (dtMs / 1000);
+  score = Math.floor(distance / 40);
+
+  // spawn rows
+  spawnAccMs += dtMs;
+  if (spawnAccMs >= nextGapMs) {
+    spawnAccMs -= nextGapMs;
+    const row = spawnRow(secs);
+    for (const lane of row.blocked) obstacles.push({ lane, y: SPAWN_Y });
+    nextGapMs = gapTimeFor(secs);
+  }
+
+  // move obstacles
+  for (const o of obstacles) o.y += spd * (dtMs / 1000);
+  obstacles = obstacles.filter(o => o.y < H + OBST_H);
+
+  // move player toward target lane (smooth tween, no teleport)
+  const targetX = laneCenterX(targetLane);
+  const maxStep = LANE_MOVE_SPEED * (dtMs / 1000);
+  if (Math.abs(targetX - playerX) <= maxStep) playerX = targetX;
+  else playerX += Math.sign(targetX - playerX) * maxStep;
+  playerLane = targetLane;
+
+  // collision: forgiving hitbox, continuous AABB check against player's fixed row band
+  const hitX0 = playerX - PLAYER_W / 2 + HIT_MARGIN_X;
+  const hitX1 = playerX + PLAYER_W / 2 - HIT_MARGIN_X;
+  const hitY0 = PLAYER_ROW_Y + HIT_MARGIN_Y;
+  const hitY1 = PLAYER_ROW_Y + PLAYER_H - HIT_MARGIN_Y;
+  for (const o of obstacles) {
+    const ox0 = o.lane * LANE_W + OBST_GAP / 2, ox1 = (o.lane + 1) * LANE_W - OBST_GAP / 2;
+    const oy0 = o.y, oy1 = o.y + OBST_H;
+    if (hitX1 > ox0 && hitX0 < ox1 && hitY1 > oy0 && hitY0 < oy1) { endRun(); return; }
+  }
+}
+
+/* ---- draw ---- */
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+
+  // lane dividers
+  ctx.strokeStyle = 'rgba(232,237,247,.12)'; ctx.lineWidth = 2; ctx.setLineDash([10, 12]);
+  for (let i = 1; i < LANES; i++) {
+    ctx.beginPath(); ctx.moveTo(i * LANE_W, 0); ctx.lineTo(i * LANE_W, H); ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // obstacles
+  for (const o of obstacles) {
+    const ox = o.lane * LANE_W + OBST_GAP / 2, ow = LANE_W - OBST_GAP;
+    ctx.fillStyle = '#fb7185'; ctx.shadowColor = '#fb7185'; ctx.shadowBlur = 12;
+    ctx.beginPath(); ctx.roundRect(ox, o.y, ow, OBST_H, 8); ctx.fill(); ctx.shadowBlur = 0;
+  }
+
+  // player
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 16;
+  ctx.beginPath(); ctx.roundRect(playerX - PLAYER_W / 2, PLAYER_ROW_Y, PLAYER_W, PLAYER_H, 10); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // HUD
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 34px Segoe UI, sans-serif';
+  ctx.fillText(score + 'm', W / 2, 46);
+  ctx.font = '700 17px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText(I18N.t('game.laneswitch.tapToStart'), W / 2, H / 2);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.laneswitch.gameOver'), W / 2, H / 2); }
+}
+
+let lastTs = 0;
+function step(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = ts - lastTs;
+  lastTs = ts;
+  doTick(Math.min(dt, 50));
+  draw();
+  requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

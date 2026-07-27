@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flash Grid — Hardest Reflex Grid Reaction Game Online Free</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<style>
+#fgWrap { width: min(480px, 92vw); text-align: center; user-select: none; }
+#fgBar {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+  font-weight: 800; font-size: 1rem;
+}
+#fgScore { color: var(--neon); }
+#fgLives { letter-spacing: 3px; font-size: 1.1rem; }
+</style>
+<meta name="description" content="Tap the glowing blue cell before it fades in Flash Grid, a brutally hard reflex grid game online. Never tap the red trap cell or it's instant game over. Free, no signup.">
+<link rel="canonical" href="https://chuong.us/games/flashgrid.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Flash Grid — Hardest Reflex Grid Reaction Game Online Free">
+<meta property="og:description" content="Tap the glowing blue cell before it fades in Flash Grid, a brutally hard reflex grid game online. Never tap the red trap cell or it's instant game over. Free, no signup.">
+<meta property="og:url" content="https://chuong.us/games/flashgrid.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flash Grid — Hardest Reflex Grid Reaction Game Online Free">
+<meta name="twitter:description" content="Tap the glowing blue cell before it fades in Flash Grid, a brutally hard reflex grid game online. Never tap the red trap cell or it's instant game over. Free, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Flash Grid",
+  "url": "https://chuong.us/games/flashgrid.html",
+  "description": "Tap the glowing blue cell before it fades in Flash Grid, a brutally hard reflex grid game online. Never tap the red trap cell or it's instant game over. Free, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Chuong US Games",
+      "item": "https://chuong.us/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flash Grid",
+      "item": "https://chuong.us/games/flashgrid.html"
+    }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="flashgrid">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n-html="common.back">Games</a>
+  <h1>💡 Flash Grid</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage">
+  <div id="fgWrap">
+    <div id="fgBar"><span id="fgScore"></span><span id="fgLives"></span></div>
+    <canvas class="game" id="cv" width="480" height="480"></canvas>
+  </div>
+</div>
+<p class="hint" data-i18n="game.flashgrid.hint">Tap the glowing BLUE cell before it fades out. Never tap the RED trap cell — that's instant game over. Missing a blue cell costs a life; you have 3.</p>
+<p class="seo-note" data-i18n="game.flashgrid.seoNote">Flash Grid is a free online reflex grid game: a random cell flashes blue and you must tap it before it fades, while occasional red trap cells must never be touched. The lit window shrinks and traps appear more often as your score climbs, making split-second color recognition and restraint the key to a high score in this brutally hard reaction test.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="colorrush.html">🎨 Color Rush</a>
+    <a href="numrush.html">🔢 Number Rush</a>
+    <a href="reaction.html">⚡ Reaction Test</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const scoreEl = document.getElementById('fgScore'), livesEl = document.getElementById('fgLives');
+const KEY = 'cug_flashgrid_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? I18N.t('game.flashgrid.bestLabel', { n: best }) : '';
+showBest();
+
+// ---- Difficulty model (mirrors flashgrid_sim.js verification script) ----
+const GRID_N = 4;                 // 4x4 grid
+const MIN_LIT_MS = 350;           // hard floor: never below realistic human reaction time
+const START_LIT_MS = 900;         // starting lit duration
+const LIT_DECAY_PER_POINT = 18;   // ms shaved off per score point
+const MIN_GAP_MS = 180;           // minimum all-off gap between rounds (jitter up to +40ms)
+const TRAP_START = 0.05;          // starting trap probability
+const TRAP_PER_POINT = 0.009;     // trap probability growth per point
+const TRAP_CAP = 0.32;            // trap probability never exceeds this
+const HIT_MARGIN = 16;            // px — lit cell's tap hitbox is biased larger than its drawn box
+
+const litDuration = score => Math.max(MIN_LIT_MS, START_LIT_MS - score * LIT_DECAY_PER_POINT);
+const trapProb = score => Math.min(TRAP_CAP, TRAP_START + score * TRAP_PER_POINT);
+const gapMs = () => MIN_GAP_MS + Math.floor(Math.random() * 40);
+
+const W = cv.width, H = cv.height;
+const cellW = W / GRID_N, cellH = H / GRID_N;
+
+let state = 'idle';      // idle | gap | lit | over
+let score = 0, lives = 3;
+let litCell = -1, isTrap = false, resolved = false;
+let roundStart = 0, roundDuration = 0, gapDuration = 0;
+let opacity = 0, targetOpacity = 0;
+let flashColor = null;   // 'ok' | 'bad' | null — brief feedback flash on whole grid
+let flashUntil = 0;
+let gameOverAt = 0;
+let ended = false;
+
+function updateHUD() {
+  scoreEl.textContent = I18N.t('game.flashgrid.scoreLabel', { n: score });
+  livesEl.textContent = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(Math.max(0, 3 - lives));
+}
+
+function pickCell(avoid) {
+  let c;
+  do { c = Math.floor(Math.random() * GRID_N * GRID_N); } while (c === avoid && GRID_N * GRID_N > 1);
+  return c;
+}
+
+function startGame() {
+  score = 0; lives = 3; ended = false;
+  updateHUD();
+  goGap();
+}
+
+function goGap() {
+  state = 'gap';
+  litCell = -1; resolved = false; targetOpacity = 0;
+  roundStart = performance.now();
+  gapDuration = gapMs();
+}
+
+function goLit() {
+  state = 'lit';
+  resolved = false;
+  isTrap = Math.random() < trapProb(score);
+  litCell = pickCell(litCell);
+  roundDuration = litDuration(score);
+  roundStart = performance.now();
+  targetOpacity = 1;
+}
+
+function missSafe() {
+  lives--;
+  updateHUD();
+  flashColor = 'bad'; flashUntil = performance.now() + 220;
+  if (lives <= 0) { endRun(); return; }
+  goGap();
+}
+
+function hitSafe() {
+  resolved = true;
+  score++;
+  updateHUD();
+  flashColor = 'ok'; flashUntil = performance.now() + 160;
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+  targetOpacity = 0;
+  setTimeout(goGap, 90);
+}
+
+function hitTrap() {
+  resolved = true;
+  flashColor = 'bad'; flashUntil = performance.now() + 260;
+  endRun();
+}
+
+function expireTrap() {
+  // player correctly avoided the trap by not tapping — safe, continue
+  goGap();
+}
+
+function endRun() {
+  if (ended) return;
+  ended = true;
+  state = 'over';
+  gameOverAt = performance.now();
+  if (window.CUG) CUG.submitScore('flashgrid', score);
+}
+
+function cellRect(idx) {
+  const col = idx % GRID_N, row = Math.floor(idx / GRID_N);
+  return { x: col * cellW, y: row * cellH, w: cellW, h: cellH };
+}
+
+function handleTap(clientX, clientY) {
+  const rect = cv.getBoundingClientRect();
+  const scaleX = W / rect.width, scaleY = H / rect.height;
+  const px = (clientX - rect.left) * scaleX;
+  const py = (clientY - rect.top) * scaleY;
+
+  if (state === 'idle') { startGame(); return; }
+  if (state === 'over') {
+    if (performance.now() - gameOverAt > 400) startGame();
+    return;
+  }
+  if (state !== 'lit' || resolved) return; // locked during gap / already resolved this round
+
+  const r = cellRect(litCell);
+  const inLit = px >= r.x - HIT_MARGIN && px <= r.x + r.w + HIT_MARGIN &&
+                py >= r.y - HIT_MARGIN && py <= r.y + r.h + HIT_MARGIN;
+  if (!inLit) return; // taps elsewhere on the grid are harmless no-ops
+
+  resolved = true;
+  if (isTrap) hitTrap(); else hitSafe();
+}
+
+cv.addEventListener('pointerdown', e => { handleTap(e.clientX, e.clientY); });
+
+function draw() {
+  const now = performance.now();
+
+  // state transitions driven by elapsed time
+  if (state === 'gap' && now - roundStart >= gapDuration) goLit();
+  if (state === 'lit' && !resolved && now - roundStart >= roundDuration) {
+    if (isTrap) expireTrap(); else missSafe();
+  }
+
+  // smooth opacity toward target (fade in/out)
+  opacity += (targetOpacity - opacity) * 0.22;
+
+  ctx.fillStyle = '#101625';
+  ctx.fillRect(0, 0, W, H);
+
+  // grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,.08)';
+  ctx.lineWidth = 2;
+  for (let i = 1; i < GRID_N; i++) {
+    ctx.beginPath(); ctx.moveTo(i * cellW, 0); ctx.lineTo(i * cellW, H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, i * cellH); ctx.lineTo(W, i * cellH); ctx.stroke();
+  }
+
+  // lit cell
+  if ((state === 'lit' || state === 'gap') && litCell >= 0 && opacity > 0.01) {
+    const r = cellRect(litCell);
+    const color = isTrap ? '251,113,133' : '34,211,238';
+    ctx.save();
+    ctx.globalAlpha = opacity;
+    ctx.shadowColor = `rgba(${color},.9)`;
+    ctx.shadowBlur = 26;
+    ctx.fillStyle = `rgba(${color},.85)`;
+    const pad = 6;
+    ctx.fillRect(r.x + pad, r.y + pad, r.w - pad * 2, r.h - pad * 2);
+    ctx.restore();
+  }
+
+  // whole-grid feedback flash
+  if (flashColor && now < flashUntil) {
+    const t = 1 - (flashUntil - now) / 260;
+    ctx.save();
+    ctx.globalAlpha = 0.25 * (1 - t);
+    ctx.fillStyle = flashColor === 'ok' ? '#4ade80' : '#fb7185';
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  } else if (flashColor && now >= flashUntil) {
+    flashColor = null;
+  }
+
+  // overlays
+  ctx.textAlign = 'center';
+  if (state === 'idle') {
+    ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#fff';
+    ctx.font = '700 22px system-ui, sans-serif';
+    ctx.fillText(I18N.t('game.flashgrid.tapToStartTitle'), W / 2, H / 2 - 12);
+    ctx.font = '400 14px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,.85)';
+    ctx.fillText(I18N.t('game.flashgrid.tapToStartBody'), W / 2, H / 2 + 16);
+  } else if (state === 'over') {
+    ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#fff';
+    ctx.font = '800 26px system-ui, sans-serif';
+    ctx.fillText(I18N.t('game.flashgrid.gameOverTitle'), W / 2, H / 2 - 18);
+    ctx.font = '700 18px system-ui, sans-serif';
+    ctx.fillStyle = '#22d3ee';
+    ctx.fillText(I18N.t('game.flashgrid.finalScoreLabel', { n: score }), W / 2, H / 2 + 14);
+    ctx.font = '400 13px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,.8)';
+    ctx.fillText(I18N.t('game.flashgrid.tapToRestart'), W / 2, H / 2 + 42);
+  }
+
+  requestAnimationFrame(draw);
+}
+
+updateHUD();
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

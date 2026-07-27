@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tilt Balance — Hardest Free Online Ball Balancing Game</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Tilt a shrinking platform with your mouse to keep a neon ball from rolling off the edges or dropping through random holes in Tilt Balance, a brutally hard free online physics balancing game. No download, no signup.">
+<link rel="canonical" href="https://chuong.us/games/tiltbalance.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Tilt Balance — Hardest Free Online Ball Balancing Game">
+<meta property="og:description" content="Tilt a shrinking platform with your mouse to keep a neon ball from rolling off the edges or dropping through random holes in Tilt Balance, a brutally hard free online physics balancing game. No download, no signup.">
+<meta property="og:url" content="https://chuong.us/games/tiltbalance.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tilt Balance — Hardest Free Online Ball Balancing Game">
+<meta name="twitter:description" content="Tilt a shrinking platform with your mouse to keep a neon ball from rolling off the edges or dropping through random holes in Tilt Balance, a brutally hard free online physics balancing game. No download, no signup.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Tilt Balance",
+  "url": "https://chuong.us/games/tiltbalance.html",
+  "description": "Tilt a shrinking platform with your mouse to keep a neon ball from rolling off the edges or dropping through random holes in Tilt Balance, a brutally hard free online physics balancing game. No download, no signup.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Tilt Balance", "item": "https://chuong.us/games/tiltbalance.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="tiltbalance">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n-html="common.back">Games</a>
+  <h1>⚖️ Tilt Balance</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.tiltbalance.hint">Move your mouse / drag your finger left-right (or use arrow keys) to tilt the platform and roll the ball. Don't let it fall off the ends or drop through a hole. The platform shrinks and holes appear as you survive longer.</p>
+<p class="seo-note" data-i18n="game.tiltbalance.seoNote">Tilt Balance is a free hard online physics game: tilt a narrow platform by moving your mouse to keep a neon ball rolling safely on top. The platform slowly shrinks from both ends and random holes open up over time, forcing constant, precise micro-adjustments. Score is the number of seconds you keep the ball alive, and staying in control for a long run is what makes this one of the hardest balance games in a browser.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="gravity.html">🔃 Gravity Flip</a>
+    <a href="breaker.html">🧱 Neon Breaker</a>
+    <a href="maze.html">🌀 Wire Maze</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_tiltbalance_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = I18N.t('game.tiltbalance.bestSecLabel', { n: best });
+showBest();
+
+// ---- constants (kept in sync with scripts/tiltbalance-sim.js) ----
+const W = cv.width, H = cv.height, CX = W / 2, CY = H / 2;
+const BALL_R = 9, HITBOX_FORGIVE = 2.5, COLLIDE_R = BALL_R - HITBOX_FORGIVE;
+const THICK = 16;
+const INITIAL_HALF = 170, MIN_HALF = 95, SHRINK_TIME = 110;
+const SHRINK_RATE = (INITIAL_HALF - MIN_HALF) / SHRINK_TIME;
+const MAX_ANGLE = 0.5, G = 900, FRICTION = 1.1, ANGLE_LERP = 6, KEY_RATE = 1.4;
+const MIN_SAFE_WIDTH = 70;
+const HOLE_W_START = 22, HOLE_W_MAX = 46, HOLE_W_GROW_TIME = 120;
+const SPAWN_START = 4.0, SPAWN_MIN = 1.3, SPAWN_RAMP = 100;
+const WARN_TIME = 0.75; // seconds a hole flashes as a warning before it becomes solid/lethal
+
+function curHalfAt(t) { return Math.max(MIN_HALF, INITIAL_HALF - SHRINK_RATE * t); }
+function holeWidthAt(t) { return Math.min(HOLE_W_MAX, HOLE_W_START + (HOLE_W_MAX - HOLE_W_START) * Math.min(1, t / HOLE_W_GROW_TIME)); }
+function spawnIntervalAt(t) { return Math.max(SPAWN_MIN, SPAWN_START - (SPAWN_START - SPAWN_MIN) * Math.min(1, t / SPAWN_RAMP)); }
+
+// segment (in local s-coords) currently containing the ball, bounded by curHalf
+// edges and/or the nearest holes; worstLeft/worstRight use MIN_HALF for any side
+// still bounded by a shrinking edge (future-proof against further shrinkage).
+function segmentContaining(ballS, holes, curHalf) {
+  let leftBound = -curHalf, rightBound = curHalf, isEdgeL = true, isEdgeR = true;
+  for (const h of holes) {
+    if (h.s1 <= ballS && h.s1 > leftBound) { leftBound = h.s1; isEdgeL = false; }
+    if (h.s0 >= ballS && h.s0 < rightBound) { rightBound = h.s0; isEdgeR = false; }
+  }
+  const worstLeft = isEdgeL ? -MIN_HALF : leftBound;
+  const worstRight = isEdgeR ? MIN_HALF : rightBound;
+  return { leftBound, rightBound, worstLeft, worstRight, isEdgeL, isEdgeR };
+}
+
+// Try to place a new hole that never traps the ball: it must land far enough
+// from the ball's current position, and the piece of the segment the ball
+// keeps (measured against the worst-case future edge position) must stay
+// >= MIN_SAFE_WIDTH. Returns null if no valid spot exists this cycle (spawn
+// is simply skipped rather than forcing an unfair hole).
+function tryPlaceHole(ballS, holes, curHalf, holeWidth, rng) {
+  const seg = segmentContaining(ballS, holes, curHalf);
+  for (let i = 0; i < 40; i++) {
+    const lo = seg.leftBound + holeWidth / 2 + 2, hi = seg.rightBound - holeWidth / 2 - 2;
+    if (lo >= hi) return null;
+    const center = lo + rng() * (hi - lo);
+    const hs0 = center - holeWidth / 2, hs1 = center + holeWidth / 2;
+    if (ballS + BALL_R + 4 > hs0 && ballS - BALL_R - 4 < hs1) continue;
+    if (ballS < hs0) {
+      const width = hs0 - seg.worstLeft;
+      if (width >= MIN_SAFE_WIDTH) return { s0: hs0, s1: hs1 };
+    } else {
+      const width = seg.worstRight - hs1;
+      if (width >= MIN_SAFE_WIDTH) return { s0: hs0, s1: hs1 };
+    }
+  }
+  return null;
+}
+
+// Only *solid* holes (past their warning window) are lethal; forming holes
+// still block segment/bot-target math (so the bot/player sees and can react
+// to them the instant they appear) but the ball can still physically pass
+// over them until they solidify — this guarantees a fixed reaction window
+// no matter how close to the ball a hole spawns.
+function isDead(nowT, ballS, holes, curHalf) {
+  if (ballS + COLLIDE_R > curHalf || ballS - COLLIDE_R < -curHalf) return true;
+  for (const h of holes) if (nowT >= h.solidAt && ballS + COLLIDE_R > h.s0 && ballS - COLLIDE_R < h.s1) return true;
+  return false;
+}
+
+let angle, targetAngle, s, v, holes, t, spawnAt, state;
+function reset() {
+  angle = 0; targetAngle = 0; s = 0; v = 0; holes = []; t = 0; spawnAt = SPAWN_START; state = 'ready';
+}
+function endRun() {
+  if (state === 'dead') return; // guard: exactly once
+  state = 'dead';
+  const sc = Math.floor(t);
+  if (window.CUG) CUG.submitScore('tiltbalance', sc);
+  if (sc > best) { best = sc; localStorage.setItem(KEY, best); showBest(); }
+}
+function startPlay() {
+  if (state === 'ready') state = 'play';
+  else if (state === 'dead') reset();
+}
+
+function scaleX(clientX) {
+  const r = cv.getBoundingClientRect();
+  return (clientX - r.left) * (W / r.width);
+}
+cv.addEventListener('pointermove', e => {
+  const x = scaleX(e.clientX);
+  targetAngle = Math.max(-MAX_ANGLE, Math.min(MAX_ANGLE, ((x / W) * 2 - 1) * MAX_ANGLE));
+});
+cv.addEventListener('pointerdown', e => { e.preventDefault(); startPlay(); });
+const keyState = { left: false, right: false };
+addEventListener('keydown', e => {
+  if (e.code === 'ArrowLeft') { keyState.left = true; e.preventDefault(); }
+  else if (e.code === 'ArrowRight') { keyState.right = true; e.preventDefault(); }
+  else if (e.code === 'Space') { e.preventDefault(); startPlay(); }
+});
+addEventListener('keyup', e => {
+  if (e.code === 'ArrowLeft') keyState.left = false;
+  else if (e.code === 'ArrowRight') keyState.right = false;
+});
+
+let last = performance.now();
+function step(now) {
+  let dt = (now - last) / 1000; last = now;
+  dt = Math.min(dt, 1 / 20); // clamp to avoid huge jumps on tab-switch
+
+  if (keyState.left) targetAngle = Math.max(-MAX_ANGLE, targetAngle - KEY_RATE * dt);
+  if (keyState.right) targetAngle = Math.min(MAX_ANGLE, targetAngle + KEY_RATE * dt);
+
+  if (state === 'play') {
+    t += dt;
+    angle += (targetAngle - angle) * Math.min(1, ANGLE_LERP * dt);
+    const accel = G * Math.sin(angle);
+    v += accel * dt;
+    v -= v * FRICTION * dt;
+    s += v * dt;
+
+    const curHalf = curHalfAt(t);
+    spawnAt -= dt;
+    if (spawnAt <= 0) {
+      spawnAt = spawnIntervalAt(t);
+      const hw = holeWidthAt(t);
+      const h = tryPlaceHole(s, holes, curHalf, hw, Math.random);
+      if (h) { h.solidAt = t + WARN_TIME; holes.push(h); }
+    }
+    if (isDead(t, s, holes, curHalf)) endRun();
+  } else {
+    angle += (targetAngle - angle) * Math.min(1, ANGLE_LERP * dt);
+  }
+
+  draw();
+  requestAnimationFrame(step);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+
+  const curHalf = curHalfAt(t);
+  ctx.save();
+  ctx.translate(CX, CY);
+  ctx.rotate(angle);
+
+  // solid platform pieces = complement of holes within [-curHalf, curHalf]
+  const allCuts = holes.filter(h => h.s1 > -curHalf && h.s0 < curHalf)
+    .map(h => ({ s0: Math.max(h.s0, -curHalf), s1: Math.min(h.s1, curHalf), solidAt: h.solidAt }))
+    .sort((a, b) => a.s0 - b.s0);
+  // only SOLID holes actually carve a gap in the drawn platform; forming
+  // (warning) holes still render as walkable surface with a flashing overlay
+  const solidCuts = allCuts.filter(c => t >= c.solidAt);
+  let cursor = -curHalf;
+  const pieces = [];
+  for (const c of solidCuts) { if (c.s0 > cursor) pieces.push({ s0: cursor, s1: c.s0 }); cursor = Math.max(cursor, c.s1); }
+  if (cursor < curHalf) pieces.push({ s0: cursor, s1: curHalf });
+
+  for (const p of pieces) {
+    const grad = ctx.createLinearGradient(p.s0, 0, p.s1, 0);
+    grad.addColorStop(0, '#7c3aed'); grad.addColorStop(1, '#4f46e5');
+    ctx.fillStyle = grad; ctx.shadowColor = '#818cf8'; ctx.shadowBlur = 10;
+    ctx.fillRect(p.s0, -THICK / 2, p.s1 - p.s0, THICK);
+    ctx.shadowBlur = 0;
+  }
+  for (const c of allCuts) {
+    if (t >= c.solidAt) {
+      ctx.fillStyle = 'rgba(10,14,23,.95)';
+      ctx.fillRect(c.s0, -THICK / 2 - 3, c.s1 - c.s0, THICK + 6);
+      ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 2;
+      ctx.strokeRect(c.s0, -THICK / 2 - 3, c.s1 - c.s0, THICK + 6);
+    } else {
+      // forming: still walkable, flashes as a warning so there's always a
+      // fixed reaction window before it becomes a real gap
+      const pulse = 0.4 + 0.4 * Math.sin(performance.now() / 90);
+      ctx.fillStyle = `rgba(251,113,133,${pulse.toFixed(3)})`;
+      ctx.fillRect(c.s0, -THICK / 2, c.s1 - c.s0, THICK);
+    }
+  }
+  // end caps (danger markers)
+  ctx.fillStyle = '#fb7185';
+  ctx.fillRect(-curHalf - 4, -THICK / 2 - 3, 4, THICK + 6);
+  ctx.fillRect(curHalf, -THICK / 2 - 3, 4, THICK + 6);
+
+  // ball sits on top surface at local (s, -(THICK/2+BALL_R))
+  const by = -(THICK / 2 + BALL_R);
+  ctx.beginPath(); ctx.arc(s, by, BALL_R, 0, 7);
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 14;
+  ctx.fill(); ctx.shadowBlur = 0;
+
+  ctx.restore();
+
+  ctx.fillStyle = '#e8edf7'; ctx.textAlign = 'center';
+  ctx.font = '800 30px Segoe UI, sans-serif';
+  ctx.fillText(t.toFixed(1) + 's', W / 2, 48);
+  ctx.font = '700 17px Segoe UI, sans-serif';
+  if (state === 'ready') ctx.fillText(I18N.t('game.tiltbalance.tapToStart'), W / 2, H - 30);
+  if (state === 'dead') { ctx.fillStyle = '#fb7185'; ctx.fillText(I18N.t('game.tiltbalance.gameOver'), W / 2, H - 30); }
+}
+reset();
+requestAnimationFrame(t0 => { last = t0; requestAnimationFrame(step); });
+</script>
+</body>
+</html>

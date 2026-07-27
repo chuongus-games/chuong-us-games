@@ -19,6 +19,7 @@
 #pad.wait { background: #7f1d2e; }
 #pad.go { background: #14532d; }
 #pad.go h2, #pad.wait h2 { color: #fff; }
+#pad.wait.decoy { background: #84cc16; }
 </style>
 <meta name="description" content="Test your reflexes with this free online reaction test game. Click the instant the screen turns green — only sub-200ms scores count. Hard to master.">
 <link rel="canonical" href="https://chuong.us/games/reaction.html">
@@ -96,22 +97,39 @@ const bestEl = document.getElementById('best');
 const showBest = () => bestEl.textContent = best ? I18N.t('game.reaction.bestMsLabel', { n: best }) : '';
 showBest();
 
-let state = 'idle', timer = null, goTime = 0;
+let state = 'idle', waitTimer = null, decoyTimer = null, decoyHideTimer = null, goTime = 0, streak = 0;
 function html(h2, p) { pad.innerHTML = '<div><h2>' + h2 + '</h2><p>' + p + '</p></div>'; }
+// Decoy-flash chance grows with the current no-foul streak, capped so it never gets unfair.
+const DECOY_CHANCE = s => Math.min(0.42, s * 0.025);
 pad.addEventListener('pointerdown', () => {
   if (state === 'idle' || state === 'result') {
     state = 'wait'; pad.className = 'wait';
     html(I18N.t('game.reaction.waitTitle'), I18N.t('game.reaction.waitBody'));
-    timer = setTimeout(() => {
+    clearTimeout(waitTimer); clearTimeout(decoyTimer); clearTimeout(decoyHideTimer);
+    const goDelay = 1200 + Math.random() * 2800;
+    if (Math.random() < DECOY_CHANCE(streak)) {
+      // Fire the decoy well before the real signal, leaving a clear gap so it stays fair.
+      const decoyDelay = 300 + Math.random() * (goDelay - 900);
+      decoyTimer = setTimeout(() => {
+        if (state !== 'wait') return;
+        pad.classList.add('decoy');
+        decoyHideTimer = setTimeout(() => {
+          if (state === 'wait') pad.classList.remove('decoy');
+        }, 160 + Math.random() * 80);
+      }, decoyDelay);
+    }
+    waitTimer = setTimeout(() => {
+      clearTimeout(decoyTimer); clearTimeout(decoyHideTimer);
       state = 'go'; pad.className = 'go'; goTime = performance.now();
       html(I18N.t('game.reaction.goTitle'), '');
-    }, 1200 + Math.random() * 2800);
+    }, goDelay);
   } else if (state === 'wait') {
-    clearTimeout(timer); state = 'result'; pad.className = '';
+    clearTimeout(waitTimer); clearTimeout(decoyTimer); clearTimeout(decoyHideTimer);
+    state = 'result'; pad.className = ''; streak = 0;
     html(I18N.t('game.reaction.tooSoonTitle'), I18N.t('game.reaction.tooSoonBody'));
   } else if (state === 'go') {
     const ms = Math.round(performance.now() - goTime);
-    state = 'result'; pad.className = '';
+    state = 'result'; pad.className = ''; streak++;
     if (window.CUG) CUG.submitScore('reaction', ms);
     if (!best || ms < best) { best = ms; localStorage.setItem(KEY, best); showBest(); }
     const rank = ms < 180 ? I18N.t('game.reaction.rankLightning') : ms < 230 ? I18N.t('game.reaction.rankFast') : ms < 300 ? I18N.t('game.reaction.rankOk') : I18N.t('game.reaction.rankSlow');

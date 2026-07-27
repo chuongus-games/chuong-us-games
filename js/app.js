@@ -78,7 +78,15 @@
     slice:     { name: 'Neon Slice',   icon: '💠', unit: 'pts' },
     gravity:   { name: 'Gravity Flip', icon: '🔃', unit: 'm' },
     echo:      { name: 'Echo Tap',     icon: '💫', unit: 'pts' },
-    catch:     { name: 'Prism Catch',  icon: '🪣', unit: 'pts' }
+    catch:     { name: 'Prism Catch',  icon: '🪣', unit: 'pts' },
+    voidjumper:  { name: 'Void Jumper',  icon: '🕳️', unit: 'm' },
+    laneswitch:  { name: 'Lane Switch',  icon: '🛣️', unit: 'm' },
+    tiltbalance: { name: 'Tilt Balance', icon: '⚖️', unit: 's' },
+    flashgrid:   { name: 'Flash Grid',   icon: '💡', unit: 'pts' },
+    grappleswing: { name: 'Grapple Swing', icon: '🪝', unit: 'hooks' },
+    eyetrick:     { name: 'Eye Trick',     icon: '👁️', unit: 'pts' },
+    focuslock:    { name: 'Focus Lock',    icon: '🔍', unit: 'rounds' },
+    trajectory:   { name: 'Trajectory',    icon: '🏹', unit: 'hits' }
   };
 
   /* fixed filler leaderboard rows (social proof) — merged with real scores at render time,
@@ -103,7 +111,15 @@
     slice:     [['FrostVein', 96], ['NovaSprint', 84], ['CobaltEdge', 73], ['WildMantis', 63], ['SteelOrbit', 54], ['LunarKite', 46], ['EmberFalcon', 39], ['VortexJay', 33], ['ShadowByte', 27], ['PixelNinja', 22]],
     gravity:   [['NeonFox', 738], ['TurboTaco', 651], ['GlitchRider', 574], ['MidnightAce', 503], ['CryoWolf', 439], ['ByteRunner87', 381], ['ZenModeX', 328], ['VelvetHawk', 280], ['RapidLynx', 236], ['EchoDrift', 197]],
     echo:      [['SolarFlare7', 41], ['IronWhisper', 35], ['DuskRaven', 30], ['BlazeCipher', 26], ['FrostVein', 22], ['NovaSprint', 18], ['CobaltEdge', 15], ['WildMantis', 12], ['SteelOrbit', 9], ['LunarKite', 7]],
-    catch:     [['EmberFalcon', 52], ['VortexJay', 45], ['ShadowByte', 39], ['PixelNinja', 34], ['NeonFox', 29], ['TurboTaco', 25], ['GlitchRider', 21], ['MidnightAce', 18], ['CryoWolf', 15], ['ByteRunner87', 12]]
+    catch:     [['EmberFalcon', 52], ['VortexJay', 45], ['ShadowByte', 39], ['PixelNinja', 34], ['NeonFox', 29], ['TurboTaco', 25], ['GlitchRider', 21], ['MidnightAce', 18], ['CryoWolf', 15], ['ByteRunner87', 12]],
+    voidjumper:  [['nova_leap', 2840], ['wanderer91', 2510], ['skyecho', 2205], ['pixel_kite', 1980], ['moonstep', 1740], ['ghostrail', 1520], ['quiet.jumper', 1305], ['zerohop', 1090], ['faintstar', 860], ['newbie_climb', 610]],
+    laneswitch:  [['neon_drifter', 940], ['roadrunner88', 812], ['triple_lane', 705], ['swervequeen', 640], ['blockdodger', 570], ['lanehopper_vn', 495], ['quickshift', 410], ['nightdrive', 330], ['sidestep99', 245], ['firstlap', 160]],
+    tiltbalance: [['BalanceKing', 187], ['SteadyHandz', 162], ['TiltMaster99', 145], ['NoWobble', 128], ['CalmCore', 111], ['FlatlineFox', 94], ['GyroGeek', 79], ['SlowRoller', 63], ['WeightShift', 48], ['FirstTilt', 31]],
+    flashgrid:   [['NeonPulse', 41], ['QuickFlash88', 36], ['GridGhost', 32], ['ReflexNova', 28], ['ByteBlink', 24], ['CyanDart', 21], ['ShadowTapX', 18], ['PixelSnap', 15], ['VoltViper', 12], ['DimLight07', 9]],
+    grappleswing: [['SwingerX', 38], ['HookMaster', 33], ['PendulumPro', 29], ['GraviGlide', 25], ['ArcCatcher', 21], ['DriftHook', 18], ['MomentumVN', 15], ['SlingSprint', 12], ['LooseGrip', 8], ['FirstSwing', 4]],
+    eyetrick:     [['StroopStorm', 42], ['InkNotWord', 37], ['PulseVision', 33], ['NeonRetina', 29], ['QuickGlance7', 25], ['ChromaBrain', 21], ['FlickerFox', 18], ['SharpBlink', 15], ['DazedDrifter', 12], ['SlowReader99', 9]],
+    focuslock:    [['zenith_focus', 27], ['quietmind88', 24], ['trackr_neo', 21], ['dottrace_vn', 19], ['lucid.eye', 17], ['stillwatcher', 14], ['orbit_lock', 12], ['pattern_hunter', 9], ['first_glance', 6], ['newbie_focus', 3]],
+    trajectory:   [['FrostVein', 42], ['NovaSprint', 37], ['CobaltEdge', 33], ['WildMantis', 29], ['SteelOrbit', 25], ['LunarKite', 21], ['EmberFalcon', 18], ['VortexJay', 15], ['ShadowByte', 12], ['PixelNinja', 9]]
   };
 
   const CUG = {

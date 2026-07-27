@@ -110,9 +110,15 @@ const showBest = () => bestEl.textContent = I18N.t('game.timer.bestStreakLabel',
 showBest();
 
 let running = false, t0 = 0, raf = null, streak = 0;
+// Thresholds tighten as the win streak grows, but never below a floor that a real browser
+// can still hit given input/render latency.
+const PASS_THRESHOLD = s => Math.max(0.014, 0.03 - s * 0.0007);
+const GODLIKE_THRESHOLD = s => Math.max(0.006, 0.01 - s * 0.00015);
+// The clock hides sooner at higher streaks too, floored so it's still visible for a beat.
+const VISIBLE_WINDOW = s => Math.max(0.15, 0.3 - s * 0.004);
 function tick() {
   const el = (performance.now() - t0) / 1000;
-  clock.textContent = el < 0.3 ? el.toFixed(3) : '?.???';
+  clock.textContent = el < VISIBLE_WINDOW(streak) ? el.toFixed(3) : '?.???';
   raf = requestAnimationFrame(tick);
 }
 btn.addEventListener('click', () => {
@@ -123,10 +129,11 @@ btn.addEventListener('click', () => {
   } else {
     running = false; cancelAnimationFrame(raf);
     const el = (performance.now() - t0) / 1000, diff = Math.abs(el - 1);
+    const godlikeMax = GODLIKE_THRESHOLD(streak), passMax = PASS_THRESHOLD(streak);
     clock.textContent = el.toFixed(3);
     btn.textContent = I18N.t('game.timer.startBtn');
-    if (diff <= 0.01) { streak++; msg.innerHTML = I18N.t('game.timer.godlike', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
-    else if (diff <= 0.03) { streak++; msg.innerHTML = I18N.t('game.timer.pass', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
+    if (diff <= godlikeMax) { streak++; msg.innerHTML = I18N.t('game.timer.godlike', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
+    else if (diff <= passMax) { streak++; msg.innerHTML = I18N.t('game.timer.pass', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
     else { streak = 0; msg.innerHTML = I18N.t('game.timer.fail', { s: el.toFixed(3), ms: (diff * 1000).toFixed(0) }); }
     if (window.CUG && streak > 0) CUG.submitScore('timer', streak);
     if (streak > best) { best = streak; localStorage.setItem(KEY, best); showBest(); }

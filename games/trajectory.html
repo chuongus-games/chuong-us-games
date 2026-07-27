@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trajectory — Hardest Free Online Artillery Aim Game</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏹</text></svg>">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://lvirausgablhtmcqdblj.supabase.co" crossorigin>
+<link rel="preconnect" href="https://accounts.google.com">
+<meta name="description" content="Pull back and release to fire a parabolic shot at a distant neon target in Trajectory, a free online artillery aim game. Wind and moving targets make every shot harder — one of the hardest physics aim games online.">
+<link rel="canonical" href="https://chuong.us/games/trajectory.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chuong US Games">
+<meta property="og:title" content="Trajectory — Hardest Free Online Artillery Aim Game">
+<meta property="og:description" content="Pull back and release to fire a parabolic shot at a distant neon target in Trajectory, a free online artillery aim game. Wind and moving targets make every shot harder — one of the hardest physics aim games online.">
+<meta property="og:url" content="https://chuong.us/games/trajectory.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Trajectory — Hardest Free Online Artillery Aim Game">
+<meta name="twitter:description" content="Pull back and release to fire a parabolic shot at a distant neon target in Trajectory, a free online artillery aim game. Wind and moving targets make every shot harder — one of the hardest physics aim games online.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Trajectory",
+  "url": "https://chuong.us/games/trajectory.html",
+  "description": "Pull back and release to fire a parabolic shot at a distant neon target in Trajectory, a free online artillery aim game. Wind and moving targets make every shot harder — one of the hardest physics aim games online.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "genre": "Hard game",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Chuong US Games", "item": "https://chuong.us/" },
+    { "@type": "ListItem", "position": 2, "name": "Trajectory", "item": "https://chuong.us/games/trajectory.html" }
+  ]
+}
+</script>
+</head>
+<body class="game-page" data-game="trajectory">
+<header class="game-top">
+  <a class="back" href="../index.html" data-i18n-html="common.back">Games</a>
+  <h1>🏹 Trajectory</h1>
+  <span class="best" id="best"></span>
+</header>
+<div class="stage"><canvas class="game" id="cv" width="480" height="480"></canvas></div>
+<p class="hint" data-i18n="game.trajectory.hint">Drag back from the launch point like a slingshot, then release to fire. Farther drag = more power. Hit the neon ring to score — 3 misses and it's over.</p>
+<p class="seo-note" data-i18n="game.trajectory.seoNote">Trajectory is a free online artillery aim game built around real parabolic physics: pull back to set angle and power, then release to launch a glowing shot at a distant ring. Distance, target size, wind and vertical drift all ramp up with your score, making sustained accuracy one of the hardest aiming challenges you'll find in a browser.</p>
+<nav class="related" aria-label="More hard games">
+  <span data-i18n="common.moreHardGames">More hard games:</span>
+  <a href="aim.html">🎯 Aim Trainer</a>
+    <a href="slice.html">💠 Neon Slice</a>
+    <a href="breaker.html">🧱 Neon Breaker</a>
+</nav>
+
+<script src="../js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/app.js"></script>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const KEY = 'cug_trajectory_best';
+let best = +(localStorage.getItem(KEY) || 0);
+const bestEl = document.getElementById('best');
+const showBest = () => bestEl.textContent = best ? I18N.t('game.trajectory.bestLabel', { n: best }) : '';
+showBest();
+
+/* ---------------- physics + spawn logic ----------------
+   Verified headless (thousands of simulated levels): every spawned target
+   is guaranteed reachable within MAX_DRAG, via a brute-force solver that
+   re-rolls (shrinking difficulty) until a solution exists. Same constants
+   and formulas as the standalone Node verification script. */
+const W = cv.width, H = cv.height;
+const LAUNCH = { x: 50, y: 430 };
+const GRAVITY = 520, V_MAX = 620, MAX_DRAG = 130, MIN_DRAG = 15;
+const HIT_TOL = 6; // player-friendly extra collision forgiveness beyond drawn radius
+const SIM_DT = 1 / 45, SIM_TMAX = 4.0;
+
+function difficultyParams(score) {
+  const lvl = Math.min(score, 40);
+  const minDist = 150 + lvl * 9, maxDist = minDist + 90;
+  const rMax = Math.max(13, 34 - lvl * 0.55), rMin = Math.max(11, rMax - 4);
+  const ampMax = Math.min(70, lvl * 3.2);
+  const freqMax = Math.min(2.6, 0.5 + lvl * 0.06);
+  const windMax = Math.min(230, lvl * 7.5);
+  return { minDist, maxDist, rMax, rMin, ampMax, freqMax, windMax };
+}
+function posAt(t, angleRad, speed, windAccel) {
+  const vx0 = speed * Math.cos(angleRad), vy0 = -speed * Math.sin(angleRad);
+  return {
+    x: LAUNCH.x + vx0 * t + 0.5 * windAccel * t * t,
+    y: LAUNCH.y + vy0 * t + 0.5 * GRAVITY * t * t
+  };
+}
+function targetYAt(t, target) { return target.ty0 + target.amp * Math.sin(target.freq * t); }
+function simulateShot(angleDeg, powerFrac, windAccel, target) {
+  const angleRad = angleDeg * Math.PI / 180, speed = powerFrac * V_MAX;
+  let minDist = Infinity, tBest = 0;
+  for (let t = 0; t <= SIM_TMAX; t += SIM_DT) {
+    const p = posAt(t, angleRad, speed, windAccel);
+    const ty = targetYAt(t, target);
+    const d = Math.hypot(p.x - target.x, p.y - ty);
+    if (d < minDist) { minDist = d; tBest = t; }
+    if (d <= target.r + HIT_TOL) return { hit: true, t, minDist: d };
+    if (p.y - target.r > H + 40) break;
+    if (p.x > W + 60 || p.x < -60) break;
+  }
+  return { hit: false, minDist, t: tBest };
+}
+function solveShot(target, windAccel) {
+  const minPower = MIN_DRAG / MAX_DRAG;
+  const angleStep = 3, powerStep = 0.05;
+  let best = null;
+  outer:
+  for (let angle = 5; angle <= 85; angle += angleStep) {
+    for (let p = minPower; p <= 1.0001; p += powerStep) {
+      const power = Math.min(p, 1);
+      const res = simulateShot(angle, power, windAccel, target);
+      if (res.hit) { best = { angle, power, t: res.t }; break outer; }
+    }
+  }
+  return best;
+}
+function spawnTarget(score) {
+  const base = difficultyParams(score);
+  let params = { ...base }, attempt = 0;
+  while (attempt < 40) {
+    const dist = params.minDist + Math.random() * (params.maxDist - params.minDist);
+    const rawTx = LAUNCH.x + 120 + dist * ((W - 25 - (LAUNCH.x + 120)) / base.maxDist);
+    const tx = Math.max(LAUNCH.x + 140, Math.min(W - 25, rawTx));
+    const ty0 = 80 + Math.random() * (H - 220);
+    const r = params.rMin + Math.random() * (params.rMax - params.rMin);
+    const amp = Math.random() * params.ampMax;
+    const freq = 0.4 + Math.random() * params.freqMax;
+    const windAccel = (Math.random() < 0.5 ? -1 : 1) * Math.random() * params.windMax;
+    const target = { x: tx, ty0, r, amp, freq };
+    const sol = solveShot(target, windAccel);
+    if (sol) return { target, windAccel };
+    params = {
+      ...params,
+      maxDist: Math.max(params.minDist + 40, params.maxDist * 0.85),
+      ampMax: params.ampMax * 0.8,
+      windMax: params.windMax * 0.8,
+      rMax: params.rMax * 1.05
+    };
+    attempt++;
+  }
+  return { target: { x: LAUNCH.x + 160, ty0: LAUNCH.y - 120, r: 30, amp: 0, freq: 0 }, windAccel: 0 };
+}
+
+/* ---------------- game state ---------------- */
+let state = 'ready';       // ready | aiming | flying | over
+let score = 0, lives = 3;
+let target = null, windAccel = 0;
+let dragStart = null, dragPt = null;
+let shot = null;            // { angleRad, speed, t }
+let flash = null;           // hit/miss feedback marker
+let ended = false;
+
+function pos(e) {
+  const rc = cv.getBoundingClientRect();
+  return { x: (e.clientX - rc.left) * cv.width / rc.width, y: (e.clientY - rc.top) * cv.height / rc.height };
+}
+
+function newTarget() {
+  const spawn = spawnTarget(score);
+  target = spawn.target;
+  windAccel = spawn.windAccel;
+}
+
+function startGame() {
+  score = 0; lives = 3; ended = false; flash = null;
+  newTarget();
+  state = 'ready';
+}
+
+function endRun() {
+  if (ended) return;
+  ended = true;
+  state = 'over';
+  if (window.CUG) CUG.submitScore('trajectory', score);
+  if (score > best) { best = score; localStorage.setItem(KEY, best); showBest(); }
+}
+
+function fire(dx, dy) {
+  // dx,dy = drag vector (from launch to release point); shot direction is opposite (slingshot)
+  let dist = Math.hypot(dx, dy);
+  if (dist < MIN_DRAG) return; // too weak, ignored
+  dist = Math.min(dist, MAX_DRAG);
+  const dirX = -dx / Math.hypot(dx, dy), dirY = -dy / Math.hypot(dx, dy);
+  const angleRad = Math.atan2(-dirY, dirX);
+  const powerFrac = dist / MAX_DRAG;
+  const speed = Math.max(MIN_DRAG / MAX_DRAG, powerFrac) * V_MAX;
+  shot = { angleRad, speed, t: 0, windAccel, trail: [] };
+  state = 'flying';
+}
+
+cv.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  if (state === 'ready') { dragStart = pos(e); dragPt = dragStart; state = 'aiming'; return; }
+  if (state === 'over') { startGame(); return; }
+  // flying / aiming(already) -> ignore new input while busy
+});
+cv.addEventListener('pointermove', e => {
+  if (state !== 'aiming') return;
+  dragPt = pos(e);
+});
+addEventListener('pointerup', () => {
+  if (state !== 'aiming') return;
+  const dx = dragPt.x - dragStart.x, dy = dragPt.y - dragStart.y;
+  if (Math.hypot(dx, dy) < MIN_DRAG) { state = 'ready'; dragStart = null; dragPt = null; return; }
+  fire(dx, dy);
+  dragStart = null; dragPt = null;
+});
+
+function resolveShot() {
+  // uses shot.t (time since release) as the target's own motion clock too —
+  // the target is static at ty0 while ready/aiming and only starts bobbing
+  // the instant the shot is fired, exactly matching what the solver proved
+  // reachable (it always assumes the target's motion clock is 0 at launch).
+  const ty = targetYAt(shot.t, target);
+  const p = posAt(shot.t, shot.angleRad, shot.speed, shot.windAccel);
+  const d = Math.hypot(p.x - target.x, p.y - ty);
+  if (d <= target.r + HIT_TOL) {
+    score++;
+    flash = { hit: true, life: 26, x: target.x, y: ty };
+    newTarget();
+    state = 'ready';
+  } else {
+    lives--;
+    flash = { hit: false, life: 26, x: target.x, y: ty };
+    if (lives <= 0) { endRun(); return; }
+    newTarget();
+    state = 'ready';
+  }
+}
+
+/* ---------------- render loop ---------------- */
+let lastTs = 0;
+function step(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = Math.min((ts - lastTs) / 1000, 0.05);
+  lastTs = ts;
+
+  if (state === 'flying') {
+    shot.t += dt;
+    const p = posAt(shot.t, shot.angleRad, shot.speed, shot.windAccel);
+    shot.trail.push({ x: p.x, y: p.y });
+    if (shot.trail.length > 60) shot.trail.shift();
+    const ty = targetYAt(shot.t, target);
+    const d = Math.hypot(p.x - target.x, p.y - ty);
+    const outOfBounds = p.y - target.r > H + 40 || p.x > W + 60 || p.x < -60 || shot.t > SIM_TMAX;
+    if (d <= target.r + HIT_TOL || outOfBounds) resolveShot();
+  }
+  if (flash) { flash.life -= dt * 60; if (flash.life <= 0) flash = null; }
+
+  draw();
+  requestAnimationFrame(step);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#101625'; ctx.fillRect(0, 0, W, H);
+
+  // ground line
+  ctx.strokeStyle = 'rgba(139,150,173,0.35)'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, LAUNCH.y + 6); ctx.lineTo(W, LAUNCH.y + 6); ctx.stroke();
+
+  // launch point
+  ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 12;
+  ctx.beginPath(); ctx.arc(LAUNCH.x, LAUNCH.y, 8, 0, 7); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  if (target && state !== 'over') {
+    const ty = targetYAt(state === 'flying' ? shot.t : 0, target);
+    ctx.strokeStyle = '#fbbf24'; ctx.shadowColor = '#fbbf24'; ctx.shadowBlur = 14; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(target.x, ty, target.r, 0, 7); ctx.stroke();
+    ctx.lineWidth = 1.5; ctx.shadowBlur = 0;
+    ctx.beginPath(); ctx.arc(target.x, ty, Math.max(2, target.r - 8), 0, 7); ctx.stroke();
+  }
+
+  // drag aim line (predicted trajectory preview) while aiming
+  if (state === 'aiming' && dragStart && dragPt) {
+    const dx = dragPt.x - dragStart.x, dy = dragPt.y - dragStart.y;
+    let dist = Math.hypot(dx, dy);
+    ctx.strokeStyle = 'rgba(232,237,247,0.45)'; ctx.lineWidth = 3; ctx.setLineDash([6, 6]);
+    ctx.beginPath(); ctx.moveTo(LAUNCH.x, LAUNCH.y); ctx.lineTo(dragPt.x, dragPt.y); ctx.stroke();
+    ctx.setLineDash([]);
+    if (dist >= MIN_DRAG) {
+      const clamped = Math.min(dist, MAX_DRAG);
+      const dirX = -dx / dist, dirY = -dy / dist;
+      const angleRad = Math.atan2(-dirY, dirX);
+      const speed = (clamped / MAX_DRAG) * V_MAX;
+      ctx.strokeStyle = 'rgba(34,211,238,0.55)'; ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let t = 0; t <= SIM_TMAX; t += 0.04) {
+        const p = posAt(t, angleRad, speed, windAccel);
+        if (p.y > H + 20 || p.x > W + 20 || p.x < -20) break;
+        if (t === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      }
+      ctx.stroke();
+    }
+  }
+
+  // flying shot + trail
+  if (state === 'flying' && shot) {
+    ctx.strokeStyle = 'rgba(34,211,238,0.5)'; ctx.lineWidth = 3;
+    ctx.beginPath();
+    shot.trail.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+    ctx.stroke();
+    const p = shot.trail[shot.trail.length - 1];
+    if (p) {
+      ctx.fillStyle = '#22d3ee'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 16;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 7, 0, 7); ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // hit/miss flash
+  if (flash) {
+    ctx.globalAlpha = Math.max(0, flash.life / 26);
+    ctx.strokeStyle = flash.hit ? '#22d3ee' : '#fb7185'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(flash.x, flash.y, 30 - flash.life, 0, 7); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // HUD
+  ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#e8edf7'; ctx.font = '800 26px Segoe UI, sans-serif';
+  ctx.fillText(I18N.t('game.trajectory.scoreLabel', { n: score }), 14, 30);
+  ctx.font = '700 16px Segoe UI, sans-serif'; ctx.fillStyle = '#fb7185';
+  ctx.fillText('❤'.repeat(Math.max(0, lives)) + '♡'.repeat(Math.max(0, 3 - lives)), 14, 54);
+
+  if (target && state !== 'over') {
+    const dist = Math.round(target.x - LAUNCH.x);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#8b96ad'; ctx.font = '700 14px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.trajectory.distanceLabel', { n: dist }), W - 14, 24);
+    const windDir = windAccel > 2 ? '➜' : (windAccel < -2 ? '⬅' : '·');
+    const windMag = Math.round(Math.abs(windAccel));
+    ctx.fillText(I18N.t('game.trajectory.windLabel', { dir: windDir, n: windMag }), W - 14, 44);
+  }
+
+  ctx.textAlign = 'center';
+  if (state === 'ready' && score === 0 && lives === 3) {
+    ctx.fillStyle = '#e8edf7'; ctx.font = '700 20px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.trajectory.tapToStart'), W / 2, H / 2);
+  }
+  if (state === 'over') {
+    ctx.fillStyle = '#fb7185'; ctx.font = '800 30px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.trajectory.gameOver'), W / 2, H / 2 - 14);
+    ctx.fillStyle = '#8b96ad'; ctx.font = '700 16px Segoe UI, sans-serif';
+    ctx.fillText(I18N.t('game.trajectory.scoreLabel', { n: score }), W / 2, H / 2 + 16);
+  }
+}
+
+startGame();
+requestAnimationFrame(step);
+</script>
+</body>
+</html>
