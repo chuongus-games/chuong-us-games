@@ -12,17 +12,22 @@
     return 'en';
   }
 
+  /* small chevrons as inline SVG, not Unicode ◂▸▶ — those have no glyph on some
+     mobile system fonts (same root cause as the sign-out icon bug) */
+  const ARROW_L = '<svg class="i18n-arrow" viewBox="0 0 24 24" width="10" height="10" fill="currentColor"><path d="M15 4L7 12L15 20Z"/></svg>';
+  const ARROW_R = '<svg class="i18n-arrow" viewBox="0 0 24 24" width="10" height="10" fill="currentColor"><path d="M9 4L17 12L9 20Z"/></svg>';
+
   const DICT = {
 
     en: {
       common: {
-        back: '◂ Games', backAll: '◂ Back to all games', play: 'PLAY ▸', moreHardGames: 'More hard games:',
+        back: ARROW_L + ' Games', backAll: ARROW_L + ' Back to all games', play: 'PLAY ' + ARROW_R, moreHardGames: 'More hard games:',
         leaderboard: '🏆 Leaderboard', top10: '🏆 Top 10 — {game}', loading: 'Loading…',
         noScoresYet: 'No scores yet — be the first! 🔥', scoreSavedAuto: 'Your best score is saved automatically.',
         signInToBoard: 'Sign in with Google to get on the board!', signInToPlayTitle: 'Sign in to play',
         signInToPlayBody: 'Sign in with Google to play {game}, save your best scores and climb the leaderboard.',
         signInGoogleFallback: 'Sign in with Google', player: 'player', signOutTitle: 'Sign out', close: 'Close',
-        start: 'START', goal: 'GOAL', playsLine: '▶ <b>{n}</b> plays',
+        start: 'START', goal: 'GOAL', playsLine: ARROW_R + ' <b>{n}</b> plays',
         pin: 'Pin to favorites', unpin: 'Remove from favorites',
         donate: 'Donate', donateTooltip: 'Support Chuong US Games via PayPal ❤️'
       },
@@ -204,13 +209,13 @@
 
     vi: {
       common: {
-        back: '◂ Trò chơi', backAll: '◂ Về tất cả trò chơi', play: 'CHƠI ▸', moreHardGames: 'Trò chơi khó khác:',
+        back: ARROW_L + ' Trò chơi', backAll: ARROW_L + ' Về tất cả trò chơi', play: 'CHƠI ' + ARROW_R, moreHardGames: 'Trò chơi khó khác:',
         leaderboard: '🏆 Bảng xếp hạng', top10: '🏆 Top 10 — {game}', loading: 'Đang tải…',
         noScoresYet: 'Chưa có điểm nào — hãy là người đầu tiên! 🔥', scoreSavedAuto: 'Điểm cao nhất của bạn được tự động lưu.',
         signInToBoard: 'Đăng nhập bằng Google để lên bảng xếp hạng!', signInToPlayTitle: 'Đăng nhập để chơi',
         signInToPlayBody: 'Đăng nhập bằng Google để chơi {game}, lưu điểm cao nhất và leo lên bảng xếp hạng.',
         signInGoogleFallback: 'Đăng nhập bằng Google', player: 'người chơi', signOutTitle: 'Đăng xuất', close: 'Đóng',
-        start: 'BẮT ĐẦU', goal: 'ĐÍCH', playsLine: '▶ <b>{n}</b> lượt chơi',
+        start: 'BẮT ĐẦU', goal: 'ĐÍCH', playsLine: ARROW_R + ' <b>{n}</b> lượt chơi',
         pin: 'Ghim vào yêu thích', unpin: 'Bỏ ghim yêu thích',
         donate: 'Ủng hộ', donateTooltip: 'Ủng hộ Chuong US Games qua PayPal ❤️'
       },
@@ -392,13 +397,13 @@
 
     zh: {
       common: {
-        back: '◂ 游戏列表', backAll: '◂ 返回所有游戏', play: '开始 ▸', moreHardGames: '更多高难度游戏：',
+        back: ARROW_L + ' 游戏列表', backAll: ARROW_L + ' 返回所有游戏', play: '开始 ' + ARROW_R, moreHardGames: '更多高难度游戏：',
         leaderboard: '🏆 排行榜', top10: '🏆 前10名 — {game}', loading: '加载中…',
         noScoresYet: '暂无成绩 — 抢先上榜！🔥', scoreSavedAuto: '你的最佳成绩会自动保存。',
         signInToBoard: '使用 Google 登录即可上榜！', signInToPlayTitle: '登录后开始游戏',
         signInToPlayBody: '使用 Google 登录来玩{game}，保存最佳成绩并冲击排行榜。',
         signInGoogleFallback: '使用 Google 登录', player: '玩家', signOutTitle: '退出登录', close: '关闭',
-        start: '起点', goal: '终点', playsLine: '▶ <b>{n}</b> 次游玩',
+        start: '起点', goal: '终点', playsLine: ARROW_R + ' <b>{n}</b> 次游玩',
         pin: '加入收藏', unpin: '取消收藏',
         donate: '捐赠', donateTooltip: '通过 PayPal 支持 Chuong US Games ❤️'
       },
@@ -580,13 +585,13 @@
 
     es: {
       common: {
-        back: '◂ Juegos', backAll: '◂ Volver a todos los juegos', play: 'JUGAR ▸', moreHardGames: 'Más juegos difíciles:',
+        back: ARROW_L + ' Juegos', backAll: ARROW_L + ' Volver a todos los juegos', play: 'JUGAR ' + ARROW_R, moreHardGames: 'Más juegos difíciles:',
         leaderboard: '🏆 Clasificación', top10: '🏆 Top 10 — {game}', loading: 'Cargando…',
         noScoresYet: 'Aún no hay puntuaciones — ¡sé el primero! 🔥', scoreSavedAuto: 'Tu mejor puntuación se guarda automáticamente.',
         signInToBoard: '¡Inicia sesión con Google para aparecer en la clasificación!', signInToPlayTitle: 'Inicia sesión para jugar',
         signInToPlayBody: 'Inicia sesión con Google para jugar {game}, guardar tus mejores puntuaciones y subir en la clasificación.',
         signInGoogleFallback: 'Iniciar sesión con Google', player: 'jugador', signOutTitle: 'Cerrar sesión', close: 'Cerrar',
-        start: 'INICIO', goal: 'META', playsLine: '▶ <b>{n}</b> partidas',
+        start: 'INICIO', goal: 'META', playsLine: ARROW_R + ' <b>{n}</b> partidas',
         pin: 'Fijar en favoritos', unpin: 'Quitar de favoritos',
         donate: 'Donar', donateTooltip: 'Apoya a Chuong US Games por PayPal ❤️'
       },
@@ -768,13 +773,13 @@
 
     pt: {
       common: {
-        back: '◂ Jogos', backAll: '◂ Voltar para todos os jogos', play: 'JOGAR ▸', moreHardGames: 'Mais jogos difíceis:',
+        back: ARROW_L + ' Jogos', backAll: ARROW_L + ' Voltar para todos os jogos', play: 'JOGAR ' + ARROW_R, moreHardGames: 'Mais jogos difíceis:',
         leaderboard: '🏆 Classificação', top10: '🏆 Top 10 — {game}', loading: 'Carregando…',
         noScoresYet: 'Ainda não há pontuações — seja o primeiro! 🔥', scoreSavedAuto: 'Sua melhor pontuação é salva automaticamente.',
         signInToBoard: 'Entre com o Google para aparecer na classificação!', signInToPlayTitle: 'Entre para jogar',
         signInToPlayBody: 'Entre com o Google para jogar {game}, salvar suas melhores pontuações e subir na classificação.',
         signInGoogleFallback: 'Entrar com o Google', player: 'jogador', signOutTitle: 'Sair', close: 'Fechar',
-        start: 'INÍCIO', goal: 'META', playsLine: '▶ <b>{n}</b> jogadas',
+        start: 'INÍCIO', goal: 'META', playsLine: ARROW_R + ' <b>{n}</b> jogadas',
         pin: 'Fixar nos favoritos', unpin: 'Remover dos favoritos',
         donate: 'Doar', donateTooltip: 'Apoie o Chuong US Games pelo PayPal ❤️'
       },
