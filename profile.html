@@ -145,7 +145,7 @@ document.addEventListener('cug-ready', async () => {
       return '<tr><td>' + m.icon + ' ' + m.name + '</td>' +
         '<td class="num">' + r.best + ' ' + m.unit + '</td>' +
         '<td class="num">' + r.plays + '</td>' +
-        '<td class="num rank">#' + r.rank + '</td></tr>';
+        '<td class="num rank">#' + CUG.effectiveRank(r.game, r.rank, r.best) + '</td></tr>';
     }).join('') + '</table></div>';
 });
 </script>

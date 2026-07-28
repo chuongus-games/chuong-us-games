@@ -125,6 +125,16 @@
   const CUG = {
     sb, user: null, profile: null, meta: GAME_META, countries: COUNTRIES, flagEmoji, flagUrl, starIcon, closeIcon,
 
+    /* my_stats() rank is computed server-side among real DB scores only — it never sees
+       FAKE_LB (client-only filler), so it disagrees with the merged leaderboard panel.
+       Add back the fake rows that outscore this user to match what the public board shows. */
+    effectiveRank(game, dbRank, myBest) {
+      const fake = FAKE_LB[game] || [];
+      const lowerBetter = !!(GAME_META[game] && GAME_META[game].lowerBetter);
+      const beatenByFake = fake.filter(([, s]) => lowerBetter ? s < myBest : s > myBest).length;
+      return dbRank + beatenByFake;
+    },
+
     async init() {
       const { data } = await sb.auth.getSession();
       CUG.user = data.session ? data.session.user : null;
