@@ -4,12 +4,26 @@
 --
 -- Adds a per-identity (signed-in: auth.uid(), guest: client-generated UUID from
 -- localStorage, see CUG.clientId() in js/app.js) minimum interval between counted
--- plays for the same game. Reconstructs log_play's existing behavior (validate
--- game id against public.games, upsert game_plays) from project memory/docs —
--- there was no SQL file for the previous version, please diff against the current
--- function in the Supabase dashboard before running if you want to double check.
+-- plays for the same game.
 --
--- Run this whole file in the Supabase SQL Editor for project lvirausgablhtmcqdblj.
+-- Confirmed the exact current definition via the Management API before writing this
+-- (2026-07-28) — original is `language sql`, single insert with `where exists (...)`,
+-- SILENTLY no-ops for an unknown game id (does NOT raise). Preserved that behavior
+-- below instead of raising, to stay behavior-compatible; only the throttle is new.
+--
+-- APPLIED 2026-07-28 via the Supabase Management API (project lvirausgablhtmcqdblj).
+-- Kept here for the record / to re-apply on another environment if ever needed.
+--
+-- IMPORTANT lesson learned while applying this: `create or replace function
+-- log_play(p_game text, p_client_id text default null)` does NOT replace the old
+-- `log_play(p_game text)` — different arg count means a different overload, so both
+-- existed at once. Since the new param has a DEFAULT, PostgREST couldn't tell which
+-- overload a 1-arg call meant and returned 300 Multiple Choices for EVERY call using
+-- the old signature (i.e. every page still running the old deployed JS) until the
+-- old overload was dropped below. Always drop the old overload in the same
+-- transaction/session as adding a new one with a default that creates ambiguity.
+
+drop function if exists public.log_play(text);
 
 create table if not exists public.play_log_throttle (
   identity text not null,
@@ -33,8 +47,9 @@ declare
   v_last timestamptz;
   v_min_interval interval := interval '20 seconds';
 begin
+  -- matches original behavior: unknown game id is a silent no-op, not an error
   if not exists (select 1 from public.games where id = p_game) then
-    raise exception 'unknown game';
+    return;
   end if;
 
   -- no identity at all (e.g. localStorage blocked) — nothing to throttle against,
