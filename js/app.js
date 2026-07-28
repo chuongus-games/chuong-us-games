@@ -1,5 +1,20 @@
 /* Chuong US Games — shared Supabase client, auth UI, scores & leaderboard */
 (function () {
+  /* supabase-js loads from a CDN (cdn.jsdelivr.net) with no fallback — if that CDN is
+     down/blocked, window.supabase never exists and CUG can't be built at all. Every
+     caller already guards with `if (window.CUG)`, so the page/game itself keeps working,
+     but login, score-saving and the leaderboard silently stop working with zero visible
+     sign to the player. Surface it instead of failing completely silently. */
+  if (!window.supabase) {
+    console.error('[CUG] supabase-js failed to load — login, score saving and leaderboards are disabled on this page.');
+    document.addEventListener('DOMContentLoaded', () => {
+      const b = document.createElement('div');
+      b.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#3a2a00;color:#ffd166;font:13px/1.4 system-ui,sans-serif;text-align:center;padding:8px 12px;border-top:1px solid #ffd16655';
+      b.textContent = '⚠️ Sign-in / score-saving is temporarily unavailable (a required script failed to load). You can still play. / Đăng nhập và lưu điểm tạm thời không khả dụng — bạn vẫn chơi được bình thường.';
+      document.body.appendChild(b);
+    });
+    return;
+  }
   const SUPABASE_URL = 'https://lvirausgablhtmcqdblj.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_qcNXOOBcJIvf0mEki-1JnQ_00Jzb5lp';
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -232,12 +247,27 @@
       return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     },
 
+    /* anonymous per-browser id, only used so the log_play RPC can throttle repeat calls
+       from the same guest (signed-in users are throttled by auth.uid() instead) — not
+       used for anything else, not sent anywhere except this one RPC call */
+    CID_KEY: 'cug_cid',
+    clientId() {
+      let id = localStorage.getItem(CUG.CID_KEY);
+      if (!id) {
+        id = (crypto.randomUUID ? crypto.randomUUID() : 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2));
+        try { localStorage.setItem(CUG.CID_KEY, id); } catch (e) {}
+      }
+      return id;
+    },
     logPlay(game) {
-      try { sb.rpc('log_play', { p_game: game }).then(() => {}); } catch (e) {}
+      try { sb.rpc('log_play', { p_game: game, p_client_id: CUG.clientId() }).then(({ error }) => { if (error) console.error('[CUG] log_play failed:', game, error); }); } catch (e) { console.error('[CUG] log_play threw:', game, e); }
     },
     async submitScore(game, score) {
       if (!CUG.user || !(score > 0)) return;
-      try { await sb.rpc('submit_score', { p_game: game, p_score: score }); } catch (e) {}
+      try {
+        const { error } = await sb.rpc('submit_score', { p_game: game, p_score: score });
+        if (error) console.error('[CUG] submit_score failed:', game, score, error);
+      } catch (e) { console.error('[CUG] submit_score threw:', game, score, e); }
     },
     async leaderboard(game, limit) {
       const { data, error } = await sb.rpc('leaderboard', { p_game: game, p_limit: limit || 10 });

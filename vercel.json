@@ -6,14 +6,32 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://accounts.google.com; connect-src 'self' https://lvirausgablhtmcqdblj.supabase.co https://accounts.google.com; frame-src https://accounts.google.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: https:; font-src 'self' data:; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'sha256-/M+pvO5KZY/gSkagZrvfr+ifboOXMqw+FrHo7FZVzWk=' 'sha256-0U8eqer/KcGlvhg4HEpCMRtum9cc8NhoFyPTfLpJZjg=' 'sha256-0YRwkwH/w4OXnustA4c5uw1smxkyT6nfDk9QYyrmAXc=' 'sha256-0tPbBcD0yaACxjGDKixh4OwOPQfYe04soyVe5wk+keg=' 'sha256-10Ovez1JkDwugO5MtQW4ognsV4qb6FIFM8Yb4JOmYwc=' 'sha256-1il1N8LUvt3LYo26mMJAQhaQ9x8pxwPTtyynjZf4gII=' 'sha256-37gFl0v1gYmxB/q8Xf9yQik9O+Uq3sc6MleMZmUAx7o=' 'sha256-5YXk02HzV8naAogs/UrgwoCrjBN/nNLPT3/PD+IJ2z0=' 'sha256-7Y+507bnsKr5Ep7BoGYI+bfBcberCjyFQTLElL64L+8=' 'sha256-7w10DHbroVVDKjlFlUqwPk0CAApaV9ZO/wJrdLsmCII=' 'sha256-8Zu2D5XmIT3AKmAIkmcjSKeFj0Uk323dVk/kls7xEDY=' 'sha256-8gWXV61GC9VDUzzuSnO4CMPaEJeq3VdDObfOI9kGfCY=' 'sha256-9BpAyWNpE9vLoD0pHtsb1AgKYLJ/9r3cHO84U2+UENM=' 'sha256-9QfD4O1/oRhzzmH549a7rPmhaHC333tA6SdDdRYFfDE=' 'sha256-9en6OG3Kwjh0kkvRuQ9/3jiDl6c8+im2skQWCw7Ve9Q=' 'sha256-AjifOxnej1S6MM247QMt9THJQpDJzjAXHW2s9+Z860Y=' 'sha256-BYlRqvARspzKGUlVYePZWhg9jCcQhUGo2Tt7mAHPKL4=' 'sha256-BmoQvUEDB90Njfcj/y7W3hl5KsKm4i0sEfJOFQD25Rw=' 'sha256-E/CLYKkLtgfBVp/In+oV3s1OSrJIwrP6bV+qbCUbXgM=' 'sha256-E3DVVWHcMUg6MBzEf/7MeHwl6ZTXLa4DQJwiN8drCTM=' 'sha256-F8877Imif9rSMj5mHjxgwwbXP/xzVSp2n3/wf+gCpLs=' 'sha256-G/hq+f9xqdc1qwjXj24B23KyMSjoUIcrxPDdkBzFAuo=' 'sha256-IDT5S+CXuypmjKkl3KP+rWGFO301HkUtfI90rValDgQ=' 'sha256-J2EjKlKhpWd+xHWSn2aLXlAszcROdHXfrvkc+sZ+/YQ=' 'sha256-KzGyK8QF7yumyaVy5sWfGnAXpCO9+TkQWQaoUDU7LTI=' 'sha256-M77HFErDQh7xWEoBLZkuK/kyo5XX4dYtc6+5D20V9E8=' 'sha256-MAgr8+s/ckqisKTSMt4P2nhY2x9EGIHbsmSpfXW27x0=' 'sha256-MavMVeZvxNn5s2AFIhune7KV9O3Z4d9l1bVXNiSlvs8=' 'sha256-PWluL9O41Mr8mGy3bJwnXuTQT81fjpfqSXaJJMlNacA=' 'sha256-PbAzujpX0IIV+96Mx0JTnOS5O9kJUMqzGAXdtQy+G+I=' 'sha256-PxZ0TuQ4XD8eTn1JjM+OqCLluzys8AsAPodT1HGd9vU=' 'sha256-Q/2JyBuPF/VWrIRxMlYHjfU1VJINW6K+vWkVuQm6pYw=' 'sha256-QMU8JAMELpIKks5XQ5U1KlF+lqKi23XeykxSesFK+Is=' 'sha256-SHZal/YN5oSLw68QchrieGOcXBNyd1h1sp5az8b6u+M=' 'sha256-SNqf08RbGfEdEz0SvsBE0LuZwbW4QrsG5fv6vpkg/KM=' 'sha256-SzqGTlJJ9ihZVWq3WThAwQ/pNL0EVqyTFZ4WuursN4k=' 'sha256-T4zTPPwT2dY0DOBpfV2qCqtMPD6s3PnRCQl70ahgTLU=' 'sha256-TlBr2YlBR81AdhnhbJ3ES3Tu3kmg/Ad2PdlGNnCVNYE=' 'sha256-Ujt+Qubp8fWwsJ1ZKM6O0Dc5IECcMhUtMnoPvqUynN8=' 'sha256-WJgJMqRbie++vdxwZyt7luS6c8IrOyTOOAz0bLn2T4g=' 'sha256-X3xE8DpupCwpoDheL4OL1wTCHWPzQQ47ClWBrkgY52s=' 'sha256-YdVRy02flcNSuQAuX0/iAFlg+jAHwm5mRoMdA0ilR0U=' 'sha256-Z+mx98wFIjlEEc70iMepI5UxUcihho0/pB2pIGalirs=' 'sha256-ZFQOJG34HJButVYmZsjQmBVw2wDTN5GNAPuNDOdmNQU=' 'sha256-ZLY96LlzOQ2O61sjBPWV+spMREviGAduI8EQs48vNTw=' 'sha256-ZcJ5i8aCTqqtpNEi4NN7KG+JdYLVzTmTlkHpDcP9BTE=' 'sha256-a1W0Nckkp5sIWtAa6Oz2wEcQERnIKpk17GrkUruDaPg=' 'sha256-c5tsIprExfE1L3XOxWkLqfqQg2WsqILfhsQRsZYMVh4=' 'sha256-c9lGAIX1ReQONHs7GtVLFHNJlK/Wpf4zFg+aDf2Btk4=' 'sha256-cVZH+RTngUAjXudQeGxRjvtzPR4VuDfxoGxmNHhKCm8=' 'sha256-cXPc0GM9EIpTeNcm137X0aAyLWNQnQshCq0Lj2SmYIw=' 'sha256-cpQC0rgkw77xzJz4HH7GG+zQRVi3C09ut133kxemVV4=' 'sha256-efpGzzTgTFrApf0CQQHr1Zy84/vYs7jt9GOKwU1T2V4=' 'sha256-euQIlnND872o5a5vsUT5UEWBaQHX4ccztX4bZYODv8g=' 'sha256-fu01mXKa3lh1M8I3aMCu9Hr+UttAPOrX6NqfHsLXWVg=' 'sha256-gISEelrip1l+LPg3Z2N4vkD6bhWgcjg6a2qpEEhxlR0=' 'sha256-gL7PCww8hlZ3edp3B5v7gAXs0VDoq4QZ9h30vb0zTPc=' 'sha256-gOXU148E5V85vhEMZ12ra9Fw/lQcS7mpRveYBV02MzU=' 'sha256-iUthfatFAROCEqzCtVxSQWVIv4zKJHv2GdyuQCZa8mc=' 'sha256-iYmhsIKFVYLomNzEELzn9oO4+HEM/YlkLZruK87CeS4=' 'sha256-ipTgzpQ/fJobhDoLNggC0wU9GUFW1ySev1GBqnvcKi8=' 'sha256-itFS7gpj4EitJ8YFSjgRiWQBnYVC2OMM1ma72ZrC1uU=' 'sha256-ixS+0KylBBlhSfT/viANEcbokQl/29QgewayjBvf1y4=' 'sha256-lVnGNJJNxPHnsfYJq0s3xs2zR8Elbxl+G2FcqrO9uyg=' 'sha256-m3tOhSK+Jt482ptdkf7zRYlSl6sABIbBuPD6GLdYUYg=' 'sha256-mcCn4CgFEEiCwu/dgHeh33biBV5g8ZdAzuvz7PM8Zys=' 'sha256-mdmLA99T97H5WHJUVyZLmmJQXPi/faKiWtnMYBYL7vY=' 'sha256-nL/wj7Hd5NN2knQH8KuR6QRco8RpLgG/b29ky9OL0ac=' 'sha256-o2DTXJVshcWI/tEnua6k5bkYmUTuIsdzh870Om3Ildg=' 'sha256-o8BVyoHo00v4cPx9y+U6oQnNEXmZSPcArvVqETa815g=' 'sha256-oYjYsjk0WfdtrA5sBuoEaJfDQXmzKeY+e96wz9W/LRc=' 'sha256-pcUz1/zKlw+tSRHdEXPC11hGlFZVbBsPnkemE6Ml7nA=' 'sha256-piOvvKLn6fSeauzApJS3l/IvhmWswAUovRwjwBACxW0=' 'sha256-poEkmbuEdk669iuFLeR0AJ2+gMHNxni5Eem9ArkPrhw=' 'sha256-qkHOuVqFSkKdDEiA6SS1gjjA9SzRQaqMf3i5I3lwJKc=' 'sha256-qlUS5ohuHNloY/zuQsqy0/Va/uv9kmgRkObESAl9t2w=' 'sha256-rD9tE1rvOQzBtc0vjx12TCkqsnc46T0pq+rHTa6T3yQ=' 'sha256-rGSksGRcqGhsoM6Xdlqxg65W/2aEnUqMA6Xf2rhf2/M=' 'sha256-rK+kmioAPxMKkwAk7qwTJziGY3ix/bqqoZGCRJbcrIs=' 'sha256-rfh0MT4z1A1iXxyH3nGY0dT90nSnwSkvot7aGQ8vvcs=' 'sha256-u6nW+JJCJlA2AiPPOgJNVf3OMgtTWCfFhcfVIRlimkQ=' 'sha256-uOiN1UiV6lqaauS7J73nhhRKQERkSi+eQGMRKyQb2rU=' 'sha256-utIGeMFeGjTT31N9murD3I7oYlZ9CQqbl2iDN7YnfEw=' 'sha256-uvIrJfGeeOPjV/pwTqjmycgIey+updmx4LWBDQ85L2s=' 'sha256-vSu7jTpv0pGUhWQK1HDqpLoYSaAilgY7wXRxDkUGXI8=' 'sha256-vbD/HT1DwThq1NBjr6D9ZJjbwRiglS1TpLmvPKaLWgM=' 'sha256-wNmQecs04aGgX8WsFNx5eVJcB8rF3iMnlUQAOxXPTzc=' 'sha256-wc0BYjso6qqTInCvCfZEhYhiECog6VdBJeNZ2tdXNKg=' 'sha256-xkOvrGsUC/2xCseqihBLCMrKozb57/X3zmX6ODDR/F4=' 'sha256-zewdpphy3r4s85I1/n3jBFsusHowdWOjlIRsAhqgNFA=' https://cdn.jsdelivr.net https://accounts.google.com; connect-src 'self' https://lvirausgablhtmcqdblj.supabase.co https://accounts.google.com; frame-src https://accounts.google.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: https:; font-src 'self' data:; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
         },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" },
-        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin-allow-popups" },
-        { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" }
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        },
+        {
+          "key": "X-Permitted-Cross-Domain-Policies",
+          "value": "none"
+        }
       ]
     }
   ]
