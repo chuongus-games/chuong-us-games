@@ -260,7 +260,12 @@
       return id;
     },
     logPlay(game) {
-      try { sb.rpc('log_play', { p_game: game, p_client_id: CUG.clientId() }).then(({ error }) => { if (error) console.error('[CUG] log_play failed:', game, error); }); } catch (e) { console.error('[CUG] log_play threw:', game, e); }
+      // NOTE: sql/2026-07-28_log_play_throttle.sql must be run in Supabase first —
+      // it adds the p_client_id parameter server-side. Until then, calling with
+      // p_client_id 404s (PGRST202, function signature not found) and play counts
+      // stop incrementing site-wide. Flip this back to include p_client_id once
+      // that SQL has been applied and verified.
+      try { sb.rpc('log_play', { p_game: game }).then(({ error }) => { if (error) console.error('[CUG] log_play failed:', game, error); }); } catch (e) { console.error('[CUG] log_play threw:', game, e); }
     },
     async submitScore(game, score) {
       if (!CUG.user || !(score > 0)) return;
