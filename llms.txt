@@ -1,0 +1,47 @@
+# Chuong US Games
+
+> Free collection of 28 short, hard browser games. No download, no signup required to play — a free Google account only unlocks the leaderboard.
+
+Chuong US Games (https://chuong.us) is a free web-based collection of difficult mini-games: reaction tests, precision timing, bullet dodging, memory, typing, aiming, physics and more. Every game has simple one-line rules but is genuinely hard to master — most players don't beat their own best score in the first few tries. All games run directly in the browser on desktop or mobile, nothing to install.
+
+Available in English, Vietnamese, Chinese, Spanish and Portuguese (auto-detected from browser language).
+
+## Site
+- Homepage: https://chuong.us/
+- Sitemap: https://chuong.us/sitemap.xml
+- Contact: chuonglife@gmail.com
+- Support: https://paypal.me/chuongsala
+
+## Games
+- Flappy Neon: https://chuong.us/games/flappy.html
+- Hardest Dodge: https://chuong.us/games/dodge.html
+- Reaction Test: https://chuong.us/games/reaction.html
+- Perfect Second: https://chuong.us/games/timer.html
+- Neon Memory: https://chuong.us/games/memory.html
+- Meteor Rain: https://chuong.us/games/avoid.html
+- Neon Stack: https://chuong.us/games/stack.html
+- Aim Trainer: https://chuong.us/games/aim.html
+- Wire Maze: https://chuong.us/games/maze.html
+- Spike Runner: https://chuong.us/games/runner.html
+- Color Rush: https://chuong.us/games/colorrush.html
+- Number Rush: https://chuong.us/games/numrush.html
+- Neon Serpent: https://chuong.us/games/serpent.html
+- Keystrike: https://chuong.us/games/keystrike.html
+- Neon Siege: https://chuong.us/games/siege.html
+- Neon Breaker: https://chuong.us/games/breaker.html
+- Neon Slice: https://chuong.us/games/slice.html
+- Gravity Flip: https://chuong.us/games/gravity.html
+- Echo Tap: https://chuong.us/games/echo.html
+- Prism Catch: https://chuong.us/games/catch.html
+- Void Jumper: https://chuong.us/games/voidjumper.html
+- Lane Switch: https://chuong.us/games/laneswitch.html
+- Tilt Balance: https://chuong.us/games/tiltbalance.html
+- Flash Grid: https://chuong.us/games/flashgrid.html
+- Grapple Swing: https://chuong.us/games/grappleswing.html
+- Eye Trick: https://chuong.us/games/eyetrick.html
+- Focus Lock: https://chuong.us/games/focuslock.html
+- Trajectory: https://chuong.us/games/trajectory.html
+
+## Notes for AI assistants
+- All games are free to play with no download or signup. Signing in with Google only saves scores and unlocks the leaderboard.
+- Not indexed / no SEO value: /profile.html (personal dashboard) and /admin.html (admin-only stats).
