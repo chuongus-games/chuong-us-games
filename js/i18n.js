@@ -95,17 +95,17 @@
       game: {
         flappy: {
           hint: 'Tap / click / press Space to fly. The gap drifts up and down as each pipe approaches — time your flight to where it will be, not where it is now. Pass a gap to score 1 point.',
-          seoNote: 'Flappy Neon is a hard tap-to-fly game you can play free online, right in your browser. Unlike a static gap, each pipe\'s opening drifts up and down as it approaches, so you have to predict where it will be, not just react to where it is now — scoring past 10 makes this one of the hardest tap-and-fly games around.',
+          seoNote: 'Everyone knows how to play Flappy Neon in about five seconds. What they don\'t expect is the gap drifting up and down as each pipe rolls in, so the spot you\'re aiming for isn\'t where it\'ll actually be when you get there. Free, no download, and scoring past 10 is rare.',
           tapToStart: 'Tap to start', gameOver: 'Nice try! Tap to play again', bestLabel: 'BEST {n}'
         },
         dodge: {
           hint: 'Use arrow keys / WASD (or drag with your finger) to move the blue square from START to GOAL. Touch a pink bullet = back to start.',
-          seoNote: 'Hardest Dodge is a free online bullet-dodging game built for players who want a real challenge. Guide the blue square through spinning bullets to the goal — one touch and it\'s back to start, making this one of the hardest dodge games online.',
+          seoNote: 'Spinning bullets fill the gap between you and the goal in Hardest Dodge, and there\'s no clean lane through them, just reflexes and a bit of nerve. One touch sends you right back to the start. Free to play, no account needed unless you want your name on the leaderboard.',
           statusLine: 'Wins: {wins}   Retries: {deaths}', winsLabel: 'WINS {n}'
         },
         reaction: {
           hint: 'Average human: ~250ms. Gamer: ~180ms. What about you?',
-          seoNote: 'This free reaction test game measures how fast your reflexes really are. Click the instant the screen turns green — anything under 200 milliseconds is a good score, which makes consistent results one of the harder reflex challenges online.',
+          seoNote: 'Average human reaction time sits around 250ms. Trained gamers get closer to 180. This free test strips the whole thing down to one click: wait for green, then go. Jump the gun on red and it doesn\'t count, so it\'s not just about speed.',
           clickToStartTitle: 'Click to start',
           clickToStartBody: 'Wait for the screen to turn GREEN, then click as fast as you can.<br>Clicking early on RED = foul.',
           waitTitle: 'Wait for green…', waitBody: 'Don\'t click yet!', goTitle: 'CLICK NOW!',
@@ -115,7 +115,7 @@
         },
         timer: {
           hint: 'Off by ≤ 0.010s: godlike · ≤ 0.030s: pass · > 0.030s: fail. Your score is your win streak.',
-          seoNote: 'Perfect Second is a hard timing game with one rule: stop the clock at exactly 1.000 seconds. There\'s no visual cue to help — one millisecond off counts as a loss, making this one of the hardest precision games you can play free online.',
+          seoNote: 'Perfect Second has exactly one rule: stop the clock at 1.000 seconds. The numbers vanish after 0.3s, so you\'re counting blind from there, and being off by a single millisecond breaks your streak. It\'s free, it\'s simple to explain, and almost nobody\'s good at it.',
           initialMsg: 'Press START — the clock runs and <b>HIDES after 0.3s</b>.<br>Press STOP at exactly <b>1.000 seconds</b>.',
           startBtn: 'START', stopBtn: 'STOP', runningMsg: 'Count in your head… press STOP at <b>1.000s</b>!',
           godlike: '🏆 <b>{s}s</b> — GODLIKE! Off by {ms}ms', pass: '✅ <b>{s}s</b> — Pass! Off by {ms}ms',
@@ -123,30 +123,30 @@
         },
         memory: {
           hint: 'Watch the sequence, then the 4 pads swap positions before your turn — remember each step by COLOR, not by where it was. The sequence grows every round and plays FASTER each time. One wrong note ends the round.',
-          seoNote: 'Neon Memory is a free hard memory game online: watch a color sequence, then repeat it back — but the pads shuffle to new positions before you answer, so spatial muscle memory won\'t save you, only true color recall will. Every round adds one more step, so a single slip ends the run.',
+          seoNote: 'Neon Memory starts friendly. Watch a color sequence, repeat it back. Then the pads start swapping positions before your turn, killing any spatial shortcut, so only real color memory keeps you alive. One slip and the run\'s over, and it\'s free to try as many times as you want.',
           initialStatus: 'Memorize the sequence — then repeat it in order', watch: '👀 Watch closely…',
           yourTurn: '🎮 Your turn!', almost: 'Almost! You reached round {n}', perfect: '✅ Perfect!',
           round: 'Round {n}', start: 'START', playAgain: 'PLAY AGAIN', bestLabel: 'BEST {n}'
         },
         avoid: {
           hint: 'Move your mouse / drag your finger to dodge the meteors. Score = seconds survived.',
-          seoNote: 'Meteor Rain drops you into a constant meteor shower that keeps speeding up. It\'s a free hard avoid game online with no safe pattern to memorize — just fast reflexes and a bit of luck to survive one more second.',
+          seoNote: 'Meteor Rain skips the warm-up. The shower starts fast and never lets up, so there\'s no safe pattern to learn, just quick hands and a little luck. Score is however many seconds you last. Free, browser-based, no signup to play.',
           tapToStart: 'Tap to start', gameOver: 'So close! Tap to play again', bestSecLabel: 'BEST {n}s'
         },
         stack: {
           hint: 'Tap / Space to drop the block. Any overhang gets sliced off — blocks get thinner, speed gets faster.',
-          seoNote: 'Neon Stack is a free hard stacking game online built around one skill: timing. Drop each block with precision or the overhang gets sliced off — run out of block and the tower is done, which is what makes this one of the harder stack games out there.',
+          seoNote: 'Drop the block too soon or too late in Neon Stack and the overhang gets sliced clean off, which means the tower gets thinner and the timing window gets tighter with every level. It\'s free, it\'s just tapping, and it\'s a lot harder than that sounds.',
           gameOver: 'So close! Tap to play again', bestLabel: 'BEST {n}'
         },
         aim: {
           hint: 'Hit 20 targets — each one smaller than the last. Every miss adds a +1s penalty. Lowest time wins.',
-          seoNote: 'This free online aim trainer is built to punish sloppy clicks: hit 20 shrinking targets as fast as possible while every miss adds a time penalty. It\'s a hard aim training game whether you\'re warming up or just chasing a better score.',
+          seoNote: 'Twenty targets, each one smaller than the last, and every miss costs you a full second. This free aim trainer doesn\'t care if you\'re warming up or chasing a personal best, it punishes sloppy clicks either way.',
           tapToStart: 'Tap to start — 20 targets', statsLine: '🎯 {hit}/{total}   ❌ {miss}   ⏱ {el}s',
           missPenalty: '(includes {miss}s miss penalty) — Tap to retry', bestSecLabel: 'BEST {n}s'
         },
         maze: {
           hint: 'Enter the START box, then trace the dark corridor to GOAL before the timer runs out. Touch the bright area = back to start. Mobile: drag your finger.',
-          seoNote: 'Wire Maze is a free steady-hand maze game online: trace your cursor through a narrow corridor to the goal before the clock runs out, and touching a wall sends you straight back to start. Simple to understand, genuinely hard to finish.',
+          seoNote: 'One narrow corridor, one shaky hand. Wire Maze wants you to trace a path from start to goal without brushing the walls, and the clock is running the whole time. Simple to look at, genuinely hard to finish, and free to keep trying.',
           moveIntoStart: 'Move your cursor into START', headToGoal: 'Head to GOAL — don\'t touch the bright walls!',
           wallTouched: 'Wall touched — back to START!', cleared: '🏆 CLEARED! Enter START to go again.',
           outOfBounds: 'Out of bounds — back to START!', timeUp: '⏰ Too slow — back to START!',
@@ -154,12 +154,12 @@
         },
         runner: {
           hint: 'Tap / Space to jump over the spikes. Speed increases forever — score is distance.',
-          seoNote: 'Spike Runner is a free hard endless runner game online. Jump the spikes, survive the speed increases, and see how far you can get — a simple format that turns into one of the hardest runner games once the pace picks up.',
+          seoNote: 'Spike Runner never really has an easy phase, the speed just keeps climbing until your reflexes are the only thing standing between you and a face full of spikes. Free to play, and the only real question is how far you get before it wins.',
           tapToStart: 'Tap to run', gameOver: 'Great run! Tap to go again', bestMLabel: 'BEST {n}m'
         },
         colorrush: {
           hint: 'Tap only when the card\'s color matches the TARGET swatch. Tapping the wrong color or missing a match resets your streak — the window gets shorter the longer you survive.',
-          seoNote: 'Color Rush is a free online go/no-go reflex game: watch the target color, then tap only when the flashing card matches it. Tap the wrong color or hesitate on a real match and your streak is gone, which makes staying calm under a shrinking time window one of the hardest reflex challenges around.',
+          seoNote: 'Watch the target color, then tap the card only when it matches — hesitate on a real match or jump on a wrong one and the streak resets. Color Rush is free, fast, and gets meaner about its timing window the longer you survive.',
           targetLabel: 'TARGET', tapToStartTitle: 'Tap to start',
           tapToStartBody: 'Watch the TARGET color. Tap the card only when it matches — don\'t tap when it doesn\'t!',
           mistakeTapWrong: '❌ Wrong color — streak of {n} saved, now reset!', mistakeMissedMatch: '⏰ Missed it — streak of {n} saved, now reset!',
@@ -167,91 +167,91 @@
         },
         numrush: {
           hint: 'Tap 1, 2, 3… all the way to 25, in order, as fast as you can. Every wrong tap adds a +1s penalty. Lowest time wins.',
-          seoNote: 'Number Rush is a free online speed and focus game built on the classic Schulte grid: find and tap every number from 1 to 25 in order, as fast as possible, while a single wrong tap costs you a time penalty. Simple to explain, brutally hard to do quickly.',
+          seoNote: 'Number Rush runs on the old Schulte grid trick: find 1 through 25 in order, as fast as you can, with a full second added for every wrong tap. It sounds like a kids\' puzzle until you actually try to do it quickly. Free to play, no download.',
           tapToStart: 'Tap 1 to begin — find every number in order', findLabel: 'Find {n}',
           missPenalty: '(includes {miss}s miss penalty)', bestLabel: 'BEST {n}s'
         },
         serpent: {
           hint: 'Arrow keys / WASD, or swipe on mobile, to steer. Eat the dot to grow — speed increases every time. Hit a wall or your own tail and it\'s over.',
-          seoNote: 'Neon Serpent is a free hard snake game online: steer a growing serpent around a 20x20 grid, eating dots while dodging the walls and your own ever-longer tail. The rules are the classic ones everyone knows — the speed ramp is what makes this one of the hardest snake games to play for very long.',
+          seoNote: 'Neon Serpent plays by the rules everyone already knows: grow the snake, don\'t hit the walls, don\'t bite your own tail. What breaks people is the speed ramp, because it never really stops climbing. Free, in your browser, no install.',
           tapToStart: 'Tap or press any arrow key to start', gameOver: 'Nice run! Tap to play again', bestLabel: 'BEST {n} pts'
         },
         keystrike: {
           hint: 'Type the glowing word before it reaches the red line at the bottom. Wrong keys are ignored — just keep typing. Speed increases with every word.',
-          seoNote: 'Keystrike is a free hard typing game online: words fall from the top and you must type each one, letter by letter, before it crosses the bottom line. It starts slow but the fall speed and spawn rate keep climbing, making sustained accuracy at speed one of the hardest typing challenges you\'ll find in a browser.',
+          seoNote: 'Words fall, you type them before they cross the line, simple enough at first. Keystrike ramps the fall speed and the spawn rate together until typing fast and clean at the same time gets genuinely difficult. Free to play in any browser.',
           tapToStart: 'Tap here or press any key to start', mobileHint: 'On mobile, tap the lane to bring up your keyboard.',
           gameOver: 'Nice typing! Tap to go again', bestLabel: 'BEST {n} words'
         },
         siege: {
           hint: 'Move your mouse / drag your finger to weave through incoming fire from every side. Score = seconds survived.',
-          seoNote: 'Neon Siege drops you in the middle of an open arena under fire from every direction at once. It\'s a free hard survival game online with nothing to memorize — bullets are aimed at you the instant they spawn, so only continuous movement and quick reflexes keep you alive one more second.',
+          seoNote: 'Neon Siege puts you in an open arena and fires from every direction at once, so there\'s nothing to memorize, only continuous movement. Survive one more second, then another. Free, hard, no download.',
           tapToStart: 'Tap to start', gameOver: 'So close! Tap to play again', bestSecLabel: 'BEST {n}s'
         },
         breaker: {
           hint: 'Move your mouse / drag your finger to steer the paddle. Tap / Space to launch. Clear every brick — the board refills faster each time. Miss once and it\'s over.',
-          seoNote: 'Neon Breaker is a free hard brick-breaking game online: keep the ball alive with your paddle while clearing full boards of bricks. Every cleared board brings back a fresh set at a slightly faster ball speed, so staying alive for a long run is what makes this one of the hardest brick games you\'ll find in a browser.',
+          seoNote: 'Neon Breaker looks like the brick game you already know. It stays fair until you clear a board, because the next one refills faster and the ball picks up speed with it. Miss once and it\'s over. Free to play, no account required.',
           tapToStart: 'Tap or press Space to launch', gameOver: 'Nice run! Tap to play again', bestLabel: 'BEST {n} bricks'
         },
         slice: {
           hint: 'Swipe across the orbs in the direction their arrow points to slice them — wrong direction just misses, no penalty. Slicing a bomb in ANY direction ends the run instantly.',
-          seoNote: 'Neon Slice is a free fast-paced slicing game you can play online in your browser. Orbs launch from the bottom and arc through the air, each marked with a required slice direction — swipe the right way to score, while one bomb sliced in any direction ends the run instantly, making precise directional aim at speed one of the hardest slicing challenges online.',
+          seoNote: 'Every orb in Neon Slice comes with an arrow telling you which way to slice it, get that wrong and you just miss, no harm done. Slice a bomb from any angle, though, and the run ends right there. Free, fast, and unforgiving about that one rule.',
           tapToStart: 'Swipe to start', gameOver: 'Sliced a bomb! Swipe to play again', bestLabel: 'BEST {n}'
         },
         gravity: {
           hint: 'Tap / Space to flip gravity between floor and ceiling. Dodge the spikes — speed increases forever.',
-          seoNote: 'Gravity Flip is a free hard runner game online: flip gravity to send your block sticking to the floor or the ceiling, dodging spikes on both sides as the speed keeps climbing. Simple one-button rule, brutally hard to keep alive for long — one mistimed flip and it\'s over.',
+          seoNote: 'One button, two surfaces. Gravity Flip has you flipping between floor and ceiling to dodge spikes on both sides while the speed never really stops building. Free to play, and staying alive for long is the actual challenge.',
           tapToStart: 'Tap to start', gameOver: 'Nice run! Tap to go again', bestMLabel: 'BEST {n}m'
         },
         echo: {
           hint: 'Tap / click / press Space the instant the shrinking ring lines up with the dashed target ring. Too early, too late, or no tap at all ends the run.',
-          seoNote: 'Echo Tap is a free online rhythm precision game: a ring shrinks toward a fixed target, and you must tap the exact instant they align. Every successful tap speeds things up and shrinks the tolerance window, making sustained precision one of the hardest timing challenges you\'ll find in a browser.',
+          seoNote: 'A ring shrinks toward a fixed target and you tap the exact instant they line up, that\'s the whole idea behind Echo Tap. Get it right and the window gets smaller next time. Free, precise, and it punishes early and late taps equally.',
           tapToStart: 'Tap to start', gameOver: 'So close! Tap to try again', bestLabel: 'BEST {n}'
         },
         catch: {
           hint: 'Move your mouse / drag your finger to slide the bucket. Catch only the gems matching the TARGET swatch — catching the wrong color ends the run. Missing a good gem is fine, just try again.',
-          seoNote: 'Prism Catch is a free online color-matching game: gems of every color fall from the top and you must catch only the ones matching the current target color. Missing a good gem costs nothing, but catching a single wrong color ends the run instantly — and the target keeps changing, making sustained focus one of the hardest catching challenges around.',
+          seoNote: 'Prism Catch keeps changing its target color, and you\'re sliding a bucket to grab gems that match it while letting the wrong ones fall. Miss a good one and nothing happens, catch a bad one and the run\'s done. Free to play.',
           targetLabel: 'TARGET', tapToStart: 'Tap to start', gameOver: 'Wrong color! Tap to try again', bestLabel: 'BEST {n}'
         },
         voidjumper: {
           hint: 'Press and hold to charge a jump — drag left/right while charging to aim, release to leap. The void scrolls up forever, faster and faster.',
-          seoNote: 'Void Jumper is a free hard vertical platformer online. Charge your jump, aim between tiny floating platforms — some crumble the instant you land, some drift sideways — while the screen auto-scrolls upward at increasing speed. Fall behind or miss a platform and it\'s over. How high can you climb?',
+          seoNote: 'Charge a jump, aim between crumbling platforms, and try not to fall behind while the void scrolls upward faster every second. Void Jumper is a free vertical climb with no ceiling on how high you can go, or how fast it can end.',
           tapToStart: 'Tap to start', gameOver: 'Fell into the void! Tap to try again', bestMLabel: 'BEST {n}m'
         },
         laneswitch: {
           hint: 'Arrow keys / A-D (or tap left/right on the road) to switch lanes. Dodge the blocks — speed climbs forever and sometimes only one lane stays open.',
-          seoNote: 'Lane Switch is a free hard online reflex game across 3 lanes: blocks slide toward you and you must slide between left, middle and right to survive. There\'s always exactly one safe lane, but as speed keeps climbing, spotting it and reacting in time becomes one of the hardest dodge challenges you\'ll find in a browser.',
+          seoNote: 'There\'s always exactly one safe lane out of three in Lane Switch. Finding it gets harder as the speed climbs, because you\'ve got less and less time to react. Free, simple controls, brutal pacing.',
           tapToStart: 'Tap or press ←/→ to start', gameOver: 'So close! Tap to play again', bestMLabel: 'BEST {n}m'
         },
         tiltbalance: {
           hint: 'Move your mouse / drag your finger left-right (or use arrow keys) to tilt the platform and roll the ball. Don\'t let it fall off the ends or drop through a hole. The platform shrinks and holes appear as you survive longer.',
-          seoNote: 'Tilt Balance is a free hard online physics game: tilt a narrow platform by moving your mouse to keep a neon ball rolling safely on top. The platform slowly shrinks from both ends and random holes open up over time, forcing constant, precise micro-adjustments. Score is the number of seconds you keep the ball alive, and staying in control for a long run is what makes this one of the hardest balance games in a browser.',
+          seoNote: 'Tilt Balance hands you a platform that keeps shrinking from both ends while random holes open up in the middle, and you\'re just trying to keep a ball rolling on what\'s left. Free to play, and the longer you survive, the less platform you get to work with.',
           tapToStart: 'Tap / click to start', gameOver: 'Game over — tap to retry', bestSecLabel: 'BEST {n}s'
         },
         flashgrid: {
           hint: 'Tap the glowing BLUE cell before it fades out. Never tap the RED trap cell — that\'s instant game over. Missing a blue cell costs a life; you have 3.',
-          seoNote: 'Flash Grid is a free online reflex grid game: a random cell flashes blue and you must tap it before it fades, while occasional red trap cells must never be touched. The lit window shrinks and traps appear more often as your score climbs, making split-second color recognition and restraint the key to a high score in this brutally hard reaction test.',
+          seoNote: 'A blue cell flashes, you tap it before it fades. A red one shows up sometimes, and touching that ends the game instantly. Flash Grid gets faster and meaner as your score climbs. Free, quick to learn, hard to keep clean.',
           bestLabel: 'BEST {n}', scoreLabel: 'Score: {n}', tapToStartTitle: 'Tap to start', tapToStartBody: 'Tap the blue cell before it fades. Never tap red.',
           gameOverTitle: 'Game Over', finalScoreLabel: 'Score: {n}', tapToRestart: 'Tap to play again'
         },
         grappleswing: {
           hint: 'Hold to fire the hook and swing like a pendulum. Let go at the top of the arc to fly to the next anchor — time it right or fall.',
-          seoNote: 'Grapple Swing is a free hard physics game online: hold to grapple onto anchor points ahead, build momentum swinging like a pendulum, then release at exactly the right instant to sail forward and catch the next hook. Anchors get trickier to reach as you go. Miss the timing and gravity takes you down. Simple one-button rule, punishing precision.',
+          seoNote: 'Grapple Swing is built around one motion: hold to hook an anchor, swing like a pendulum, let go at the top of the arc to sail to the next one. Miscalculate the timing and gravity does the rest. Free to play, one button, real physics.',
           tapToStart: 'Hold to start swinging', gameOver: 'Fell! Tap to try again', bestLabel: 'BEST {n}'
         },
         eyetrick: {
           hint: 'A color word appears painted in a different ink color. Tap the button matching the INK COLOR, not what the word says — the time window shrinks as your score climbs. Wrong tap or timeout costs a life. 3 lives total.',
-          seoNote: 'Eye Trick is a free online reflex game built on the Stroop effect, a famous cognitive-science phenomenon where reading a color word interferes with naming the ink color it\'s printed in. Tap only the true ink color while the clock shrinks with every correct answer, and occasional matching trials test whether you\'re actually looking or just reading on autopilot.',
+          seoNote: 'Eye Trick runs on the Stroop effect, the classic trick where a color word printed in the wrong ink color messes with your brain. Tap the actual ink color, not the word, while the clock keeps shrinking. Free, and harder than it has any right to be.',
           tapToStart: 'Tap to start — tap the INK COLOR, not the word!', gameOver: 'Game over — tap to try again', bestLabel: 'BEST {n}'
         },
         focuslock: {
           hint: 'Watch the yellow dot, then track it as every dot mixes together. When they stop, tap the one you tracked. Wrong tap costs a life — you have 3.',
-          seoNote: 'Focus Lock is a free online attention game built on multiple object tracking, a classic cognitive-science test of sustained visual attention. One dot flashes briefly, then blends back into an identical swarm that drifts and bounces for several seconds. Losing your target for even a moment ends the streak, making this one of the hardest focus games you can play in a browser — no download required.',
+          seoNote: 'One dot flashes, then blends into a swarm of identical ones that drift and bounce for several seconds. Focus Lock is a free attention game built on real cognitive science, multiple object tracking, and losing your dot for even a second ends the streak.',
           tapToStart: 'Tap to start', roundLabel: 'Round {n}', revealMsg: 'Watch the yellow dot!', trackMsg: 'Track it!', chooseMsg: 'Tap the dot you tracked',
           gameOver: 'Game Over', finalLine: 'You reached round {n} — Tap to play again', bestLabel: 'BEST {n}'
         },
         trajectory: {
           hint: 'Drag back from the launch point like a slingshot, then release to fire. Farther drag = more power. Hit the neon ring to score — 3 misses and it\'s over.',
-          seoNote: 'Trajectory is a free online artillery aim game built around real parabolic physics: pull back to set angle and power, then release to launch a glowing shot at a distant ring. Distance, target size, wind and vertical drift all ramp up with your score, making sustained accuracy one of the hardest aiming challenges you\'ll find in a browser.',
+          seoNote: 'Pull back like a slingshot, read the wind, and let go. Trajectory adds distance, wind and vertical drift as your score climbs, so the shot that worked a minute ago won\'t work now. Free to play, real parabolic physics under the hood.',
           scoreLabel: 'Score: {n}', distanceLabel: 'DIST {n}m', windLabel: 'WIND {dir} {n}', tapToStart: 'Drag back from the anchor to aim — release to fire',
           gameOver: 'Game Over — tap to try again', bestLabel: 'BEST {n}'
         }
@@ -334,17 +334,17 @@
       game: {
         flappy: {
           hint: 'Chạm / bấm / phím Space để bay. Khe hở trôi lên xuống khi ống tới gần — hãy canh đúng vị trí khe SẼ Ở, không phải vị trí hiện tại. Qua một khe hở được 1 điểm.',
-          seoNote: 'Flappy Neon là trò chơi kiểu chạm-để-bay khó, chơi miễn phí ngay trên trình duyệt. Khác với khe hở đứng yên thông thường, khe hở của mỗi ống trôi lên xuống khi tới gần, buộc bạn phải dự đoán vị trí khe sẽ ở chứ không chỉ phản xạ theo vị trí hiện tại — vượt qua điểm 10 khiến đây trở thành một trong những trò chạm-bay khó nhất.',
+          seoNote: 'Ai cũng biết chơi Flappy Neon trong vòng năm giây. Nhưng cái khe hở nó cứ trôi lên trôi xuống theo từng cái ống tới gần, nên chỗ mình nhắm tới hổng phải chỗ nó sẽ ở khi mình bay tới đâu. Miễn phí, khỏi tải gì hết, mà qua điểm 10 là hiếm lắm.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Cố lên! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         dodge: {
           hint: 'Dùng phím mũi tên / WASD (hoặc kéo bằng ngón tay) để đưa ô vuông xanh từ BẮT ĐẦU tới ĐÍCH. Chạm viên đạn hồng = quay lại từ đầu.',
-          seoNote: 'Hardest Dodge là trò né đạn miễn phí dành cho ai muốn thử thách thật sự. Dẫn ô vuông xanh vượt qua các viên đạn xoay để tới đích — chạm một cái là quay lại từ đầu, khiến đây là một trong những trò né đạn khó nhất trực tuyến.',
+          seoNote: 'Đạn xoay tít giăng đầy khoảng giữa mình với đích trong Hardest Dodge, hổng có đường nào sạch sẽ để lách qua đâu, chỉ có phản xạ với chút liều lĩnh thôi. Chạm một cái là về vạch xuất phát liền. Chơi miễn phí, khỏi cần tài khoản, trừ khi muốn tên mình lên bảng xếp hạng.',
           statusLine: 'Thắng: {wins}   Thử lại: {deaths}', winsLabel: 'THẮNG {n}'
         },
         reaction: {
           hint: 'Người bình thường: ~250ms. Game thủ: ~180ms. Còn bạn thì sao?',
-          seoNote: 'Trò kiểm tra phản xạ miễn phí này đo tốc độ phản xạ thực sự của bạn. Bấm ngay khi màn hình chuyển xanh — dưới 200 mili giây là điểm tốt, khiến việc đạt kết quả ổn định trở thành một trong những thử thách phản xạ khó nhất trực tuyến.',
+          seoNote: 'Người bình thường phản xạ tầm 250ms. Dân chơi game giỏi thì gần 180. Trò test phản xạ miễn phí này gói gọn trong một cú bấm: chờ xanh rồi bấm. Bấm sớm lúc còn đỏ là bị tính phạm luật liền, nên đâu chỉ nhanh là đủ.',
           clickToStartTitle: 'Bấm để bắt đầu',
           clickToStartBody: 'Chờ màn hình chuyển XANH rồi bấm thật nhanh.<br>Bấm sớm khi còn ĐỎ = phạm luật.',
           waitTitle: 'Chờ màu xanh…', waitBody: 'Đừng bấm vội!', goTitle: 'BẤM NGAY!',
@@ -354,7 +354,7 @@
         },
         timer: {
           hint: 'Lệch ≤ 0.010s: siêu đẳng · ≤ 0.030s: đạt · > 0.030s: trượt. Điểm của bạn là chuỗi thắng liên tiếp.',
-          seoNote: 'Perfect Second là trò canh giờ khó với một luật duy nhất: dừng đồng hồ đúng 1.000 giây. Không có gợi ý hình ảnh nào giúp bạn — lệch một mili giây cũng tính là thua, khiến đây là một trong những trò canh giờ khó nhất chơi miễn phí trực tuyến.',
+          seoNote: 'Perfect Second chỉ có đúng một luật: dừng đồng hồ ở đúng 1.000 giây. Số biến mất sau 0.3 giây, từ đó mình đếm mù luôn, lệch một mili giây thôi là mất chuỗi thắng. Miễn phí, luật đơn giản vậy mà chẳng mấy ai làm được.',
           initialMsg: 'Bấm BẮT ĐẦU — đồng hồ chạy và <b>ẨN đi sau 0.3 giây</b>.<br>Bấm DỪNG đúng vào <b>1.000 giây</b>.',
           startBtn: 'BẮT ĐẦU', stopBtn: 'DỪNG', runningMsg: 'Đếm nhẩm trong đầu… bấm DỪNG ở <b>1.000s</b>!',
           godlike: '🏆 <b>{s}s</b> — SIÊU ĐẲNG! Lệch {ms}ms', pass: '✅ <b>{s}s</b> — Đạt! Lệch {ms}ms',
@@ -362,30 +362,30 @@
         },
         memory: {
           hint: 'Xem chuỗi màu, rồi 4 ô sẽ đổi chỗ trước khi tới lượt bạn — phải nhớ theo MÀU SẮC, không phải vị trí. Chuỗi dài thêm mỗi vòng và chạy NHANH hơn mỗi lần. Bấm sai một nốt là kết thúc vòng chơi.',
-          seoNote: 'Neon Memory là trò chơi trí nhớ khó, miễn phí: xem chuỗi màu rồi lặp lại — nhưng các ô sẽ xáo trộn vị trí trước khi bạn trả lời, nên trí nhớ vận động theo vị trí không giúp được gì, chỉ có khả năng nhớ đúng màu mới có ích. Mỗi vòng thêm một bước, chỉ cần sai một lần là kết thúc.',
+          seoNote: 'Neon Memory ban đầu dễ thương lắm. Xem chuỗi màu, lặp lại y chang. Rồi mấy cái ô bắt đầu đổi chỗ trước khi tới lượt mình, trí nhớ theo vị trí coi như bỏ, chỉ còn trí nhớ màu thiệt sự mới cứu được mình. Bấm sai một cái là hết vòng, chơi lại thoải mái vì miễn phí mà.',
           initialStatus: 'Ghi nhớ chuỗi màu — rồi lặp lại đúng thứ tự', watch: '👀 Chú ý quan sát…',
           yourTurn: '🎮 Đến lượt bạn!', almost: 'Suýt nữa! Bạn đạt tới vòng {n}', perfect: '✅ Hoàn hảo!',
           round: 'Vòng {n}', start: 'BẮT ĐẦU', playAgain: 'CHƠI LẠI', bestLabel: 'CAO NHẤT {n}'
         },
         avoid: {
           hint: 'Di chuột / kéo ngón tay để né thiên thạch. Điểm = số giây sống sót.',
-          seoNote: 'Meteor Rain đưa bạn vào cơn mưa thiên thạch liên tục ngày càng nhanh. Đây là trò né miễn phí không có kiểu mẫu an toàn để học thuộc — chỉ có phản xạ nhanh và chút may mắn để sống thêm một giây nữa.',
+          seoNote: 'Meteor Rain hổng có màn khởi động đâu nha. Mưa thiên thạch rớt xuống nhanh ngay từ đầu và hổng bao giờ chậm lại, nên hổng có kiểu mẫu nào để học thuộc hết, chỉ có tay lẹ với chút may mắn thôi. Điểm là số giây mình sống được. Miễn phí, chơi ngay trên trình duyệt, khỏi đăng ký.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Tiếc quá! Chạm để chơi lại', bestSecLabel: 'CAO NHẤT {n}s'
         },
         stack: {
           hint: 'Chạm / Space để thả khối. Phần thừa sẽ bị cắt — khối càng mỏng, tốc độ càng nhanh.',
-          seoNote: 'Neon Stack là trò xếp chồng khó, miễn phí, xoay quanh một kỹ năng: canh thời điểm. Thả từng khối thật chính xác kẻo phần thừa bị cắt — hết khối là tháp đổ, đó là điều khiến đây thành một trong những trò xếp chồng khó nhất.',
+          seoNote: 'Thả khối sớm hay trễ một chút trong Neon Stack là phần thừa bị cắt phăng liền, tháp càng lên càng mỏng, canh giờ càng lúc càng gắt. Miễn phí, chỉ mỗi việc chạm tay thôi mà khó hơn tưởng tượng nhiều.',
           gameOver: 'Tiếc quá! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         aim: {
           hint: 'Bắn trúng 20 mục tiêu — mỗi cái nhỏ hơn cái trước. Mỗi lần trượt bị phạt thêm 1 giây. Thời gian thấp nhất thắng.',
-          seoNote: 'Trò luyện ngắm miễn phí này được thiết kế để trừng phạt những cú bấm ẩu: bắn trúng 20 mục tiêu co nhỏ dần nhanh nhất có thể trong khi mỗi lần trượt bị phạt thời gian. Đây là trò luyện ngắm khó dù bạn đang khởi động hay chỉ muốn phá kỷ lục.',
+          seoNote: 'Hai mươi mục tiêu, cái sau nhỏ hơn cái trước, trượt phát nào là mất nguyên một giây phát đó. Trò luyện ngắm miễn phí này hổng quan tâm mình đang khởi động hay đang rượt điểm cao nhất đâu, cứ bấm ẩu là bị phạt như nhau.',
           tapToStart: 'Chạm để bắt đầu — 20 mục tiêu', statsLine: '🎯 {hit}/{total}   ❌ {miss}   ⏱ {el}s',
           missPenalty: '(đã cộng {miss}s phạt trượt) — Chạm để thử lại', bestSecLabel: 'CAO NHẤT {n}s'
         },
         maze: {
           hint: 'Vào ô BẮT ĐẦU, rồi rê chuột theo hành lang tối tới ĐÍCH trước khi hết giờ. Chạm vùng sáng = quay lại từ đầu. Di động: kéo bằng ngón tay.',
-          seoNote: 'Wire Maze là trò mê cung đòi hỏi tay vững, miễn phí: rê chuột qua hành lang hẹp để tới đích trước khi đồng hồ chạy hết, chạm tường sẽ đưa bạn quay lại từ đầu ngay lập tức. Dễ hiểu nhưng thực sự khó để hoàn thành.',
+          seoNote: 'Một hành lang hẹp, một bàn tay hay run. Wire Maze bắt mình rê từ điểm bắt đầu tới đích mà đừng chạm tường, trong khi đồng hồ cứ chạy hoài. Nhìn thì đơn giản, làm mới thấy khó thiệt, mà chơi lại bao nhiêu lần cũng miễn phí.',
           moveIntoStart: 'Đưa chuột vào ô BẮT ĐẦU', headToGoal: 'Tiến tới ĐÍCH — đừng chạm vùng sáng!',
           wallTouched: 'Chạm tường rồi — quay lại BẮT ĐẦU!', cleared: '🏆 HOÀN THÀNH! Vào lại BẮT ĐẦU để chơi tiếp.',
           outOfBounds: 'Ra ngoài vùng chơi — quay lại BẮT ĐẦU!', timeUp: '⏰ Chậm quá — quay lại BẮT ĐẦU!',
@@ -393,12 +393,12 @@
         },
         runner: {
           hint: 'Chạm / Space để nhảy qua chông. Tốc độ tăng liên tục — điểm là quãng đường.',
-          seoNote: 'Spike Runner là trò endless runner khó, miễn phí. Nhảy qua chông, sống sót qua từng đợt tăng tốc, xem bạn chạy được bao xa — một luật chơi đơn giản nhưng trở nên cực khó khi tốc độ tăng lên.',
+          seoNote: 'Spike Runner gần như hổng có đoạn nào dễ thở hết, tốc độ cứ tăng lên hoài cho tới khi chỉ còn phản xạ của mình đứng giữa mình với đống chông. Miễn phí, câu hỏi duy nhất là mình chạy được bao xa trước khi thua.',
           tapToStart: 'Chạm để chạy', gameOver: 'Chạy tốt lắm! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
         },
         colorrush: {
           hint: 'Chỉ chạm vào thẻ khi màu của nó trùng với ô màu MỤC TIÊU. Chạm sai màu hoặc bỏ lỡ khi trùng màu sẽ làm mất chuỗi — thời gian phản ứng càng ngắn dần khi bạn sống sót càng lâu.',
-          seoNote: 'Color Rush là trò chơi phản xạ kiểu "go/no-go" miễn phí: quan sát màu mục tiêu, rồi chỉ chạm khi thẻ nhấp nháy trùng màu đó. Chạm sai màu hoặc chần chừ khi đúng màu là mất chuỗi ngay lập tức, khiến việc giữ bình tĩnh dưới áp lực thời gian rút ngắn trở thành một trong những thử thách phản xạ khó nhất.',
+          seoNote: 'Ngó màu mục tiêu rồi chỉ chạm thẻ lúc nó trùng màu, chần chừ lúc đúng hoặc lỡ tay lúc sai là mất chuỗi liền. Color Rush miễn phí, nhanh, và càng sống lâu thì cửa sổ thời gian càng ác hơn.',
           targetLabel: 'MỤC TIÊU', tapToStartTitle: 'Chạm để bắt đầu',
           tapToStartBody: 'Quan sát màu MỤC TIÊU. Chỉ chạm vào thẻ khi nó trùng màu — đừng chạm khi không trùng!',
           mistakeTapWrong: '❌ Sai màu — đã lưu chuỗi {n}, giờ reset lại!', mistakeMissedMatch: '⏰ Bỏ lỡ rồi — đã lưu chuỗi {n}, giờ reset lại!',
@@ -406,91 +406,91 @@
         },
         numrush: {
           hint: 'Chạm lần lượt 1, 2, 3… cho tới 25, đúng thứ tự, nhanh nhất có thể. Mỗi lần chạm sai bị cộng thêm 1 giây. Thời gian thấp nhất thắng.',
-          seoNote: 'Number Rush là trò chơi miễn phí rèn tốc độ và sự tập trung dựa trên bảng Schulte kinh điển: tìm và chạm từng số từ 1 đến 25 theo đúng thứ tự, nhanh nhất có thể, trong khi mỗi lần chạm sai sẽ bị phạt thêm thời gian. Luật chơi đơn giản nhưng để làm thật nhanh thì cực kỳ khó.',
+          seoNote: 'Number Rush chơi theo kiểu bảng Schulte cũ, tìm số 1 tới 25 đúng thứ tự, nhanh nhất có thể, chạm sai một cái là cộng thêm một giây. Nghe như trò con nít cho tới khi mình thử làm thiệt nhanh mới biết. Miễn phí, khỏi tải.',
           tapToStart: 'Chạm số 1 để bắt đầu — tìm đủ các số theo đúng thứ tự', findLabel: 'Tìm số {n}',
           missPenalty: '(đã cộng {miss}s phạt chạm sai)', bestLabel: 'CAO NHẤT {n}s'
         },
         serpent: {
           hint: 'Dùng phím mũi tên / WASD, hoặc vuốt trên di động, để điều khiển. Ăn chấm để lớn lên — tốc độ tăng mỗi lần ăn. Chạm tường hoặc tự cắn đuôi là thua.',
-          seoNote: 'Neon Serpent là trò rắn săn mồi khó, miễn phí: điều khiển con rắn lớn dần trên lưới 20x20, vừa ăn mồi vừa né tường và cái đuôi ngày càng dài của chính mình. Luật chơi kinh điển ai cũng biết — tốc độ tăng dần mới là thứ khiến đây thành một trong những trò rắn khó sống lâu nhất.',
+          seoNote: 'Neon Serpent chơi theo luật ai cũng thuộc lòng rồi: nuôi rắn lớn, đừng đụng tường, đừng cắn đuôi mình. Cái làm người ta gãy là tốc độ cứ tăng hoài hổng dừng. Miễn phí, ngay trên trình duyệt, khỏi cài gì hết.',
           tapToStart: 'Chạm hoặc bấm phím mũi tên để bắt đầu', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} điểm'
         },
         keystrike: {
           hint: 'Gõ chữ đang sáng trước khi nó chạm vạch đỏ ở đáy. Gõ sai không sao — cứ tiếp tục gõ. Tốc độ tăng theo mỗi chữ đã gõ xong.',
-          seoNote: 'Keystrike là trò chơi gõ chữ khó, miễn phí: chữ rơi từ trên xuống và bạn phải gõ từng ký tự trước khi nó vượt qua vạch đáy. Ban đầu chậm nhưng tốc độ rơi và tần suất xuất hiện tăng liên tục, khiến việc gõ chính xác ở tốc độ cao trở thành một trong những thử thách gõ phím khó nhất trên trình duyệt.',
+          seoNote: 'Chữ rớt xuống, mình gõ trước khi nó qua vạch, nghe đơn giản lúc đầu. Keystrike tăng tốc độ rớt với tần suất xuất hiện cùng lúc, tới lúc vừa gõ nhanh vừa gõ đúng trở thành chuyện thiệt sự khó. Chơi miễn phí trên mọi trình duyệt.',
           tapToStart: 'Chạm vào đây hoặc bấm phím bất kỳ để bắt đầu', mobileHint: 'Trên di động, chạm vào khung chơi để hiện bàn phím.',
           gameOver: 'Gõ tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} từ'
         },
         siege: {
           hint: 'Di chuột / kéo ngón tay để lách qua đạn bắn tới từ mọi phía. Điểm = số giây sống sót.',
-          seoNote: 'Neon Siege đưa bạn vào giữa một đấu trường mở bị bắn phá từ mọi hướng cùng lúc. Đây là trò sinh tồn khó, miễn phí, không có gì để học thuộc — đạn nhắm vào bạn ngay khi xuất hiện, nên chỉ có di chuyển liên tục và phản xạ nhanh mới giúp bạn sống thêm một giây nữa.',
+          seoNote: 'Neon Siege thả mình vào giữa đấu trường mở, đạn bắn từ tứ phía cùng lúc, nên hổng có gì để học thuộc hết, chỉ có di chuyển liên tục thôi. Sống thêm một giây, rồi thêm giây nữa. Miễn phí, khó, khỏi tải.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Tiếc quá! Chạm để chơi lại', bestSecLabel: 'CAO NHẤT {n}s'
         },
         breaker: {
           hint: 'Di chuột / kéo ngón tay để điều khiển thanh đỡ. Chạm / Space để phóng bóng. Phá hết gạch — bảng gạch sẽ đầy lại nhanh hơn mỗi lần. Trượt một lần là hết.',
-          seoNote: 'Neon Breaker là trò đập gạch khó, miễn phí: giữ cho bóng không rơi bằng thanh đỡ trong khi phá hết từng bảng gạch. Mỗi lần phá hết bảng, gạch mới xuất hiện với tốc độ bóng nhanh hơn một chút, khiến việc trụ được lâu dài trở thành một trong những trò đập gạch khó nhất trên trình duyệt.',
+          seoNote: 'Neon Breaker nhìn giống trò đập gạch mình từng biết. Nó công bằng cho tới khi mình phá hết một bảng, vì bảng sau đầy lại nhanh hơn và bóng cũng lẹ hơn theo. Trượt một lần là xong. Miễn phí, khỏi cần tài khoản.',
           tapToStart: 'Chạm hoặc bấm Space để phóng bóng', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n} viên gạch'
         },
         slice: {
           hint: 'Vuốt đúng hướng mũi tên chỉ trên mỗi quả cầu để chém trúng — sai hướng chỉ tính trượt, không bị phạt. Chém trúng bom theo BẤT KỲ hướng nào đều kết thúc ngay lập tức.',
-          seoNote: 'Neon Slice là trò chém tốc độ cao, miễn phí, chơi ngay trên trình duyệt. Các quả cầu bay lên từ phía dưới theo đường vòng cung, mỗi quả đều có mũi tên chỉ hướng chém bắt buộc — vuốt đúng hướng để ghi điểm, trong khi chỉ cần chém nhầm một quả bom (ở bất kỳ hướng nào) là kết thúc ngay, khiến việc nhắm hướng chính xác ở tốc độ cao trở thành một trong những thử thách chém khó nhất trực tuyến.',
+          seoNote: 'Mỗi quả cầu trong Neon Slice đều có mũi tên chỉ hướng chém, chém sai hướng thì chỉ trượt thôi, hổng sao hết. Nhưng chém trúng bom theo hướng nào cũng bị kết thúc ngay tại chỗ. Miễn phí, nhanh, và cái luật đó thì hổng có nương tay đâu.',
           tapToStart: 'Vuốt để bắt đầu', gameOver: 'Chém trúng bom rồi! Vuốt để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         gravity: {
           hint: 'Chạm / Space để đảo trọng lực giữa sàn và trần. Né chông — tốc độ tăng liên tục.',
-          seoNote: 'Gravity Flip là trò chạy khó, miễn phí: đảo trọng lực để đưa khối vuông của bạn dính vào sàn hoặc trần, né chông ở cả hai bên khi tốc độ ngày càng tăng. Luật chơi chỉ một nút bấm nhưng cực khó để sống sót lâu — đảo sai thời điểm một lần là hết.',
+          seoNote: 'Một nút bấm, hai mặt sàn. Gravity Flip bắt mình đảo qua đảo lại giữa sàn với trần để né chông hai bên trong khi tốc độ cứ tăng hoài chẳng ngừng. Miễn phí, sống lâu được mới là thử thách thiệt sự.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Chơi tốt lắm! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
         },
         echo: {
           hint: 'Chạm / bấm / phím Space đúng lúc vòng tròn thu nhỏ trùng với vòng mục tiêu nét đứt. Sớm quá, trễ quá, hoặc không chạm đều kết thúc trò chơi.',
-          seoNote: 'Echo Tap là trò chơi nhịp điệu canh thời điểm chính xác, miễn phí: một vòng tròn thu nhỏ dần về phía mục tiêu cố định, bạn phải chạm đúng khoảnh khắc chúng trùng nhau. Mỗi lần thành công tốc độ lại tăng và cửa sổ dung sai thu hẹp lại, khiến việc giữ độ chính xác liên tục trở thành một trong những thử thách canh giờ khó nhất trên trình duyệt.',
+          seoNote: 'Một vòng tròn thu nhỏ dần về phía mục tiêu cố định, mình chạm đúng khoảnh khắc hai vòng trùng nhau, đó là hết ý tưởng của Echo Tap luôn. Đúng lần này thì lần sau cửa sổ nhỏ lại. Miễn phí, đòi chính xác, chạm sớm hay trễ đều bị phạt như nhau.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Suýt nữa! Chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
         },
         catch: {
           hint: 'Di chuột / kéo ngón tay để trượt giỏ. Chỉ hứng những viên đá quý trùng màu MỤC TIÊU — hứng nhầm màu là kết thúc. Bỏ lỡ một viên đúng màu không sao, cứ tiếp tục.',
-          seoNote: 'Prism Catch là trò chơi ghép màu miễn phí: đá quý đủ màu rơi từ trên xuống và bạn chỉ được hứng những viên trùng với màu mục tiêu hiện tại. Bỏ lỡ một viên đúng màu không mất gì, nhưng chỉ cần hứng nhầm một màu là kết thúc ngay — và mục tiêu liên tục thay đổi, khiến việc giữ tập trung liên tục trở thành một trong những thử thách hứng khó nhất.',
+          seoNote: 'Prism Catch cứ đổi màu mục tiêu hoài, mình trượt cái giỏ hứng đúng đá quý trùng màu, để đá sai màu rớt luôn cũng được. Bỏ lỡ viên đúng thì hổng sao, hứng nhầm viên sai là xong phim. Chơi miễn phí.',
           targetLabel: 'MỤC TIÊU', tapToStart: 'Chạm để bắt đầu', gameOver: 'Sai màu rồi! Chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
         },
         voidjumper: {
           hint: 'Nhấn giữ để tích lực nhảy — kéo trái/phải khi đang giữ để ngắm hướng, thả ra để bật nhảy. Vực thẳm cuộn lên mãi mãi, ngày càng nhanh.',
-          seoNote: 'Void Jumper là game platformer leo cao miễn phí cực khó: tích lực nhảy, ngắm hướng giữa những bệ nhỏ trôi nổi — vài bệ sập ngay khi vừa đáp, vài bệ trôi ngang — trong khi màn hình tự cuộn lên với tốc độ tăng dần. Rớt lại phía sau hoặc trượt bệ là kết thúc. Bạn leo được bao cao?',
+          seoNote: 'Tích lực nhảy, ngắm giữa mấy bệ đang sập, cố đừng để bị bỏ lại trong khi vực thẳm cuộn lên ngày càng nhanh. Void Jumper miễn phí, leo cao được bao nhiêu là tùy mình, mà cũng kết thúc nhanh bấy nhiêu nếu lỡ tay.',
           tapToStart: 'Chạm để bắt đầu', gameOver: 'Rơi xuống vực! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
         },
         laneswitch: {
           hint: 'Phím mũi tên / A-D (hoặc chạm trái/phải trên đường) để đổi làn. Né chướng ngại vật — tốc độ tăng mãi và đôi khi chỉ còn đúng 1 làn trống.',
-          seoNote: 'Lane Switch là game phản xạ 3 làn đường miễn phí cực khó: chướng ngại vật lao về phía bạn và bạn phải trượt giữa làn trái, giữa, phải để sống sót. Luôn có đúng 1 làn an toàn, nhưng khi tốc độ không ngừng tăng, việc nhận ra và phản ứng kịp trở thành một trong những thử thách né tránh khó nhất trên trình duyệt.',
+          seoNote: 'Trong Lane Switch lúc nào cũng có đúng một làn an toàn trong ba làn. Tìm ra nó càng lúc càng khó khi tốc độ tăng lên, vì thời gian phản ứng cứ ít dần. Miễn phí, điều khiển đơn giản, nhịp độ thì ác liệt.',
           tapToStart: 'Chạm hoặc nhấn ←/→ để bắt đầu', gameOver: 'Suýt nữa thôi! Chạm để chơi lại', bestMLabel: 'CAO NHẤT {n}m'
         },
         tiltbalance: {
           hint: 'Di chuột / kéo ngón tay sang trái-phải (hoặc dùng phím mũi tên) để nghiêng bục và lăn bóng. Đừng để bóng rơi khỏi hai đầu hoặc lọt qua lỗ hổng. Bục sẽ ngắn dần và xuất hiện lỗ hổng khi bạn sống sót lâu hơn.',
-          seoNote: 'Tilt Balance là game vật lý cân bằng miễn phí cực khó: nghiêng một bục hẹp bằng cách di chuột để giữ quả bóng neon lăn an toàn trên đó. Bục dần ngắn lại từ hai đầu và các lỗ hổng ngẫu nhiên xuất hiện theo thời gian, buộc bạn phải điều chỉnh liên tục và chính xác. Điểm số là số giây giữ bóng sống sót — đây là một trong những game giữ thăng bằng khó nhất trên trình duyệt.',
+          seoNote: 'Tilt Balance đưa mình một cái bục cứ ngắn dần từ hai đầu trong khi lỗ hổng ngẫu nhiên mọc lên ở giữa, mình chỉ biết cố giữ quả bóng lăn trên phần còn lại. Miễn phí, sống càng lâu thì bục còn lại càng ít.',
           tapToStart: 'Chạm / click để bắt đầu', gameOver: 'Kết thúc rồi — chạm để thử lại', bestSecLabel: 'CAO NHẤT {n}s'
         },
         flashgrid: {
           hint: 'Chạm vào ô XANH đang sáng trước khi nó tắt. Tuyệt đối không chạm ô bẫy MÀU ĐỎ — thua ngay lập tức. Bỏ lỡ ô xanh sẽ mất 1 mạng; bạn có 3 mạng.',
-          seoNote: 'Flash Grid là game lưới phản xạ miễn phí trực tuyến: một ô ngẫu nhiên sáng màu xanh và bạn phải chạm vào nó trước khi tắt, trong khi thỉnh thoảng xuất hiện ô bẫy màu đỏ tuyệt đối không được chạm. Thời gian sáng ngắn dần và bẫy xuất hiện nhiều hơn khi điểm số tăng, khiến việc nhận diện màu tức thì và sự kiềm chế trở thành chìa khóa để đạt điểm cao trong bài test phản xạ cực khó này.',
+          seoNote: 'Ô xanh sáng lên, mình chạm trước khi nó tắt. Thỉnh thoảng có ô đỏ, chạm vô là thua ngay lập tức. Flash Grid càng lúc càng nhanh càng ác khi điểm mình tăng lên. Miễn phí, học nhanh, giữ sạch tay thì khó.',
           bestLabel: 'CAO NHẤT {n}', scoreLabel: 'Điểm: {n}', tapToStartTitle: 'Chạm để bắt đầu', tapToStartBody: 'Chạm ô xanh trước khi nó tắt. Không chạm ô đỏ.',
           gameOverTitle: 'Kết thúc', finalScoreLabel: 'Điểm: {n}', tapToRestart: 'Chạm để chơi lại'
         },
         grappleswing: {
           hint: 'Giữ để móc vào điểm neo tiếp theo và đu như con lắc. Thả ra ở đỉnh quỹ đạo để bay về phía trước — canh đúng thời điểm hoặc rơi xuống.',
-          seoNote: 'Grapple Swing là game vật lý miễn phí cực khó: giữ nút để móc vào các điểm neo phía trước, tích lũy đà đu như con lắc, rồi thả đúng thời điểm để bay tới móc tiếp theo. Các điểm neo ngày càng khó với tới. Sai thời điểm là trọng lực sẽ kéo bạn xuống. Luật chỉ 1 nút bấm, nhưng đòi hỏi độ chính xác khắc nghiệt.',
+          seoNote: 'Grapple Swing xoay quanh đúng một động tác: giữ để móc vào điểm neo, đu như con lắc, thả ra đúng đỉnh cung để bay tới cái tiếp theo. Canh sai thời điểm là trọng lực lo phần còn lại. Miễn phí, một nút bấm, vật lý thiệt luôn.',
           tapToStart: 'Giữ để bắt đầu đu', gameOver: 'Rơi rồi! Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         eyetrick: {
           hint: 'Một từ tên màu xuất hiện được tô bằng màu mực khác. Chạm vào nút đúng MÀU MỰC, không phải nghĩa của từ — thời gian giới hạn ngắn dần khi điểm tăng. Chạm sai hoặc hết giờ mất 1 mạng. Tổng 3 mạng.',
-          seoNote: 'Eye Trick là game phản xạ miễn phí dựa trên hiệu ứng Stroop, một hiện tượng nổi tiếng trong khoa học nhận thức khi việc đọc từ tên màu gây nhiễu với việc gọi tên màu mực thực tế. Chỉ chạm đúng màu mực trong khi đồng hồ ngắn dần sau mỗi câu đúng, và thỉnh thoảng có câu trùng khớp để kiểm tra bạn có thực sự quan sát hay chỉ đọc theo quán tính.',
+          seoNote: 'Eye Trick dựa trên hiệu ứng Stroop, cái trò kinh điển mà chữ tên màu in bằng màu mực khác làm não mình rối tung lên. Chạm đúng màu mực thiệt, đừng chạm theo nghĩa chữ, trong khi đồng hồ cứ ngắn dần. Miễn phí, mà khó hơn cái vẻ ngoài của nó nhiều.',
           tapToStart: 'Chạm để bắt đầu — chạm MÀU MỰC, không phải từ!', gameOver: 'Kết thúc — chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
         },
         focuslock: {
           hint: 'Quan sát chấm màu vàng, rồi theo dõi nó khi tất cả các chấm trộn lẫn vào nhau. Khi chúng dừng lại, chạm vào chấm bạn đã theo dõi. Chạm sai mất 1 mạng — bạn có 3 mạng.',
-          seoNote: 'Focus Lock là game tập trung miễn phí dựa trên kỹ thuật theo dõi nhiều vật thể (multiple object tracking), một bài test kinh điển trong khoa học nhận thức về sự chú ý thị giác bền vững. Một chấm chớp sáng trong chốc lát rồi hòa lẫn vào đàn chấm giống hệt đang trôi dạt và va chạm trong vài giây. Chỉ cần mất dấu mục tiêu 1 khoảnh khắc là kết thúc chuỗi điểm, khiến đây trở thành một trong những game tập trung khó nhất có thể chơi trên trình duyệt — không cần tải về.',
+          seoNote: 'Một chấm sáng lên rồi hòa vào đàn chấm giống hệt nhau, trôi dạt với va chạm suốt mấy giây liền. Focus Lock là trò tập trung miễn phí dựa trên khoa học nhận thức thiệt sự, kiểu theo dõi nhiều vật thể cùng lúc, mất dấu chấm của mình dù chỉ một giây là mất chuỗi luôn.',
           tapToStart: 'Chạm để bắt đầu', roundLabel: 'Vòng {n}', revealMsg: 'Quan sát chấm vàng!', trackMsg: 'Theo dõi nó!', chooseMsg: 'Chạm vào chấm bạn đã theo dõi',
           gameOver: 'Kết thúc', finalLine: 'Bạn đạt vòng {n} — Chạm để chơi lại', bestLabel: 'CAO NHẤT {n}'
         },
         trajectory: {
           hint: 'Kéo ngược từ điểm bắn như ná thun, rồi thả ra để bắn. Kéo càng xa lực càng mạnh. Bắn trúng vòng tròn neon để ghi điểm — trượt 3 lần là thua.',
-          seoNote: 'Trajectory là game bắn pháo miễn phí dựa trên vật lý parabol thực thụ: kéo lùi để chỉnh góc và lực, rồi thả ra để bắn viên đạn phát sáng tới vòng tròn mục tiêu ở xa. Khoảng cách, kích thước mục tiêu, gió và độ trôi dọc đều tăng dần theo điểm số, khiến việc duy trì độ chính xác trở thành một trong những thử thách ngắm bắn khó nhất trên trình duyệt.',
+          seoNote: 'Kéo lùi như bắn ná thun, đọc hướng gió, rồi thả tay. Trajectory cứ thêm khoảng cách, gió, độ trôi dọc khi điểm mình tăng lên, nên phát bắn vừa nãy ăn rồi giờ hổng còn ăn nữa đâu. Miễn phí, vật lý parabol thiệt luôn ở phía sau.',
           scoreLabel: 'Điểm: {n}', distanceLabel: 'KHOẢNG CÁCH {n}m', windLabel: 'GIÓ {dir} {n}', tapToStart: 'Kéo lùi từ điểm neo để ngắm — thả ra để bắn',
           gameOver: 'Kết thúc — chạm để thử lại', bestLabel: 'CAO NHẤT {n}'
         }
